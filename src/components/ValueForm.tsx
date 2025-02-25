@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -108,8 +107,11 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
+        className="relative"
       >
-        <Card className="w-full max-w-md mx-auto glass-panel">
+        <div className="absolute -inset-1 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 rounded-lg blur-xl opacity-30 animate-[glow_6s_linear_infinite]" />
+        
+        <Card className="w-full max-w-md mx-auto glass-panel relative z-10">
           <CardHeader>
             <motion.div
               initial={{ opacity: 0, y: -10 }}
