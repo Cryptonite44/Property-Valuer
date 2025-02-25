@@ -26,14 +26,14 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ["#ffffff"],
+        colors: ["#FFD700", "#FDB931", "#FFE5B4"], // Gold confetti
       });
       confetti({
         particleCount: 2,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ["#ffffff"],
+        colors: ["#FFD700", "#FDB931", "#FFE5B4"], // Gold confetti
       });
 
       if (Date.now() < animationEnd) {
@@ -44,11 +44,19 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
     frame();
   }, []);
 
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
   return (
     <Card className="w-full max-w-md mx-auto glass-panel animate-fade-up">
       <CardHeader className="text-center">
         <CardTitle className="text-3xl font-light text-gradient">
-          Your Estimated Home Value
+          Your Estimated Property Value
         </CardTitle>
         <CardDescription className="text-lg">
           Based on similar properties in your area
@@ -56,8 +64,8 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
       </CardHeader>
       <CardContent className="space-y-8">
         <div className="text-center">
-          <div className="text-5xl font-light mb-4 text-gradient glow">
-            ${value.toLocaleString()}
+          <div className="text-5xl font-light mb-4 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent">
+            {formatCurrency(value)}
           </div>
           <p className="text-sm text-muted-foreground">
             This estimate is based on recent market data and similar properties in
@@ -66,7 +74,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
         </div>
         <div className="space-y-4">
           <p className="text-sm text-center text-muted-foreground">
-            Want a more accurate valuation? Our expert agents can provide a detailed
+            Would you like a more accurate valuation? Our expert estate agents can provide a detailed
             analysis of your property's worth.
           </p>
           <div className="flex flex-col gap-3">
@@ -77,7 +85,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
                 window.open("mailto:contact@example.com", "_blank")
               }
             >
-              Contact an Agent
+              Contact an Estate Agent
             </Button>
             <Button 
               variant="secondary"

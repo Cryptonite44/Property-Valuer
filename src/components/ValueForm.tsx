@@ -46,9 +46,9 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
     }
 
     // Dummy calculation for demo purposes
-    const baseValue = 350000;
-    const sizeMultiplier = parseInt(formData.size) * 150;
-    const bedroomMultiplier = parseInt(formData.bedrooms) * 50000;
+    const baseValue = 275000; // Starting with £275,000 as base
+    const sizeMultiplier = parseInt(formData.size) * 120; // Adjusted for £
+    const bedroomMultiplier = parseInt(formData.bedrooms) * 40000;
     const propertyTypeMultiplier = formData.propertyType === "house" ? 1.2 : 1;
 
     const estimatedValue = (baseValue + sizeMultiplier + bedroomMultiplier) * propertyTypeMultiplier;
@@ -58,7 +58,9 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
   return (
     <Card className="w-full max-w-md mx-auto glass-panel animate-fade-up">
       <CardHeader>
-        <CardTitle className="text-gradient">Property Details</CardTitle>
+        <CardTitle className="bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent">
+          Property Details
+        </CardTitle>
         <CardDescription className="text-lg">
           Enter your property details to get an instant estimate
         </CardDescription>
@@ -78,7 +80,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="size" className="text-sm text-muted-foreground">Square Footage</Label>
+            <Label htmlFor="size" className="text-sm text-muted-foreground">Square Metres</Label>
             <Input
               id="size"
               type="number"
@@ -121,14 +123,14 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="house">House</SelectItem>
-                <SelectItem value="apartment">Apartment</SelectItem>
-                <SelectItem value="condo">Condo</SelectItem>
+                <SelectItem value="apartment">Flat</SelectItem>
+                <SelectItem value="condo">Maisonette</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <Button 
             type="submit" 
-            className="w-full mt-8 bg-white/10 hover:bg-white/20 transition-colors"
+            className="w-full mt-8 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] text-black font-medium hover:opacity-90 transition-opacity"
           >
             Get Estimate
           </Button>
