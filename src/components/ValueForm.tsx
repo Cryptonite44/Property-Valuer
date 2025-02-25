@@ -129,10 +129,13 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
               transition={{ delay: 0.3 }}
               className="relative z-10"
             >
-              <CardTitle className="bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent text-3xl relative">
-                Property Details
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700]/20 to-[#FFE5B4]/20 blur-lg -z-10" />
-              </CardTitle>
+              <div className="relative">
+                <CardTitle className="bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent text-3xl relative">
+                  Property Details
+                  <div className="absolute -inset-1 bg-gradient-to-r from-[#FFD700]/20 to-[#FFE5B4]/20 blur-lg -z-10" />
+                </CardTitle>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-r from-[#FFD700]/5 to-[#FFE5B4]/5 rounded-full blur-3xl" />
+              </div>
               <CardDescription className="text-lg mt-2 text-white/70">
                 Enter your property address for an AI-powered estimate
               </CardDescription>
@@ -202,6 +205,9 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                     onChange={handleAddressChange}
                     className="relative bg-white/5 border-white/10 focus:border-white/20 transition-all pl-10 z-10 rounded-lg text-white placeholder:text-white/30 hover:bg-white/10"
                   />
+                  <div className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-xl" />
+                  </div>
                 </div>
                 <p className="text-xs text-white/50">
                   Include postcode for more accurate results
