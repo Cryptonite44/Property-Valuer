@@ -58,15 +58,15 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
   return (
     <Card className="w-full max-w-md mx-auto glass-panel animate-fade-up">
       <CardHeader>
-        <CardTitle>Property Details</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-gradient">Property Details</CardTitle>
+        <CardDescription className="text-lg">
           Enter your property details to get an instant estimate
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="address">Property Address</Label>
+            <Label htmlFor="address" className="text-sm text-muted-foreground">Property Address</Label>
             <Input
               id="address"
               placeholder="Enter your property address"
@@ -74,29 +74,29 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
               onChange={(e) =>
                 setFormData({ ...formData, address: e.target.value })
               }
-              className="bg-white/5"
+              className="bg-white/5 border-white/10 focus:border-white/20 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="size">Square Footage</Label>
+            <Label htmlFor="size" className="text-sm text-muted-foreground">Square Footage</Label>
             <Input
               id="size"
               type="number"
               placeholder="Enter property size"
               value={formData.size}
               onChange={(e) => setFormData({ ...formData, size: e.target.value })}
-              className="bg-white/5"
+              className="bg-white/5 border-white/10 focus:border-white/20 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="bedrooms">Number of Bedrooms</Label>
+            <Label htmlFor="bedrooms" className="text-sm text-muted-foreground">Number of Bedrooms</Label>
             <Select
               value={formData.bedrooms}
               onValueChange={(value) =>
                 setFormData({ ...formData, bedrooms: value })
               }
             >
-              <SelectTrigger className="bg-white/5">
+              <SelectTrigger className="bg-white/5 border-white/10">
                 <SelectValue placeholder="Select bedrooms" />
               </SelectTrigger>
               <SelectContent>
@@ -109,14 +109,14 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="propertyType">Property Type</Label>
+            <Label htmlFor="propertyType" className="text-sm text-muted-foreground">Property Type</Label>
             <Select
               value={formData.propertyType}
               onValueChange={(value) =>
                 setFormData({ ...formData, propertyType: value })
               }
             >
-              <SelectTrigger className="bg-white/5">
+              <SelectTrigger className="bg-white/5 border-white/10">
                 <SelectValue placeholder="Select property type" />
               </SelectTrigger>
               <SelectContent>
@@ -126,7 +126,10 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
               </SelectContent>
             </Select>
           </div>
-          <Button type="submit" className="w-full mt-6">
+          <Button 
+            type="submit" 
+            className="w-full mt-8 bg-white/10 hover:bg-white/20 transition-colors"
+          >
             Get Estimate
           </Button>
         </form>

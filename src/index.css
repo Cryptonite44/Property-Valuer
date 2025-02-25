@@ -35,11 +35,29 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: radial-gradient(
+      circle at center,
+      hsl(240 10% 10%) 0%,
+      hsl(240 10% 3.9%) 100%
+    );
   }
 }
 
 @layer utilities {
   .glass-panel {
     @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-lg shadow-lg;
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/90 to-white/70;
+  }
+  
+  .glow {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5),
+                 0 0 30px rgba(255, 255, 255, 0.2);
   }
 }

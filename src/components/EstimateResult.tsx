@@ -20,10 +20,6 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
 
-    const randomInRange = (min: number, max: number) => {
-      return Math.random() * (max - min) + min;
-    };
-
     const frame = () => {
       confetti({
         particleCount: 2,
@@ -50,15 +46,17 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
 
   return (
     <Card className="w-full max-w-md mx-auto glass-panel animate-fade-up">
-      <CardHeader>
-        <CardTitle className="text-2xl font-light">
+      <CardHeader className="text-center">
+        <CardTitle className="text-3xl font-light text-gradient">
           Your Estimated Home Value
         </CardTitle>
-        <CardDescription>Based on similar properties in your area</CardDescription>
+        <CardDescription className="text-lg">
+          Based on similar properties in your area
+        </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-8">
         <div className="text-center">
-          <div className="text-4xl font-light mb-2">
+          <div className="text-5xl font-light mb-4 text-gradient glow">
             ${value.toLocaleString()}
           </div>
           <p className="text-sm text-muted-foreground">
@@ -67,20 +65,25 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
           </p>
         </div>
         <div className="space-y-4">
-          <p className="text-sm">
+          <p className="text-sm text-center text-muted-foreground">
             Want a more accurate valuation? Our expert agents can provide a detailed
             analysis of your property's worth.
           </p>
           <div className="flex flex-col gap-3">
             <Button
               variant="outline"
+              className="hover:bg-white/10 transition-colors"
               onClick={() =>
                 window.open("mailto:contact@example.com", "_blank")
               }
             >
               Contact an Agent
             </Button>
-            <Button variant="secondary" onClick={onReset}>
+            <Button 
+              variant="secondary"
+              className="hover:bg-white/10 transition-colors" 
+              onClick={onReset}
+            >
               Get Another Estimate
             </Button>
           </div>
