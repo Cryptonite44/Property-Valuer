@@ -17,46 +17,95 @@ serve(async (req) => {
     const { address, propertyType } = await req.json()
     console.log(`Analysing property: ${address} (${propertyType})`)
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    // First, let's ask GPT to research the property and area
+    const researchResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',
         messages: [
           {
             role: 'system',
-            content: 'You are a UK property valuation expert. Provide concise property valuations in British English, focusing on key market factors and local insights. Keep the analysis brief and factual.'
+            content: `You are a UK property expert with access to current market data. 
+            Research the given address and:
+            1. Find recent sale prices of similar properties in the area
+            2. Consider local amenities, transport links, and schools
+            3. Analyse current market conditions for that specific postcode
+            4. Look for any recent developments or changes in the area
+            Return ONLY the key facts you find, separated by semicolons.`
           },
           {
             role: 'user',
-            content: `Analyse this property:\nAddress: ${address}\nType: ${propertyType}\n\nProvide a brief market analysis in simple terms, focusing on location value, property characteristics, and current market conditions. Use British English spelling and avoid special characters.`
+            content: `Research this property and its area: ${address}`
           }
         ],
       }),
     });
 
-    const aiResponse = await response.json();
-    const analysis = aiResponse.choices[0].message.content;
-    
-    // Structure the response in a simpler format
-    const mockAnalysis = {
-      estimatedValue: 350000,
-      confidence: 'high' as 'low' | 'medium' | 'high',
-      factors: [
-        "Location and transport links",
-        "Property size and condition",
-        "Local market demand"
-      ],
-      analysis: "Based on current market data, this property is in an area with good transport links and local amenities. The local market shows steady demand, particularly for this type of property. Recent sales of similar properties in the area suggest this is a fair valuation.",
+    const researchData = await researchResponse.json();
+    const researchFacts = researchData.choices[0].message.content;
+
+    // Now, use these facts to generate a valuation
+    const valuationResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o',
+        messages: [
+          {
+            role: 'system',
+            content: `You are a UK property valuation expert. Based on the provided research data,
+            generate a property valuation with:
+            1. A specific estimated value (not a range)
+            2. A confidence level (low/medium/high) based on data quality
+            3. A brief, specific analysis focusing on this property
+            Format: JSON object with estimatedValue (number), confidence (string), and analysis (string).
+            Use British English. Be specific to this property.`
+          },
+          {
+            role: 'user',
+            content: `Property: ${address}
+            Type: ${propertyType}
+            Research data: ${researchFacts}`
+          }
+        ],
+      }),
+    });
+
+    const valuationData = await valuationResponse.json();
+    let valuation;
+    try {
+      valuation = JSON.parse(valuationData.choices[0].message.content);
+    } catch (e) {
+      console.error('Failed to parse valuation response:', e);
+      // Fallback to extracting just the text if JSON parsing fails
+      valuation = {
+        estimatedValue: 0,
+        confidence: 'low',
+        analysis: valuationData.choices[0].message.content
+      };
     }
 
-    console.log('Analysis completed:', mockAnalysis)
+    // Log for debugging
+    console.log('Research facts:', researchFacts);
+    console.log('Valuation:', valuation);
+
+    // Format the final response
+    const analysis = {
+      estimatedValue: valuation.estimatedValue || 0,
+      confidence: (valuation.confidence || 'low') as 'low' | 'medium' | 'high',
+      factors: researchFacts.split(';').filter(Boolean).slice(0, 3),
+      analysis: valuation.analysis || 'Unable to generate detailed analysis'
+    };
 
     return new Response(
-      JSON.stringify(mockAnalysis),
+      JSON.stringify(analysis),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
     )
   } catch (error) {
@@ -66,4 +115,4 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 },
     )
   }
-})
+});
