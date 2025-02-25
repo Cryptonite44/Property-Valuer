@@ -5,11 +5,30 @@ import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { motion } from "framer-motion";
 
+interface PropertyDetails {
+  location: {
+    description: string;
+    amenities: string[];
+  };
+  education: {
+    description: string;
+    schools: string[];
+  };
+  transport: {
+    description: string;
+    links: string[];
+  };
+  marketActivity: {
+    recentSales: string;
+    priceChanges: string;
+  };
+}
+
 interface AIAnalysis {
   estimatedValue: number;
   confidence: 'low' | 'medium' | 'high';
-  factors: string[];
   analysis: string;
+  details: PropertyDetails;
 }
 
 const Index = () => {

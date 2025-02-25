@@ -9,13 +9,26 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders })
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { address, propertyType } = await req.json()
-    console.log(`Analysing property: ${address} (${propertyType})`)
+    if (!openAIApiKey) {
+      throw new Error('OpenAI API key not configured');
+    }
+
+    const { address, propertyType } = await req.json();
+    
+    if (!address || !propertyType) {
+      return new Response(
+        JSON.stringify({ error: 'Address and property type are required' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
+      );
+    }
+
+    console.log(`Analysing property: ${address} (${propertyType})`);
 
     const researchResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -28,7 +41,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: `You are a UK property expert. For the given address, provide a JSON response in this exact format:
+            content: `You are a UK property expert. For the given address, provide a JSON response with this structure:
             {
               "location": {
                 "description": "Brief description of location benefits",
@@ -57,20 +70,29 @@ serve(async (req) => {
       }),
     });
 
-    const researchData = await researchResponse.json();
-    if (!researchData.choices?.[0]?.message?.content) {
-      throw new Error('Failed to get research data');
+    if (!researchResponse.ok) {
+      throw new Error('Failed to get research data from OpenAI');
     }
+
+    const researchData = await researchResponse.json();
     
+    if (!researchData.choices?.[0]?.message?.content) {
+      throw new Error('Invalid research response format');
+    }
+
     let propertyDetails;
     try {
-      propertyDetails = JSON.parse(researchData.choices[0].message.content);
+      const cleanJson = researchData.choices[0].message.content
+        .replace(/```json\n?/g, '')
+        .replace(/```\n?/g, '')
+        .trim();
+      propertyDetails = JSON.parse(cleanJson);
     } catch (e) {
       console.error('Failed to parse research data:', e);
       throw new Error('Failed to analyze property details');
     }
 
-    // Now generate the valuation based on the research
+    // Generate valuation
     const valuationResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -82,9 +104,9 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: `You are a UK property valuation expert. Generate a valuation response in this exact JSON format:
+            content: `You are a UK property valuation expert. Generate a valuation response with this structure:
             {
-              "estimatedValue": number (no currency symbol, just the number),
+              "estimatedValue": number (no currency symbol),
               "confidence": "low" or "medium" or "high",
               "analysis": "brief summary of valuation reasoning"
             }`
@@ -99,9 +121,14 @@ serve(async (req) => {
       }),
     });
 
+    if (!valuationResponse.ok) {
+      throw new Error('Failed to get valuation from OpenAI');
+    }
+
     const valuationData = await valuationResponse.json();
+    
     if (!valuationData.choices?.[0]?.message?.content) {
-      throw new Error('Failed to get valuation');
+      throw new Error('Invalid valuation response format');
     }
 
     let valuation;
@@ -126,7 +153,7 @@ serve(async (req) => {
       throw new Error('Failed to parse valuation data');
     }
 
-    // Combine the research and valuation data
+    // Combine research and valuation data
     const analysis = {
       estimatedValue: valuation.estimatedValue,
       confidence: valuation.confidence as 'low' | 'medium' | 'high',
@@ -134,17 +161,29 @@ serve(async (req) => {
       details: propertyDetails
     };
 
-    console.log('Final analysis:', analysis);
+    console.log('Sending analysis:', JSON.stringify(analysis, null, 2));
     
     return new Response(
       JSON.stringify(analysis),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
-    )
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200
+      }
+    );
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error in analyze-property function:', error);
+    
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 },
-    )
+      JSON.stringify({ 
+        error: errorMessage,
+        details: 'Failed to analyze property. Please try again.'
+      }),
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 500
+      }
+    );
   }
 });
