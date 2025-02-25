@@ -42,30 +42,11 @@ const PropertyTypeIcons = [
 const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAnalysis) => void }) => {
   const { toast } = useToast();
   const [address, setAddress] = useState("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedType, setSelectedType] = useState<string>('house');
 
-  const handleAddressChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setAddress(value);
-
-    if (value.length > 3) {
-      // Simulate address autocomplete - replace with actual API call
-      const mockSuggestions = [
-        `${value} Street, London`,
-        `${value} Road, Manchester`,
-        `${value} Avenue, Birmingham`,
-      ];
-      setSuggestions(mockSuggestions);
-    } else {
-      setSuggestions([]);
-    }
-  };
-
-  const handleSelectSuggestion = (suggestion: string) => {
-    setAddress(suggestion);
-    setSuggestions([]);
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -150,29 +131,13 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
 
             <div className="space-y-2">
               <Label htmlFor="address" className="text-sm text-muted-foreground">Full Property Address</Label>
-              <div className="relative">
-                <Input
-                  id="address"
-                  placeholder="Enter the complete property address"
-                  value={address}
-                  onChange={handleAddressChange}
-                  className="bg-white/5 border-white/10 focus:border-white/20 transition-colors"
-                />
-                {suggestions.length > 0 && (
-                  <div className="absolute w-full mt-1 bg-background border border-white/10 rounded-lg shadow-lg z-10">
-                    {suggestions.map((suggestion, index) => (
-                      <button
-                        key={index}
-                        type="button"
-                        className="w-full px-4 py-2 text-left hover:bg-white/5 transition-colors first:rounded-t-lg last:rounded-b-lg"
-                        onClick={() => handleSelectSuggestion(suggestion)}
-                      >
-                        {suggestion}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <Input
+                id="address"
+                placeholder="Enter the complete property address"
+                value={address}
+                onChange={handleAddressChange}
+                className="bg-white/5 border-white/10 focus:border-white/20 transition-colors"
+              />
               <p className="text-xs text-muted-foreground">
                 Include postcode for more accurate results
               </p>
@@ -200,4 +165,3 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
 };
 
 export default ValueForm;
-
