@@ -4,6 +4,9 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { supabase } from "../_shared/supabase-client.ts";
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+if (!openAIApiKey) {
+  throw new Error('OPENAI_API_KEY environment variable is not set');
+}
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -19,10 +22,15 @@ serve(async (req) => {
     const { address, propertyType, bedrooms, size } = await req.json();
 
     // First, query our database for similar properties
-    const { data: existingProperties } = await supabase
+    const { data: existingProperties, error: dbError } = await supabase
       .from('house_prices')
       .select('price, postcode, property_type, bedrooms, size_sqm')
       .limit(5);
+
+    if (dbError) {
+      console.error('Database query error:', dbError);
+      throw new Error('Failed to fetch comparison data');
+    }
 
     // Create a prompt for OpenAI
     const prompt = `As a real estate expert, analyze this property:
@@ -49,6 +57,7 @@ serve(async (req) => {
       "analysis": string
     }`;
 
+    console.log('Sending request to OpenAI...');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -70,9 +79,16 @@ serve(async (req) => {
       }),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('OpenAI API error:', errorData);
+      throw new Error('Failed to get AI analysis');
+    }
+
     const aiResponse = await response.json();
     const analysis = JSON.parse(aiResponse.choices[0].message.content);
 
+    console.log('Analysis completed successfully');
     return new Response(
       JSON.stringify(analysis),
       { 
