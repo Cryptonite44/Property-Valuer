@@ -4,6 +4,7 @@ import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { motion } from "framer-motion";
+import { ShieldCheck, Building2 } from "lucide-react";
 
 interface PropertyDetails {
   location: {
@@ -47,6 +48,35 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
+      {/* Logo and Security Badge */}
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="fixed top-0 left-0 right-0 w-full flex items-center justify-between p-4 z-20 bg-gradient-to-b from 'rgb(17, 24, 39)' to-transparent"
+      >
+        {/* Logo */}
+        <motion.div 
+          className="flex items-center space-x-2 text-white"
+          whileHover={{ scale: 1.02 }}
+        >
+          <Building2 className="w-8 h-8 text-[#FFD700]" />
+          <div>
+            <h2 className="font-semibold text-lg">PropertyValuer</h2>
+            <p className="text-xs text-gray-400">by Digitol</p>
+          </div>
+        </motion.div>
+
+        {/* Security Badge */}
+        <motion.div 
+          className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        >
+          <ShieldCheck className="w-5 h-5 text-green-400" />
+          <span className="text-sm text-gray-300">Secure Valuation</span>
+        </motion.div>
+      </motion.div>
+
       {/* Animated background elements */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]" />
@@ -57,7 +87,7 @@ const Index = () => {
         </div>
       </div>
       
-      <div className="relative z-10 w-full max-w-5xl mx-auto">
+      <div className="relative z-10 w-full max-w-5xl mx-auto mt-16">
         {!estimatedValue ? (
           <>
             <motion.div 
