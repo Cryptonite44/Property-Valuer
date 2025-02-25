@@ -174,15 +174,19 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                   Full Property Address
                 </Label>
                 <div className="relative">
-                  {/* Updated glow effect positioning */}
-                  <div className="absolute inset-0 rounded-md border-2 border-yellow-400/30 animate-[glow_3s_ease-in-out_infinite]" />
+                  <div 
+                    className="absolute inset-0 rounded-lg border border-[#3b82f6]/30 shadow-[0_0_15px_rgba(59,130,246,0.15)] animate-[glow_4s_ease-in-out_infinite]"
+                    style={{
+                      background: 'linear-gradient(to bottom, rgba(59,130,246,0.1), transparent)',
+                    }}
+                  />
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 z-20" />
                   <Input
                     id="address"
                     placeholder="Enter the complete property address"
                     value={address}
                     onChange={handleAddressChange}
-                    className="relative bg-white/5 border-white/10 focus:border-white/20 transition-colors pl-10 z-10"
+                    className="relative bg-background/50 border-[#3b82f6]/20 focus:border-[#3b82f6]/40 transition-colors pl-10 z-10 rounded-lg"
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">
