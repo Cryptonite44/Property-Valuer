@@ -10,12 +10,20 @@ import {
 } from "@/components/ui/card";
 import confetti from "canvas-confetti";
 
+interface AIAnalysis {
+  estimatedValue: number;
+  confidence: 'low' | 'medium' | 'high';
+  factors: string[];
+  analysis: string;
+}
+
 interface EstimateResultProps {
   value: number;
+  analysis?: AIAnalysis;
   onReset: () => void;
 }
 
-const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
+const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onReset }) => {
   useEffect(() => {
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
@@ -26,14 +34,14 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ["#FFD700", "#FDB931", "#FFE5B4"], // Gold confetti
+        colors: ["#FFD700", "#FDB931", "#FFE5B4"],
       });
       confetti({
         particleCount: 2,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ["#FFD700", "#FDB931", "#FFE5B4"], // Gold confetti
+        colors: ["#FFD700", "#FDB931", "#FFE5B4"],
       });
 
       if (Date.now() < animationEnd) {
@@ -59,7 +67,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
           Your Estimated Property Value
         </CardTitle>
         <CardDescription className="text-lg">
-          Based on similar properties in your area
+          Based on AI analysis and market data
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-8">
@@ -67,11 +75,28 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
           <div className="text-5xl font-light mb-4 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent">
             {formatCurrency(value)}
           </div>
-          <p className="text-sm text-muted-foreground">
-            This estimate is based on recent market data and similar properties in
-            your area
+          <p className="text-sm text-muted-foreground mb-4">
+            Confidence Level: <span className="font-medium">{analysis?.confidence.toUpperCase()}</span>
           </p>
         </div>
+        
+        {analysis && (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <h3 className="font-medium">Key Factors:</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                {analysis.factors.map((factor, index) => (
+                  <li key={index} className="text-sm text-muted-foreground">{factor}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-medium">Analysis:</h3>
+              <p className="text-sm text-muted-foreground">{analysis.analysis}</p>
+            </div>
+          </div>
+        )}
+        
         <div className="space-y-4">
           <p className="text-sm text-center text-muted-foreground">
             Would you like a more accurate valuation? Our expert estate agents can provide a detailed
@@ -81,9 +106,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, onReset }) => {
             <Button
               variant="outline"
               className="hover:bg-white/10 transition-colors"
-              onClick={() =>
-                window.open("mailto:contact@example.com", "_blank")
-              }
+              onClick={() => window.open("mailto:contact@example.com", "_blank")}
             >
               Contact an Estate Agent
             </Button>

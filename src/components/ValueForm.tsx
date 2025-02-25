@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
 
 interface FormData {
   address: string;
@@ -26,7 +27,14 @@ interface FormData {
   propertyType: string;
 }
 
-const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
+interface AIAnalysis {
+  estimatedValue: number;
+  confidence: 'low' | 'medium' | 'high';
+  factors: string[];
+  analysis: string;
+}
+
+const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAnalysis) => void }) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState<FormData>({
     address: "",
@@ -34,8 +42,9 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
     bedrooms: "",
     propertyType: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.address || !formData.size || !formData.bedrooms || !formData.propertyType) {
       toast({
@@ -45,14 +54,39 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
       return;
     }
 
-    // Dummy calculation for demo purposes
-    const baseValue = 275000; // Starting with £275,000 as base
-    const sizeMultiplier = parseInt(formData.size) * 120; // Adjusted for £
-    const bedroomMultiplier = parseInt(formData.bedrooms) * 40000;
-    const propertyTypeMultiplier = formData.propertyType === "house" ? 1.2 : 1;
+    setIsLoading(true);
+    try {
+      const response = await fetch('/functions/v1/analyze-property', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const estimatedValue = (baseValue + sizeMultiplier + bedroomMultiplier) * propertyTypeMultiplier;
-    onEstimate(estimatedValue);
+      if (!response.ok) {
+        throw new Error('Failed to get property analysis');
+      }
+
+      const analysis: AIAnalysis = await response.json();
+      
+      toast({
+        title: `Analysis Confidence: ${analysis.confidence}`,
+        description: "Based on AI analysis and local market data",
+      });
+
+      onEstimate(analysis.estimatedValue, analysis);
+    } catch (error) {
+      console.error('Error analyzing property:', error);
+      toast({
+        title: "Error analyzing property",
+        description: "Please try again later",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -62,7 +96,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
           Property Details
         </CardTitle>
         <CardDescription className="text-lg">
-          Enter your property details to get an instant estimate
+          Enter your property details for an AI-powered estimate
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -124,15 +158,16 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number) => void }) => {
               <SelectContent>
                 <SelectItem value="house">House</SelectItem>
                 <SelectItem value="apartment">Flat</SelectItem>
-                <SelectItem value="condo">Maisonette</SelectItem>
+                <SelectItem value="maisonette">Maisonette</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <Button 
             type="submit" 
             className="w-full mt-8 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] text-black font-medium hover:opacity-90 transition-opacity"
+            disabled={isLoading}
           >
-            Get Estimate
+            {isLoading ? "Analyzing..." : "Get Estimate"}
           </Button>
         </form>
       </CardContent>

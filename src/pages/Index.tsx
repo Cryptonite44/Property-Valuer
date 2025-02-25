@@ -4,8 +4,26 @@ import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 
+interface AIAnalysis {
+  estimatedValue: number;
+  confidence: 'low' | 'medium' | 'high';
+  factors: string[];
+  analysis: string;
+}
+
 const Index = () => {
   const [estimatedValue, setEstimatedValue] = useState<number | null>(null);
+  const [analysis, setAnalysis] = useState<AIAnalysis | undefined>(undefined);
+
+  const handleEstimate = (value: number, aiAnalysis?: AIAnalysis) => {
+    setEstimatedValue(value);
+    setAnalysis(aiAnalysis);
+  };
+
+  const handleReset = () => {
+    setEstimatedValue(null);
+    setAnalysis(undefined);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
@@ -21,16 +39,16 @@ const Index = () => {
                 <TypewriterText text="How much is YOUR property worth?" />
               </h1>
               <p className="text-xl md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto">
-                We'll help you find out, quickly and easily. Ready to see your
-                property's value?
+                Get an AI-powered estimate based on local market data
               </p>
             </div>
-            <ValueForm onEstimate={setEstimatedValue} />
+            <ValueForm onEstimate={handleEstimate} />
           </>
         ) : (
           <EstimateResult
             value={estimatedValue}
-            onReset={() => setEstimatedValue(null)}
+            analysis={analysis}
+            onReset={handleReset}
           />
         )}
       </div>
