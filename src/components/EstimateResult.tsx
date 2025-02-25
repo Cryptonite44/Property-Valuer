@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,12 +21,6 @@ import {
   BarChart3, 
   HomeIcon, 
   Info,
-  School,
-  Store,
-  Trees,
-  Hospital,
-  Coffee,
-  TrendingDown,
   HelpCircle
 } from "lucide-react";
 
@@ -56,14 +51,6 @@ const ConfidenceLevels = {
     description: "Excellent data available. The estimate is based on comprehensive market data and very similar properties."
   }
 };
-
-const NearbyAmenities = [
-  { icon: School, label: "Schools", distance: "0.3 miles" },
-  { icon: Store, label: "Shops", distance: "0.5 miles" },
-  { icon: Trees, label: "Parks", distance: "0.2 miles" },
-  { icon: Hospital, label: "Hospital", distance: "1.2 miles" },
-  { icon: Coffee, label: "Restaurants", distance: "0.4 miles" },
-];
 
 const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onReset }) => {
   useEffect(() => {
@@ -102,29 +89,15 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
     }).format(value);
   };
 
-  const renderFactorIcon = (index: number) => {
-    const icons = [
-      <TrendingUp key="trend" className="text-[#FFD700]" />,
-      <BarChart3 key="chart" className="text-[#FDB931]" />,
-      <MapPin key="location" className="text-[#FFE5B4]" />,
-      <HomeIcon key="home" className="text-[#FFD700]" />,
-      <Info key="info" className="text-[#FDB931]" />
-    ];
-    return icons[index % icons.length];
-  };
-
   return (
     <TooltipProvider>
-      <Card className="w-full max-w-4xl mx-auto glass-panel animate-fade-up">
+      <Card className="w-full max-w-2xl mx-auto glass-panel animate-fade-up">
         <CardHeader className="text-center pb-4">
           <CardTitle className="text-3xl font-light text-gradient">
-            Your Estimated Property Value
+            Property Value Estimate
           </CardTitle>
-          <CardDescription className="text-lg">
-            Based on AI analysis and market data
-          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="space-y-4">
           <div className="text-center mb-4">
             <div className="text-5xl font-light mb-2 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent">
               {formatCurrency(value)}
@@ -148,65 +121,11 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
               </TooltipContent>
             </Tooltip>
           </div>
-          
+
           {analysis && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Market Trends */}
-              <div className="space-y-3">
-                <h3 className="font-medium text-gradient">Market Trends</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5">
-                    <TrendingUp className="text-green-400 w-4 h-4" />
-                    <div>
-                      <p className="text-sm font-medium">Price Trend</p>
-                      <p className="text-xs text-muted-foreground">+5.2% YoY</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5">
-                    <BarChart3 className="text-blue-400 w-4 h-4" />
-                    <div>
-                      <p className="text-sm font-medium">Demand</p>
-                      <p className="text-xs text-muted-foreground">High</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Nearby Amenities */}
-              <div className="space-y-3">
-                <h3 className="font-medium text-gradient">Nearby Amenities</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {NearbyAmenities.slice(0, 4).map(({ icon: Icon, label, distance }, index) => (
-                    <div key={index} className="flex items-center gap-2 p-2 rounded-lg bg-white/5">
-                      <Icon className="text-[#FFD700] w-4 h-4" />
-                      <div>
-                        <p className="text-sm font-medium">{label}</p>
-                        <p className="text-xs text-muted-foreground">{distance}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Key Factors */}
-              <div className="space-y-3">
-                <h3 className="font-medium text-gradient">Key Factors</h3>
-                <div className="grid gap-2">
-                  {analysis.factors.slice(0, 3).map((factor, index) => (
-                    <div key={index} className="flex items-start gap-2 p-2 rounded-lg bg-white/5">
-                      <div className="mt-0.5">
-                        {renderFactorIcon(index)}
-                      </div>
-                      <p className="text-xs text-muted-foreground">{factor}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Analysis */}
-              <div className="space-y-3">
-                <h3 className="font-medium text-gradient">Analysis</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed bg-white/5 p-2 rounded-lg">
+            <div className="space-y-4">
+              <div className="p-4 rounded-lg bg-white/5">
+                <p className="text-sm leading-relaxed text-muted-foreground">
                   {analysis.analysis}
                 </p>
               </div>
@@ -226,7 +145,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
               className="flex-1 hover:bg-white/10 transition-colors" 
               onClick={onReset}
             >
-              Get Another Estimate
+              New Estimate
             </Button>
           </div>
         </CardContent>
