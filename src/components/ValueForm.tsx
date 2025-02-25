@@ -100,7 +100,32 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md mx-auto"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/10 via-purple-500/10 to-[#3b82f6]/10 blur-3xl -z-10" />
+        {/* Powerful burst glow effect */}
+        <motion.div
+          className="absolute -inset-2 bg-gradient-to-r from-[#8B5CF6] via-[#D946EF] to-[#0EA5E9] opacity-75 blur-2xl rounded-lg"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.5, 0.8, 0.5],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute -inset-2 bg-gradient-to-r from-[#F97316] via-[#8B5CF6] to-[#D946EF] opacity-75 blur-2xl rounded-lg"
+          animate={{
+            scale: [1.1, 1, 1.1],
+            opacity: [0.5, 0.8, 0.5],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2,
+          }}
+        />
         
         <Card className="relative w-full bg-black/40 backdrop-blur-xl border border-white/10 shadow-lg overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
