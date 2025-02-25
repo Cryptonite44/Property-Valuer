@@ -93,12 +93,12 @@ export default {
         },
         glow: {
           "0%, 100%": {
-            opacity: "0.5",
+            opacity: "0.2",
             transform: "scale(1)",
           },
           "50%": {
-            opacity: "1",
-            transform: "scale(1.01)",
+            opacity: "0.8",
+            transform: "scale(1.02)",
           },
         }
       },
