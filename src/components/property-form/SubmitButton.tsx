@@ -19,7 +19,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
         type="submit" 
         className={`w-full mt-8 relative overflow-hidden ${
           isLoading 
-            ? 'bg-gradient-to-r from-[#1a1a1a] via-[#0f172a] to-[#1a1a1a]' 
+            ? 'bg-transparent' 
             : 'bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] text-black'
         } font-medium hover:opacity-90 transition-all h-16`}
         disabled={isLoading}
