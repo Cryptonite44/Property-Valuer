@@ -3,7 +3,7 @@ import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { motion } from "framer-motion";
-import { ShieldCheck, Building2, Lock, UserCheck, Activity, Star, Shield } from "lucide-react";
+import { ShieldCheck, Building2, Lock, UserCheck, Search, Star, Shield } from "lucide-react";
 
 interface PropertyDetails {
   location: {
@@ -102,7 +102,7 @@ const Index = () => {
             whileHover={{ scale: 1.05 }}
             className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
           >
-            <Activity className="w-4 h-4 text-green-400" />
+            <Search className="w-4 h-4 text-green-400" />
             <span className="text-sm">247 valuations today</span>
           </motion.div>
           
