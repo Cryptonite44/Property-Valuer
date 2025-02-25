@@ -1,125 +1,55 @@
 
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-if (!openAIApiKey) {
-  throw new Error('OPENAI_API_KEY environment variable is not set');
-}
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import "https://deno.land/x/xhr@0.1.0/mod.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+}
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response(null, { headers: corsHeaders })
   }
 
   try {
-    const { address } = await req.json();
-    console.log('Analyzing address:', address);
+    const { address, propertyType } = await req.json()
+    console.log(`Analyzing property: ${address} (${propertyType})`)
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
+    // Simulate analysis delay
+    await new Promise(resolve => setTimeout(resolve, 1500))
+
+    // Mock analysis data with realistic values
+    const mockAnalysis = {
+      estimatedValue: Math.floor(250000 + Math.random() * 500000),
+      confidence: ['low', 'medium', 'high'][Math.floor(Math.random() * 3)] as 'low' | 'medium' | 'high',
+      factors: [
+        "Recent sales of similar properties in the area",
+        "Property size and condition",
+        "Local market demand",
+        "Proximity to public transport",
+        "School catchment area rating"
+      ],
+      analysis: "Based on recent market data and comparable properties in the area, this property shows strong potential. The location benefits from excellent transport links and local amenities, which positively impacts its value. The current market trends in this area show steady growth, with particular demand for this property type.",
+    }
+
+    console.log('Analysis completed:', mockAnalysis)
+
+    return new Response(
+      JSON.stringify(mockAnalysis),
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are a UK real estate expert. Analyze property values based on historical data and market trends. Respond ONLY with a JSON object containing estimatedValue (number), confidence (low/medium/high), factors (array of strings), and analysis (string).'
-          },
-          {
-            role: 'user',
-            content: `Analyze this UK property value: ${address}
-
-            Consider:
-            1. Historical sales data (last 5 years)
-            2. Apply 5% annual appreciation to past sales
-            3. Recent sales of similar properties
-            4. Local market trends
-            5. Area developments
-
-            Return ONLY a JSON object in this format:
-            {
-              "estimatedValue": number,
-              "confidence": "low"|"medium"|"high",
-              "factors": string[],
-              "analysis": string
-            }`
-          }
-        ],
-        temperature: 0.7
-      }),
-    });
-
-    const data = await response.json();
-    if (!response.ok) {
-      console.error('OpenAI API error:', data);
-      return new Response(
-        JSON.stringify({
-          estimatedValue: 0,
-          confidence: "low",
-          factors: ["Error: Failed to get AI analysis"],
-          analysis: "Unable to complete analysis. Please try again."
-        }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200 // Return 200 even for OpenAI errors to prevent edge function error
-        }
-      );
-    }
-
-    let result;
-    try {
-      result = JSON.parse(data.choices[0].message.content);
-      
-      // Validate and sanitize the response
-      result = {
-        estimatedValue: Number(result.estimatedValue) || 0,
-        confidence: ['low', 'medium', 'high'].includes(result.confidence) ? result.confidence : 'low',
-        factors: Array.isArray(result.factors) ? result.factors : ['Analysis completed'],
-        analysis: typeof result.analysis === 'string' ? result.analysis : 'Analysis completed'
-      };
-
-      console.log('Successfully analyzed property:', result);
-    } catch (parseError) {
-      console.error('Error parsing AI response:', parseError);
-      result = {
-        estimatedValue: 0,
-        confidence: "low",
-        factors: ["Error: Invalid response format"],
-        analysis: "Unable to parse analysis results. Please try again."
-      };
-    }
-
-    return new Response(
-      JSON.stringify(result),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
-      }
-    );
-
+    )
   } catch (error) {
-    console.error('Error in edge function:', error);
-    // Always return 200 with error information in the response body
+    console.error('Error:', error)
     return new Response(
-      JSON.stringify({
-        estimatedValue: 0,
-        confidence: "low",
-        factors: ["Error processing request"],
-        analysis: error.message || "An unexpected error occurred. Please try again."
-      }),
+      JSON.stringify({ error: error.message }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 // Return 200 even for errors
-      }
-    );
+        status: 500,
+      },
+    )
   }
-});
+})
