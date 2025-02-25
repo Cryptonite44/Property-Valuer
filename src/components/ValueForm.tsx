@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/integrations/supabase/client";
 
 interface FormData {
   address: string;
@@ -40,32 +41,29 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
 
     setIsLoading(true);
     try {
-      const response = await fetch('/functions/v1/analyze-property', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({ address }),
+      const { data, error } = await supabase.functions.invoke('analyze-property', {
+        body: { address }
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to get property analysis');
+      if (error || !data) {
+        throw new Error(error?.message || 'Failed to analyze property');
       }
 
-      const analysis: AIAnalysis = await response.json();
-      
+      if (!data.estimatedValue || !data.confidence || !data.factors || !data.analysis) {
+        throw new Error('Invalid response from analysis');
+      }
+
       toast({
-        title: `Analysis Confidence: ${analysis.confidence}`,
+        title: `Analysis Complete`,
         description: "Based on historical sales data and market trends",
       });
 
-      onEstimate(analysis.estimatedValue, analysis);
+      onEstimate(data.estimatedValue, data);
     } catch (error) {
       console.error('Error analyzing property:', error);
       toast({
         title: "Error analyzing property",
-        description: "Please try again later",
+        description: error.message || "Please try again later",
         variant: "destructive",
       });
     } finally {
