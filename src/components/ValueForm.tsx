@@ -137,7 +137,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
               transition={{ delay: 0.3 }}
               className="relative z-10"
             >
-              <CardTitle className="bg-gradient-to-r from-[#9b87f5] via-[#8B5CF6] to-[#D6BCFA] bg-clip-text text-transparent text-3xl">
+              <CardTitle className="text-white text-3xl">
                 Property Details
               </CardTitle>
               <CardDescription className="text-lg mt-2 text-white/70 flex items-center gap-2">

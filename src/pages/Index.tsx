@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -57,7 +56,7 @@ const Index = () => {
           className="flex items-center space-x-2 text-white"
           whileHover={{ scale: 1.02 }}
         >
-          <Building2 className="w-6 md:w-8 h-6 md:h-8 text-[#FFD700]" />
+          <Building2 className="w-6 md:w-8 h-6 md:h-8 text-white" />
           <div>
             <h2 className="font-semibold text-base md:text-lg">PropertyValuer</h2>
             <p className="text-xs text-gray-400">by Digitol</p>

@@ -168,7 +168,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="text-center mb-4">
-            <div className="text-5xl font-light mb-2 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent">
+            <div className="text-5xl font-light mb-2 bg-gradient-to-r from-[#9b87f5] via-[#8B5CF6] to-[#D6BCFA] bg-clip-text text-transparent">
               {formatCurrency(value)}
             </div>
             <Tooltip>
