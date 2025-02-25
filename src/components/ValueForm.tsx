@@ -115,7 +115,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                 Property Details
               </CardTitle>
               <CardDescription className="text-lg mt-2 text-white/70">
-                Enter your property address for an AI-powered estimate
+                AI-powered property valuations in seconds
               </CardDescription>
             </motion.div>
           </CardHeader>
