@@ -1,10 +1,9 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { motion } from "framer-motion";
-import { ShieldCheck, Building2 } from "lucide-react";
+import { ShieldCheck, Building2, Lock, UserCheck, Activity, Star, Shield } from "lucide-react";
 
 interface PropertyDetails {
   location: {
@@ -48,13 +47,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
-      {/* Logo and Security Badge */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="fixed top-0 left-0 right-0 w-full flex items-center justify-between p-4 z-20 bg-gradient-to-b from 'rgb(17, 24, 39)' to-transparent"
+        className="fixed top-0 left-0 right-0 w-full flex items-center justify-between p-4 z-20 bg-gradient-to-b from-[rgb(17,24,39)] to-transparent"
       >
-        {/* Logo */}
         <motion.div 
           className="flex items-center space-x-2 text-white"
           whileHover={{ scale: 1.02 }}
@@ -66,18 +63,67 @@ const Index = () => {
           </div>
         </motion.div>
 
-        {/* Security Badge */}
-        <motion.div 
-          className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 400, damping: 10 }}
-        >
-          <ShieldCheck className="w-5 h-5 text-green-400" />
-          <span className="text-sm text-gray-300">Secure Valuation</span>
-        </motion.div>
+        <div className="flex items-center space-x-4">
+          <motion.div 
+            className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <Lock className="w-4 h-4 text-green-400" />
+            <span className="text-sm text-gray-300">SSL Secured</span>
+          </motion.div>
+          <motion.div 
+            className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <ShieldCheck className="w-4 h-4 text-green-400" />
+            <span className="text-sm text-gray-300">Secure Valuation</span>
+          </motion.div>
+          <motion.div 
+            className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <Shield className="w-4 h-4 text-blue-400" />
+            <span className="text-sm text-gray-300">GDPR Compliant</span>
+          </motion.div>
+        </div>
       </motion.div>
 
-      {/* Animated background elements */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="fixed bottom-0 left-0 right-0 w-full flex justify-center p-4 z-20 bg-gradient-to-t from-[rgb(17,24,39)] to-transparent"
+      >
+        <div className="flex flex-wrap justify-center items-center gap-4 text-white max-w-5xl">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+          >
+            <Activity className="w-4 h-4 text-green-400" />
+            <span className="text-sm">247 valuations today</span>
+          </motion.div>
+          
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+          >
+            <UserCheck className="w-4 h-4 text-blue-400" />
+            <span className="text-sm">50,000+ valuations performed</span>
+          </motion.div>
+          
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="hidden md:flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+          >
+            <Star className="w-4 h-4 text-yellow-400" />
+            <span className="text-sm">4.9/5 from 2,000+ users</span>
+          </motion.div>
+        </div>
+      </motion.div>
+
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]" />
         <div className="absolute top-0 left-0 w-full h-full opacity-50">
@@ -87,7 +133,7 @@ const Index = () => {
         </div>
       </div>
       
-      <div className="relative z-10 w-full max-w-5xl mx-auto mt-16">
+      <div className="relative z-10 w-full max-w-5xl mx-auto mt-16 mb-24">
         {!estimatedValue ? (
           <>
             <motion.div 
