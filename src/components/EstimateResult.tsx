@@ -23,7 +23,7 @@ import {
   Info,
   School,
   Store,
-  Tree,
+  Trees,
   Hospital,
   Coffee,
   TrendingDown,
@@ -61,7 +61,7 @@ const ConfidenceLevels = {
 const NearbyAmenities = [
   { icon: School, label: "Schools", distance: "0.3 miles" },
   { icon: Store, label: "Shops", distance: "0.5 miles" },
-  { icon: Tree, label: "Parks", distance: "0.2 miles" },
+  { icon: Trees, label: "Parks", distance: "0.2 miles" },
   { icon: Hospital, label: "Hospital", distance: "1.2 miles" },
   { icon: Coffee, label: "Restaurants", distance: "0.4 miles" },
 ];
