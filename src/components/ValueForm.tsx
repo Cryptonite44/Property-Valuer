@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -110,9 +109,6 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md mx-auto"
       >
-        {/* Animated border glow effect */}
-        <div className="absolute inset-0 rounded-lg border-2 border-yellow-400/30 animate-[glow_3s_ease-in-out_infinite]" />
-        
         <Card className="relative w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 z-10">
           <CardHeader>
             <motion.div
@@ -168,7 +164,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
               </motion.div>
 
               <motion.div 
-                className="space-y-2"
+                className="space-y-2 relative"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
@@ -177,13 +173,14 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                   Full Property Address
                 </Label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <div className="absolute -inset-0.5 rounded-md border-2 border-yellow-400/30 animate-[glow_3s_ease-in-out_infinite]" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 z-20" />
                   <Input
                     id="address"
                     placeholder="Enter the complete property address"
                     value={address}
                     onChange={handleAddressChange}
-                    className="bg-white/5 border-white/10 focus:border-white/20 transition-colors pl-10"
+                    className="relative bg-white/5 border-white/10 focus:border-white/20 transition-colors pl-10 z-10"
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">
