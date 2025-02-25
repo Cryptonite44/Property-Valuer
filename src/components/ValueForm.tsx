@@ -110,22 +110,29 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md mx-auto"
       >
-        <Card className="relative w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 z-10">
+        {/* Add ambient glow behind the card */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#3b82f6]/10 via-purple-500/10 to-[#3b82f6]/10 blur-3xl -z-10" />
+        
+        <Card className="relative w-full bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(59,130,246,0.1)] overflow-hidden">
+          {/* Add subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
+          
           <CardHeader>
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
+              className="relative z-10"
             >
               <CardTitle className="bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent text-3xl">
                 Property Details
               </CardTitle>
-              <CardDescription className="text-lg mt-2">
+              <CardDescription className="text-lg mt-2 text-white/70">
                 Enter your property address for an AI-powered estimate
               </CardDescription>
             </motion.div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative z-10">
             <form onSubmit={handleSubmit} className="space-y-6">
               <motion.div 
                 className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4"
@@ -141,8 +148,8 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                         onClick={() => setSelectedType(type)}
                         className={`relative p-4 rounded-lg text-center transition-all overflow-hidden
                           ${selectedType === type
-                            ? 'bg-white/10 border-2 border-white/20'
-                            : 'bg-white/5 hover:bg-white/10'
+                            ? 'bg-white/10 border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)]'
+                            : 'bg-white/5 hover:bg-white/10 border border-transparent'
                           }`}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -153,7 +160,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                           <div className="text-2xl mb-2 flex justify-center">
                             {icon}
                           </div>
-                          <span className="text-xs text-muted-foreground">{label}</span>
+                          <span className="text-xs text-white/70">{label}</span>
                         </div>
                       </motion.button>
                     </TooltipTrigger>
@@ -170,7 +177,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
               >
-                <Label htmlFor="address" className="text-sm text-muted-foreground">
+                <Label htmlFor="address" className="text-sm text-white/70">
                   Full Property Address
                 </Label>
                 <div className="relative">
@@ -180,16 +187,16 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                       background: 'linear-gradient(to bottom, rgba(59,130,246,0.1), transparent)',
                     }}
                   />
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 z-20" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-4 h-4 z-20" />
                   <Input
                     id="address"
                     placeholder="Enter the complete property address"
                     value={address}
                     onChange={handleAddressChange}
-                    className="relative bg-background/50 border-[#3b82f6]/20 focus:border-[#3b82f6]/40 transition-colors pl-10 z-10 rounded-lg"
+                    className="relative bg-white/5 border-white/10 focus:border-white/20 transition-colors pl-10 z-10 rounded-lg text-white placeholder:text-white/30"
                   />
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white/50">
                   Include postcode for more accurate results
                 </p>
               </motion.div>
