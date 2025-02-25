@@ -3,7 +3,7 @@ import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { motion } from "framer-motion";
-import { ShieldCheck, Building2, Lock, UserCheck, Search, Star, Shield } from "lucide-react";
+import { ShieldCheck, Building2, Lock, UserCheck, Search, Star, Shield, Clock, FileText, Zap } from "lucide-react";
 
 interface PropertyDetails {
   location: {
@@ -156,6 +156,38 @@ const Index = () => {
               >
                 Get an AI-powered estimate based on local market data
               </motion.p>
+              
+              <div className="flex flex-wrap justify-center gap-4 mt-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors"
+                >
+                  <FileText className="w-4 h-4 text-purple-400" />
+                  <span className="text-sm text-white/90">No Long Forms</span>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.5 }}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors"
+                >
+                  <Clock className="w-4 h-4 text-blue-400" />
+                  <span className="text-sm text-white/90">Quick & Easy</span>
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors"
+                >
+                  <Zap className="w-4 h-4 text-yellow-400" />
+                  <span className="text-sm text-white/90">Instant Valuation</span>
+                </motion.div>
+              </div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
