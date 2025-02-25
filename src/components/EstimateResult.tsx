@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,11 +28,30 @@ import {
   Landmark,
 } from "lucide-react";
 
+interface PropertyDetails {
+  location: {
+    description: string;
+    amenities: string[];
+  };
+  education: {
+    description: string;
+    schools: string[];
+  };
+  transport: {
+    description: string;
+    links: string[];
+  };
+  marketActivity: {
+    recentSales: string;
+    priceChanges: string;
+  };
+}
+
 interface AIAnalysis {
   estimatedValue: number;
   confidence: 'low' | 'medium' | 'high';
-  factors: string[];
   analysis: string;
+  details: PropertyDetails;
 }
 
 interface EstimateResultProps {
@@ -93,28 +113,28 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
   };
 
   const renderAnalysisSection = () => {
-    if (!analysis?.analysis) return null;
+    if (!analysis?.details) return null;
 
     const sections = [
       {
         icon: <MapPin className="w-5 h-5 text-blue-400" />,
         title: "Location",
-        content: "Benefits from proximity to Kingston Centre and extensive green spaces"
+        content: analysis.details.location.description
       },
       {
         icon: <School className="w-5 h-5 text-purple-400" />,
         title: "Education",
-        content: "Near reputable schools, ideal for families"
+        content: analysis.details.education.description
       },
       {
         icon: <Bus className="w-5 h-5 text-green-400" />,
         title: "Transport",
-        content: "Strong transport links enhance accessibility"
+        content: analysis.details.transport.description
       },
       {
         icon: <BarChart3 className="w-5 h-5 text-yellow-400" />,
         title: "Market Trends",
-        content: "2% increase in house prices over the past year"
+        content: analysis.details.marketActivity.priceChanges
       }
     ];
 
@@ -179,8 +199,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
                   <h3 className="font-medium text-white">Recent Market Activity</h3>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Recent sales of similar properties in the area include a nearby three-bedroom 
-                  detached house sold for £375,000, indicating a competitive market.
+                  {analysis.details.marketActivity.recentSales}
                 </p>
               </div>
               {renderAnalysisSection()}
