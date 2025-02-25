@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -173,7 +174,8 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                   Full Property Address
                 </Label>
                 <div className="relative">
-                  <div className="absolute -inset-0.5 rounded-md border-2 border-yellow-400/30 animate-[glow_3s_ease-in-out_infinite]" />
+                  {/* Updated glow effect positioning */}
+                  <div className="absolute inset-0 rounded-md border-2 border-yellow-400/30 animate-[glow_3s_ease-in-out_infinite]" />
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4 z-20" />
                   <Input
                     id="address"
