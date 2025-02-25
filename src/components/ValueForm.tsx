@@ -19,17 +19,31 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { PropertyType } from "@/types";
 
-interface FormData {
-  address: string;
+interface PropertyDetails {
+  location: {
+    description: string;
+    amenities: string[];
+  };
+  education: {
+    description: string;
+    schools: string[];
+  };
+  transport: {
+    description: string;
+    links: string[];
+  };
+  marketActivity: {
+    recentSales: string;
+    priceChanges: string;
+  };
 }
 
 interface AIAnalysis {
   estimatedValue: number;
   confidence: 'low' | 'medium' | 'high';
-  factors: string[];
   analysis: string;
+  details: PropertyDetails;
 }
 
 const PropertyTypeIcons = [
@@ -67,10 +81,6 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
 
       if (error || !data) {
         throw new Error(error?.message || 'Failed to analyze property');
-      }
-
-      if (!data.estimatedValue || !data.confidence || !data.factors || !data.analysis) {
-        throw new Error('Invalid response from analysis');
       }
 
       toast({
