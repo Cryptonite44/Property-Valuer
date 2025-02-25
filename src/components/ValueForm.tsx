@@ -13,6 +13,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
+import { Wand2 } from "lucide-react";
 import { PropertyTypeSelector } from "./property-form/PropertyTypeSelector";
 import { AddressInput } from "./property-form/AddressInput";
 import { SubmitButton } from "./property-form/SubmitButton";
@@ -114,8 +115,9 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
               <CardTitle className="bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] bg-clip-text text-transparent text-3xl">
                 Property Details
               </CardTitle>
-              <CardDescription className="text-lg mt-2 text-white/70">
+              <CardDescription className="text-lg mt-2 text-white/70 flex items-center gap-2">
                 AI-powered property valuations in seconds
+                <Wand2 className="w-4 h-4 text-[#FFD700]" />
               </CardDescription>
             </motion.div>
           </CardHeader>
