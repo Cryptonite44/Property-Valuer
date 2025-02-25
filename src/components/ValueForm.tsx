@@ -110,8 +110,8 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md mx-auto"
       >
-        {/* Animated glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 rounded-lg opacity-75 animate-[glow_6s_linear_infinite]" />
+        {/* Animated border glow effect */}
+        <div className="absolute inset-0 rounded-lg border-2 border-yellow-400/50 animate-[glow_2s_ease-in-out_infinite]" />
         
         <Card className="relative w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 z-10">
           <CardHeader>

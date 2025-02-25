@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -91,12 +92,14 @@ export default {
           "100%": { transform: "translateY(0)" },
         },
         glow: {
-          "0%": {
-            transform: "rotate(0deg)",
+          "0%, 100%": {
+            opacity: "0.5",
+            transform: "scale(1)",
           },
-          "100%": {
-            transform: "rotate(360deg)",
-          }
+          "50%": {
+            opacity: "1",
+            transform: "scale(1.01)",
+          },
         }
       },
       animation: {
