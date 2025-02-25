@@ -34,7 +34,7 @@ export const PropertyTypeSelector = ({ selectedType, onTypeSelect }: PropertyTyp
             <motion.button
               type="button"
               onClick={() => onTypeSelect(type)}
-              className={`relative p-4 rounded-lg text-center transition-all overflow-hidden
+              className={`relative p-4 rounded-lg text-center transition-all overflow-hidden flex flex-col items-center justify-center h-full
                 ${selectedType === type
                   ? 'bg-white/10 border border-white/20 shadow-lg'
                   : 'bg-white/5 hover:bg-white/10 border border-transparent'
@@ -43,8 +43,8 @@ export const PropertyTypeSelector = ({ selectedType, onTypeSelect }: PropertyTyp
               whileTap={{ scale: 0.95 }}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-20`} />
-              <div className="relative z-10">
-                <div className="text-2xl mb-2 flex justify-center">
+              <div className="relative z-10 flex flex-col items-center">
+                <div className="text-2xl mb-2">
                   {icon}
                 </div>
                 <span className="text-xs text-white/70">{label}</span>
