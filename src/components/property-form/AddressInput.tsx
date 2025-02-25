@@ -32,7 +32,7 @@ export const AddressInput = ({ address, onChange }: AddressInputProps) => {
           placeholder="Enter the complete property address"
           value={address}
           onChange={onChange}
-          className="relative bg-white/5 border-white/10 focus:border-[#3b82f6]/50 transition-all duration-300 pl-10 rounded-lg text-white placeholder:text-white/30 focus:ring-4 focus:ring-[#3b82f6]/20 shadow-[0_0_30px_rgba(139,92,246,0.3)] focus:shadow-[0_0_40px_rgba(139,92,246,0.45),0_0_20px_rgba(139,92,246,0.35),inset_0_0_15px_rgba(139,92,246,0.25)] focus:bg-white/10 z-10"
+          className="relative bg-[#1A1F2C] border-white/10 focus:border-[#3b82f6]/50 transition-all duration-300 pl-10 rounded-lg text-white placeholder:text-white/30 focus:ring-4 focus:ring-[#3b82f6]/20 shadow-[0_0_30px_rgba(139,92,246,0.3)] focus:shadow-[0_0_40px_rgba(139,92,246,0.45),0_0_20px_rgba(139,92,246,0.35),inset_0_0_15px_rgba(139,92,246,0.25)] focus:bg-[#1A1F2C] z-10"
         />
       </div>
       <p className="text-xs text-white/50">
