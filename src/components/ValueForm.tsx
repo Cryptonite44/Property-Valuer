@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/integrations/supabase/client";
 
 interface FormData {
   address: string;
@@ -41,15 +40,20 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
 
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.functions.invoke('analyze-property', {
-        body: { address }
+      const response = await fetch('/functions/v1/analyze-property', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ address }),
       });
 
-      if (error) {
-        throw error;
+      if (!response.ok) {
+        throw new Error('Failed to get property analysis');
       }
 
-      const analysis: AIAnalysis = data;
+      const analysis: AIAnalysis = await response.json();
       
       toast({
         title: `Analysis Confidence: ${analysis.confidence}`,
