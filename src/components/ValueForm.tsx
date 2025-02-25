@@ -11,20 +11,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { supabase } from "@/integrations/supabase/client";
 
 interface FormData {
   address: string;
-  size: string;
-  bedrooms: string;
-  propertyType: string;
 }
 
 interface AIAnalysis {
@@ -36,19 +25,14 @@ interface AIAnalysis {
 
 const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAnalysis) => void }) => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState<FormData>({
-    address: "",
-    size: "",
-    bedrooms: "",
-    propertyType: "",
-  });
+  const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.address || !formData.size || !formData.bedrooms || !formData.propertyType) {
+    if (!address) {
       toast({
-        title: "Please fill in all fields",
+        title: "Please enter an address",
         variant: "destructive",
       });
       return;
@@ -62,7 +46,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ address }),
       });
 
       if (!response.ok) {
@@ -73,7 +57,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
       
       toast({
         title: `Analysis Confidence: ${analysis.confidence}`,
-        description: "Based on AI analysis and local market data",
+        description: "Based on historical sales data and market trends",
       });
 
       onEstimate(analysis.estimatedValue, analysis);
@@ -96,71 +80,23 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
           Property Details
         </CardTitle>
         <CardDescription className="text-lg">
-          Enter your property details for an AI-powered estimate
+          Enter your property address for an AI-powered estimate based on historical sales data
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="address" className="text-sm text-muted-foreground">Property Address</Label>
+            <Label htmlFor="address" className="text-sm text-muted-foreground">Full Property Address</Label>
             <Input
               id="address"
-              placeholder="Enter your property address"
-              value={formData.address}
-              onChange={(e) =>
-                setFormData({ ...formData, address: e.target.value })
-              }
+              placeholder="Enter the complete property address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               className="bg-white/5 border-white/10 focus:border-white/20 transition-colors"
             />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="size" className="text-sm text-muted-foreground">Square Metres</Label>
-            <Input
-              id="size"
-              type="number"
-              placeholder="Enter property size"
-              value={formData.size}
-              onChange={(e) => setFormData({ ...formData, size: e.target.value })}
-              className="bg-white/5 border-white/10 focus:border-white/20 transition-colors"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="bedrooms" className="text-sm text-muted-foreground">Number of Bedrooms</Label>
-            <Select
-              value={formData.bedrooms}
-              onValueChange={(value) =>
-                setFormData({ ...formData, bedrooms: value })
-              }
-            >
-              <SelectTrigger className="bg-white/5 border-white/10">
-                <SelectValue placeholder="Select bedrooms" />
-              </SelectTrigger>
-              <SelectContent>
-                {[1, 2, 3, 4, 5, 6].map((num) => (
-                  <SelectItem key={num} value={num.toString()}>
-                    {num} {num === 1 ? "bedroom" : "bedrooms"}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="propertyType" className="text-sm text-muted-foreground">Property Type</Label>
-            <Select
-              value={formData.propertyType}
-              onValueChange={(value) =>
-                setFormData({ ...formData, propertyType: value })
-              }
-            >
-              <SelectTrigger className="bg-white/5 border-white/10">
-                <SelectValue placeholder="Select property type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="house">House</SelectItem>
-                <SelectItem value="apartment">Flat</SelectItem>
-                <SelectItem value="maisonette">Maisonette</SelectItem>
-              </SelectContent>
-            </Select>
+            <p className="text-xs text-muted-foreground">
+              Include postcode for more accurate results
+            </p>
           </div>
           <Button 
             type="submit" 

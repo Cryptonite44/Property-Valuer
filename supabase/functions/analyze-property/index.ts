@@ -19,35 +19,24 @@ serve(async (req) => {
   }
 
   try {
-    const { address, propertyType, bedrooms, size } = await req.json();
+    const { address } = await req.json();
 
-    // First, query our database for similar properties
-    const { data: existingProperties, error: dbError } = await supabase
-      .from('house_prices')
-      .select('price, postcode, property_type, bedrooms, size_sqm')
-      .limit(5);
-
-    if (dbError) {
-      console.error('Database query error:', dbError);
-      throw new Error('Failed to fetch comparison data');
-    }
-
-    // Create a prompt for OpenAI
-    const prompt = `As a real estate expert, analyze this property:
+    // Create a prompt for OpenAI that focuses on historical sales data
+    const prompt = `As a UK real estate expert, analyze this property:
     Address: ${address}
-    Type: ${propertyType}
-    Bedrooms: ${bedrooms}
-    Size: ${size} sq meters
 
-    Similar properties in our database:
-    ${existingProperties?.map(p => 
-      `${p.property_type}, ${p.bedrooms} beds, ${p.size_sqm}sqm, £${p.price}`
-    ).join('\n')}
+    Please:
+    1. Consider any historical sales data for this exact property in the last 5 years
+    2. If historical data exists, apply a 5% annual appreciation to the last sale price
+    3. Look at recent sales of similar properties in the same area/postcode
+    4. Consider current market conditions and local area trends
+    5. Factor in any recent local developments or changes that might affect value
 
-    Based on this data and your knowledge of the UK property market:
-    1. What's the estimated market value?
-    2. What are the key factors affecting the price?
-    3. How confident are you in this estimate (low/medium/high)?
+    Important guidelines:
+    - If you find historical sales data, mention when it was last sold and for how much
+    - Apply 5% annual appreciation to historical prices when estimating current value
+    - Consider local market trends and similar property sales
+    - Explain your confidence level based on data availability
 
     Format your response as JSON with these fields:
     {
@@ -55,7 +44,9 @@ serve(async (req) => {
       "confidence": "low"|"medium"|"high",
       "factors": string[],
       "analysis": string
-    }`;
+    }
+
+    Include in the analysis when the property was last sold (if you find this information) and how you calculated the current estimate.`;
 
     console.log('Sending request to OpenAI...');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -69,7 +60,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are a UK real estate expert. Analyze properties and provide market valuations based on location, type, and market data. Be precise and factual.'
+            content: 'You are a UK real estate expert with access to historical sales data. Focus on finding historical sales data and applying appropriate appreciation rates to estimate current values.'
           },
           {
             role: 'user',
