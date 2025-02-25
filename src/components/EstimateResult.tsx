@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import confetti from "canvas-confetti";
+import { TrendingUp, MapPin, BarChart3, HomeIcon, Info } from "lucide-react";
 
 interface AIAnalysis {
   estimatedValue: number;
@@ -60,6 +61,17 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
     }).format(value);
   };
 
+  const renderFactorIcon = (index: number) => {
+    const icons = [
+      <TrendingUp key="trend" className="text-[#FFD700]" />,
+      <BarChart3 key="chart" className="text-[#FDB931]" />,
+      <MapPin key="location" className="text-[#FFE5B4]" />,
+      <HomeIcon key="home" className="text-[#FFD700]" />,
+      <Info key="info" className="text-[#FDB931]" />
+    ];
+    return icons[index % icons.length];
+  };
+
   return (
     <Card className="w-full max-w-md mx-auto glass-panel animate-fade-up">
       <CardHeader className="text-center">
@@ -81,23 +93,31 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
         </div>
         
         {analysis && (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <h3 className="font-medium">Key Factors:</h3>
-              <ul className="list-disc pl-5 space-y-1">
-                {analysis.factors.map((factor, index) => (
-                  <li key={index} className="text-sm text-muted-foreground">{factor}</li>
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h3 className="font-medium text-gradient">Key Factors</h3>
+              <div className="grid gap-3">
+                {analysis.factors.slice(0, 5).map((factor, index) => (
+                  <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/5 backdrop-blur-sm">
+                    <div className="mt-0.5">
+                      {renderFactorIcon(index)}
+                    </div>
+                    <p className="text-sm text-muted-foreground">{factor}</p>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
-            <div className="space-y-2">
-              <h3 className="font-medium">Analysis:</h3>
-              <p className="text-sm text-muted-foreground">{analysis.analysis}</p>
+            
+            <div className="space-y-3">
+              <h3 className="font-medium text-gradient">Analysis</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed bg-white/5 backdrop-blur-sm p-4 rounded-lg">
+                {analysis.analysis}
+              </p>
             </div>
           </div>
         )}
         
-        <div className="space-y-4">
+        <div className="space-y-4 pt-4">
           <p className="text-sm text-center text-muted-foreground">
             Would you like a more accurate valuation? Our expert estate agents can provide a detailed
             analysis of your property's worth.
