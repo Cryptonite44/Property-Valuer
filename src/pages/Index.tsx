@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -87,39 +88,6 @@ const Index = () => {
           >
             <Shield className="w-3 md:w-4 h-3 md:h-4 text-blue-400" />
             <span className="text-xs md:text-sm text-gray-300">GDPR Compliant</span>
-          </motion.div>
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="fixed bottom-0 left-0 right-0 w-full flex justify-center p-2 md:p-4 z-20 bg-gradient-to-t from-[rgb(17,24,39)] to-transparent"
-      >
-        <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 text-white max-w-5xl">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-          >
-            <Search className="w-3 md:w-4 h-3 md:h-4 text-green-400" />
-            <span className="text-xs md:text-sm">247 valuations today</span>
-          </motion.div>
-          
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-          >
-            <UserCheck className="w-3 md:w-4 h-3 md:h-4 text-blue-400" />
-            <span className="text-xs md:text-sm">50,000+ valuations</span>
-          </motion.div>
-          
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="hidden md:flex items-center space-x-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-          >
-            <Star className="w-3 md:w-4 h-3 md:h-4 text-yellow-400" />
-            <span className="text-xs md:text-sm">4.9/5 from 2,000+ users</span>
           </motion.div>
         </div>
       </motion.div>
