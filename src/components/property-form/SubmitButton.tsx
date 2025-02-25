@@ -19,7 +19,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
         type="submit" 
         className={`w-full mt-8 relative overflow-hidden ${
           isLoading 
-            ? 'bg-gradient-to-r from-black/40 via-blue-950/40 to-black/40' 
+            ? 'bg-gradient-to-r from-[#1a1a1a] via-[#0f172a] to-[#1a1a1a]' 
             : 'bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] text-black'
         } font-medium hover:opacity-90 transition-all h-16`}
         disabled={isLoading}
@@ -32,7 +32,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
           >
             <div className="relative">
               <motion.div
-                className="absolute -inset-3 rounded-full blur-md bg-blue-400/30"
+                className="absolute -inset-3 rounded-full blur-md bg-blue-500/40"
                 animate={{
                   scale: [1, 1.2, 1],
                   opacity: [0.3, 0.7, 0.3],
@@ -55,7 +55,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
                     delay: 0,
                   }}
                 >
-                  <Building2 className="w-5 h-5 text-blue-300" />
+                  <Building2 className="w-5 h-5 text-blue-400" />
                 </motion.div>
                 <motion.div
                   animate={{
@@ -68,7 +68,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
                     delay: 0.6,
                   }}
                 >
-                  <Brain className="w-5 h-5 text-purple-300" />
+                  <Brain className="w-5 h-5 text-purple-400" />
                 </motion.div>
                 <motion.div
                   animate={{
@@ -81,7 +81,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
                     delay: 1.2,
                   }}
                 >
-                  <ChartLine className="w-5 h-5 text-green-300" />
+                  <ChartLine className="w-5 h-5 text-green-400" />
                 </motion.div>
               </motion.div>
             </div>
@@ -90,9 +90,9 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
                 className="relative"
               >
                 <motion.span
-                  className="inline-block"
+                  className="inline-block text-white/90 font-medium"
                   animate={{
-                    opacity: [0.5, 1, 0.5],
+                    opacity: [0.7, 1, 0.7],
                   }}
                   transition={{
                     duration: 2,
@@ -111,7 +111,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
                 {[0, 1, 2].map((index) => (
                   <motion.div
                     key={index}
-                    className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-400"
+                    className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
                     animate={{
                       scale: [1, 1.5, 1],
                       opacity: [0.5, 1, 0.5],
