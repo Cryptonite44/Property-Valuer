@@ -175,7 +175,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                 </Label>
                 <div className="relative">
                   <div 
-                    className="absolute inset-0 rounded-lg border border-[#3b82f6]/30 shadow-[0_0_15px_rgba(59,130,246,0.15)] animate-[glow_4s_ease-in-out_infinite]"
+                    className="absolute inset-0 rounded-lg border border-[#3b82f6]/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(59,130,246,0.1), transparent)',
                     }}
