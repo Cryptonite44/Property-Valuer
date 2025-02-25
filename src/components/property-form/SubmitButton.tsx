@@ -31,18 +31,6 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
             animate={{ opacity: 1 }}
           >
             <div className="relative">
-              <motion.div
-                className="absolute -inset-3 rounded-full blur-md bg-blue-500/40"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.3, 0.7, 0.3],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
               <motion.div className="flex items-center gap-6">
                 <motion.div
                   animate={{
