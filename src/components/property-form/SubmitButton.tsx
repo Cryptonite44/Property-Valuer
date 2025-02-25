@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Loader, Brain, Building2, ChartLineUp } from "lucide-react";
+import { Loader, Brain, Building2, ChartLine } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SubmitButtonProps {
@@ -81,7 +81,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
                     delay: 1.2,
                   }}
                 >
-                  <ChartLineUp className="w-5 h-5 text-green-300" />
+                  <ChartLine className="w-5 h-5 text-green-300" />
                 </motion.div>
               </motion.div>
             </div>
