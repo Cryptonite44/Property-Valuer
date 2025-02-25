@@ -116,8 +116,25 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                 Property Details
               </CardTitle>
               <CardDescription className="text-lg mt-2 text-white/70 flex items-center gap-2">
-                AI-powered property valuations in seconds
-                <Wand2 className="w-4 h-4 text-[#FFD700]" />
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  AI-powered property valuations in seconds
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ 
+                    delay: 0.7,
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 10
+                  }}
+                >
+                  <Wand2 className="w-4 h-4 text-[#FFD700] animate-pulse" />
+                </motion.div>
               </CardDescription>
             </motion.div>
           </CardHeader>
@@ -135,6 +152,36 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
             </form>
           </CardContent>
         </Card>
+        
+        {/* Add subtle floating shapes in the background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full mix-blend-overlay filter blur-xl"
+            animate={{
+              y: [0, 50, 0],
+              x: [0, 30, 0],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+          <motion.div
+            className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full mix-blend-overlay filter blur-xl"
+            animate={{
+              y: [0, -30, 0],
+              x: [0, 20, 0],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        </div>
       </motion.div>
     </TooltipProvider>
   );
