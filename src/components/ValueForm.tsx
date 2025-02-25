@@ -127,7 +127,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
           }}
         />
         
-        <Card className="relative w-full bg-black/40 backdrop-blur-xl border border-white/10 shadow-lg overflow-hidden">
+        <Card className="relative w-full bg-black border border-white/10 shadow-lg overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
           
           <CardHeader>
