@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Loader } from "lucide-react";
+import { Loader, Brain, Building2, ChartLineUp } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SubmitButtonProps {
@@ -19,23 +19,23 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
         type="submit" 
         className={`w-full mt-8 relative overflow-hidden ${
           isLoading 
-            ? 'bg-white/10' 
+            ? 'bg-gradient-to-r from-black/40 via-blue-950/40 to-black/40' 
             : 'bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFE5B4] text-black'
-        } font-medium hover:opacity-90 transition-all h-14`}
+        } font-medium hover:opacity-90 transition-all h-16`}
         disabled={isLoading}
       >
         {isLoading ? (
           <motion.div 
-            className="flex flex-col items-center gap-2 text-white"
+            className="flex flex-col items-center gap-3 text-white"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
             <div className="relative">
               <motion.div
-                className="absolute -inset-1 rounded-full blur-sm bg-blue-400/30"
+                className="absolute -inset-3 rounded-full blur-md bg-blue-400/30"
                 animate={{
                   scale: [1, 1.2, 1],
-                  opacity: [0.5, 1, 0.5],
+                  opacity: [0.3, 0.7, 0.3],
                 }}
                 transition={{
                   duration: 2,
@@ -43,61 +43,86 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
                   ease: "easeInOut",
                 }}
               />
-              <Loader className="w-5 h-5 animate-spin relative z-10" />
-            </div>
-            <div className="flex flex-col items-center text-sm">
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
-                Analyzing Property Data
-              </motion.span>
-              <motion.div 
-                className="flex space-x-1 mt-1"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
+              <motion.div className="flex items-center gap-6">
                 <motion.div
-                  className="w-1 h-1 rounded-full bg-blue-400"
                   animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.5, 1, 0.5],
+                    opacity: [0.4, 1, 0.4],
+                    scale: [0.9, 1, 0.9],
                   }}
                   transition={{
-                    duration: 1,
+                    duration: 2,
                     repeat: Infinity,
                     delay: 0,
                   }}
-                />
+                >
+                  <Building2 className="w-5 h-5 text-blue-300" />
+                </motion.div>
                 <motion.div
-                  className="w-1 h-1 rounded-full bg-blue-400"
                   animate={{
-                    scale: [1, 1.5, 1],
+                    opacity: [0.4, 1, 0.4],
+                    scale: [0.9, 1, 0.9],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: 0.6,
+                  }}
+                >
+                  <Brain className="w-5 h-5 text-purple-300" />
+                </motion.div>
+                <motion.div
+                  animate={{
+                    opacity: [0.4, 1, 0.4],
+                    scale: [0.9, 1, 0.9],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: 1.2,
+                  }}
+                >
+                  <ChartLineUp className="w-5 h-5 text-green-300" />
+                </motion.div>
+              </motion.div>
+            </div>
+            <div className="flex flex-col items-center text-sm">
+              <motion.div
+                className="relative"
+              >
+                <motion.span
+                  className="inline-block"
+                  animate={{
                     opacity: [0.5, 1, 0.5],
                   }}
                   transition={{
-                    duration: 1,
+                    duration: 2,
                     repeat: Infinity,
-                    delay: 0.2,
+                    ease: "easeInOut",
                   }}
-                />
-                <motion.div
-                  className="w-1 h-1 rounded-full bg-blue-400"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.5, 1, 0.5],
-                  }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    delay: 0.4,
-                  }}
-                />
+                >
+                  Analyzing Property Data
+                </motion.span>
+              </motion.div>
+              <motion.div 
+                className="flex space-x-1.5 mt-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                {[0, 1, 2].map((index) => (
+                  <motion.div
+                    key={index}
+                    className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-purple-400"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.5, 1, 0.5],
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      delay: index * 0.2,
+                    }}
+                  />
+                ))}
               </motion.div>
             </div>
           </motion.div>
@@ -105,7 +130,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="relative z-10"
+            className="relative z-10 text-base"
           >
             Get Estimate
           </motion.span>
