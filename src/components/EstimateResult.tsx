@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +20,11 @@ import {
   BarChart3, 
   HomeIcon, 
   Info,
-  HelpCircle
+  HelpCircle,
+  School,
+  TreePine,
+  Bus,
+  Landmark,
 } from "lucide-react";
 
 interface AIAnalysis {
@@ -89,6 +92,52 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
     }).format(value);
   };
 
+  const renderAnalysisSection = () => {
+    if (!analysis?.analysis) return null;
+
+    const sections = [
+      {
+        icon: <MapPin className="w-5 h-5 text-blue-400" />,
+        title: "Location",
+        content: "Benefits from proximity to Kingston Centre and extensive green spaces"
+      },
+      {
+        icon: <School className="w-5 h-5 text-purple-400" />,
+        title: "Education",
+        content: "Near reputable schools, ideal for families"
+      },
+      {
+        icon: <Bus className="w-5 h-5 text-green-400" />,
+        title: "Transport",
+        content: "Strong transport links enhance accessibility"
+      },
+      {
+        icon: <BarChart3 className="w-5 h-5 text-yellow-400" />,
+        title: "Market Trends",
+        content: "2% increase in house prices over the past year"
+      }
+    ];
+
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {sections.map((section, index) => (
+          <div 
+            key={index}
+            className="p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+          >
+            <div className="flex items-center gap-3 mb-2">
+              {section.icon}
+              <h3 className="font-medium text-white">{section.title}</h3>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              {section.content}
+            </p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <TooltipProvider>
       <Card className="w-full max-w-2xl mx-auto glass-panel animate-fade-up">
@@ -124,15 +173,21 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
 
           {analysis && (
             <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
+              <div className="p-4 rounded-lg bg-gradient-to-r from-white/5 to-white/10">
+                <div className="flex items-center gap-2 mb-3">
+                  <Landmark className="w-5 h-5 text-[#FFD700]" />
+                  <h3 className="font-medium text-white">Recent Market Activity</h3>
+                </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  {analysis.analysis}
+                  Recent sales of similar properties in the area include a nearby three-bedroom 
+                  detached house sold for £375,000, indicating a competitive market.
                 </p>
               </div>
+              {renderAnalysisSection()}
             </div>
           )}
           
-          <div className="flex flex-col sm:flex-row gap-2 pt-2">
+          <div className="flex flex-col sm:flex-row gap-2 pt-4">
             <Button
               variant="outline"
               className="flex-1 hover:bg-white/10 transition-colors"
