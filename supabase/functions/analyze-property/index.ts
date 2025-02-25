@@ -1,6 +1,7 @@
 
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { supabase } from "../_shared/supabase-client.ts";
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 if (!openAIApiKey) {
@@ -19,8 +20,8 @@ serve(async (req) => {
 
   try {
     const { address } = await req.json();
-    console.log('Received address:', address);
 
+    // Create a prompt for OpenAI that focuses on historical sales data
     const prompt = `As a UK real estate expert, analyze this property:
     Address: ${address}
 
@@ -37,13 +38,15 @@ serve(async (req) => {
     - Consider local market trends and similar property sales
     - Explain your confidence level based on data availability
 
-    You must respond with valid JSON in this exact format:
+    Format your response as JSON with these fields:
     {
-      "estimatedValue": <number>,
-      "confidence": "low" | "medium" | "high",
-      "factors": [<string array of factors>],
-      "analysis": "<string explanation>"
-    }`;
+      "estimatedValue": number,
+      "confidence": "low"|"medium"|"high",
+      "factors": string[],
+      "analysis": string
+    }
+
+    Include in the analysis when the property was last sold (if you find this information) and how you calculated the current estimate.`;
 
     console.log('Sending request to OpenAI...');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -57,14 +60,13 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are a UK real estate expert. You MUST respond with properly formatted JSON containing an estimatedValue (number), confidence (string), factors (array of strings), and analysis (string).'
+            content: 'You are a UK real estate expert with access to historical sales data. Focus on finding historical sales data and applying appropriate appreciation rates to estimate current values.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.7,
       }),
     });
 
@@ -75,39 +77,9 @@ serve(async (req) => {
     }
 
     const aiResponse = await response.json();
-    console.log('Raw AI response:', aiResponse.choices[0].message.content);
+    const analysis = JSON.parse(aiResponse.choices[0].message.content);
 
-    let analysis;
-    try {
-      analysis = JSON.parse(aiResponse.choices[0].message.content);
-      
-      // Validate the response format
-      if (!analysis.estimatedValue || !analysis.confidence || !analysis.factors || !analysis.analysis) {
-        throw new Error('Invalid response format from AI');
-      }
-
-      // Ensure estimatedValue is a number
-      analysis.estimatedValue = Number(analysis.estimatedValue);
-      if (isNaN(analysis.estimatedValue)) {
-        throw new Error('Invalid estimated value');
-      }
-
-      // Ensure confidence is one of the allowed values
-      if (!['low', 'medium', 'high'].includes(analysis.confidence)) {
-        analysis.confidence = 'medium';
-      }
-
-      // Ensure factors is an array
-      if (!Array.isArray(analysis.factors)) {
-        analysis.factors = [analysis.factors.toString()];
-      }
-
-      console.log('Validated analysis:', analysis);
-    } catch (error) {
-      console.error('Error parsing AI response:', error);
-      throw new Error('Failed to parse AI response');
-    }
-
+    console.log('Analysis completed successfully');
     return new Response(
       JSON.stringify(analysis),
       { 
@@ -115,15 +87,9 @@ serve(async (req) => {
       },
     );
   } catch (error) {
-    console.error('Error:', error.message);
+    console.error('Error:', error);
     return new Response(
-      JSON.stringify({ 
-        error: error.message,
-        estimatedValue: 0,
-        confidence: "low",
-        factors: ["Error in analysis"],
-        analysis: "Failed to analyze property. Please try again."
-      }),
+      JSON.stringify({ error: error.message }),
       { 
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
