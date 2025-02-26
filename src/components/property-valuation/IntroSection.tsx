@@ -10,10 +10,10 @@ export const IntroSection = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="text-center mb-8 space-y-6 relative w-full max-w-screen-lg mx-auto px-4 pt-20"
+      className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-12"
     >
       {/* Animated Value Scene */}
-      <div className="relative h-32 mb-8">
+      <div className="relative h-24 mb-4">
         {/* Value indicators */}
         <motion.div
           className="absolute left-1/4 top-0"
@@ -27,7 +27,7 @@ export const IntroSection = () => {
             ease: "easeInOut",
           }}
         >
-          <PoundSterling className="w-6 h-6 text-green-400/50" />
+          <PoundSterling className="w-4 h-4 text-green-400/50" />
         </motion.div>
         <motion.div
           className="absolute right-1/3 top-4"
@@ -41,7 +41,7 @@ export const IntroSection = () => {
             ease: "easeInOut",
           }}
         >
-          <TrendingUp className="w-6 h-6 text-blue-400/50" />
+          <TrendingUp className="w-4 h-4 text-blue-400/50" />
         </motion.div>
         <motion.div
           className="absolute right-1/4 top-2"
@@ -55,7 +55,7 @@ export const IntroSection = () => {
             ease: "easeInOut",
           }}
         >
-          <ChartBar className="w-6 h-6 text-purple-400/50" />
+          <ChartBar className="w-4 h-4 text-purple-400/50" />
         </motion.div>
 
         {/* Centered value indicator */}
@@ -68,7 +68,7 @@ export const IntroSection = () => {
           <div className="relative">
             {/* Value glow effect */}
             <motion.div
-              className="absolute -inset-4 bg-gradient-to-r from-green-500/10 via-blue-500/10 to-purple-500/10 blur-xl rounded-full"
+              className="absolute -inset-2 bg-gradient-to-r from-green-500/10 via-blue-500/10 to-purple-500/10 blur-lg rounded-full"
               animate={{
                 opacity: [0.3, 0.6, 0.3],
                 scale: [0.98, 1.02, 0.98],
@@ -86,7 +86,7 @@ export const IntroSection = () => {
             >
               <div className="relative">
                 <motion.div
-                  className="flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-blue-500/20 px-4 py-2 rounded-full"
+                  className="flex items-center gap-1.5 bg-gradient-to-r from-green-500/20 to-blue-500/20 px-3 py-1.5 rounded-full"
                   animate={{
                     y: [-2, 2, -2],
                     scale: [1, 1.05, 1],
@@ -97,9 +97,9 @@ export const IntroSection = () => {
                     ease: "easeInOut",
                   }}
                 >
-                  <PoundSterling className="w-8 h-8 text-green-400" />
+                  <PoundSterling className="w-5 h-5 text-green-400" />
                   <motion.span 
-                    className="text-lg font-semibold text-white/70"
+                    className="text-sm font-semibold text-white/70"
                     animate={{
                       opacity: [0.7, 1, 0.7],
                     }}
@@ -123,8 +123,8 @@ export const IntroSection = () => {
             key={i}
             className="absolute"
             style={{
-              top: `${i * 15 + 10}px`,
-              left: `${i * 20 + 65}%`,
+              top: `${i * 12 + 8}px`,
+              left: `${i * 16 + 65}%`,
             }}
             animate={{
               y: [-8, 8, -8],
@@ -137,7 +137,7 @@ export const IntroSection = () => {
               ease: "easeInOut",
             }}
           >
-            <TrendingUp className="w-4 h-4 text-green-400/40" />
+            <TrendingUp className="w-3 h-3 text-green-400/40" />
           </motion.div>
         ))}
       </div>
@@ -157,7 +157,7 @@ export const IntroSection = () => {
             backgroundSize: "200% 200%",
           }}
         />
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 relative z-10 flex flex-col items-center gap-4">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 relative z-10 flex flex-col items-center gap-3">
           <div className="text-white">Property Valuations</div>
           <div className="relative inline-block">
             <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 pb-2">
