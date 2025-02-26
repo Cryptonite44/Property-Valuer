@@ -17,7 +17,7 @@ serve(async (req) => {
   try {
     const { address, propertyType } = await req.json();
 
-    console.log('Starting property analysis:', { address, propertyType });
+    console.log('Request received:', { address, propertyType });
 
     const prompt = `You are a UK property expert. Analyze this ${propertyType} at ${address} and provide a detailed response with:
 1. Estimated value
@@ -52,6 +52,8 @@ Format your response EXACTLY as this JSON (no other text):
   }
 }`;
 
+    console.log('Sending prompt to OpenAI:', prompt);
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -63,24 +65,24 @@ Format your response EXACTLY as this JSON (no other text):
         messages: [
           {
             role: 'system',
-            content: 'You are a UK property valuation expert with detailed knowledge of local areas, schools, transport, and market trends. Always respond with valid JSON.'
+            content: 'You are a UK property valuation expert. Always respond with valid JSON.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.7
+        temperature: 0.3 // Reduced temperature for more consistent results
       }),
     });
 
     if (!response.ok) {
-      console.error('OpenAI API error status:', response.status);
+      console.error('OpenAI API error:', response.status, await response.text());
       throw new Error('OpenAI API request failed');
     }
 
     const data = await response.json();
-    console.log('OpenAI raw response:', data);
+    console.log('Raw OpenAI response:', JSON.stringify(data, null, 2));
 
     if (!data.choices?.[0]?.message?.content) {
       console.error('Invalid response structure:', data);
@@ -90,19 +92,22 @@ Format your response EXACTLY as this JSON (no other text):
     const rawContent = data.choices[0].message.content;
     console.log('Raw content from OpenAI:', rawContent);
 
-    // Clean the response and parse it
+    // Clean any potential markdown formatting
     const cleanJson = rawContent.replace(/```(?:json)?\n?|\n?```/g, '').trim();
-    console.log('Cleaned JSON:', cleanJson);
+    console.log('Cleaned JSON string:', cleanJson);
     
     const parsed = JSON.parse(cleanJson);
-    console.log('Parsed response:', parsed);
+    console.log('Parsed response object:', JSON.stringify(parsed, null, 2));
 
-    // Validate the response format
+    // Validate the essential fields
     if (!parsed || typeof parsed.estimatedValue !== 'number') {
-      throw new Error('Invalid response format');
+      console.error('Validation failed:', parsed);
+      throw new Error('Invalid response format - missing or invalid estimatedValue');
     }
 
-    // Use all the details from ChatGPT's response
+    console.log('Final response being sent:', JSON.stringify(parsed, null, 2));
+
+    // Return the exact parsed response from ChatGPT without any modifications
     return new Response(
       JSON.stringify(parsed),
       { 
@@ -115,30 +120,11 @@ Format your response EXACTLY as this JSON (no other text):
     console.error('Function error:', error);
     return new Response(
       JSON.stringify({
-        estimatedValue: 250000,
-        confidence: "low",
-        analysis: "Unable to process detailed analysis at this time",
-        details: {
-          location: {
-            description: "Area information temporarily unavailable",
-            amenities: ["Local amenities data unavailable"]
-          },
-          education: {
-            description: "Education information temporarily unavailable",
-            schools: ["School data unavailable"]
-          },
-          transport: {
-            description: "Transport information temporarily unavailable",
-            links: ["Transport data unavailable"]
-          },
-          marketActivity: {
-            recentSales: "Sales data temporarily unavailable",
-            priceChanges: "Market trend data unavailable"
-          }
-        }
+        error: 'Failed to process property data',
+        details: error.message
       }),
       {
-        status: 200,
+        status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
