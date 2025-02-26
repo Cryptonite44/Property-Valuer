@@ -32,13 +32,6 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   }, []);
 
   useEffect(() => {
-    // Reset the animation when texts change
-    setCurrentText("");
-    setCurrentTextIndex(0);
-    setCurrentCharIndex(0);
-  }, [texts]);
-
-  useEffect(() => {
     // Always show typewriter effect regardless of device
     if (currentTextIndex >= texts.length) return;
 

@@ -67,13 +67,15 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         throw new Error(error?.message || 'Failed to analyze property');
       }
 
+      console.log('Analysis response:', data);
+
       toast({
         title: `Analysis Complete`,
         description: "Based on historical sales data and market trends",
       });
 
       onEstimate(data.estimatedValue, data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error analyzing property:', error);
       toast({
         title: "Error analyzing property",
