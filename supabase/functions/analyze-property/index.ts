@@ -9,6 +9,13 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Helper function to extract JSON from markdown code blocks if present
+function cleanJsonResponse(response: string): string {
+  // Try to extract JSON from markdown code blocks if present
+  const jsonMatch = response.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+  return jsonMatch ? jsonMatch[1] : response;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -28,6 +35,10 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
+          {
+            role: 'system',
+            content: 'You are a UK property valuation expert. Return only valid JSON with no markdown formatting or extra text.'
+          },
           {
             role: 'user',
             content: `Provide the exact current market value for this ${propertyType} at ${address}. Return ONLY a JSON response with this exact structure:
@@ -71,12 +82,17 @@ serve(async (req) => {
     const chatGPTContent = openAIData.choices[0].message.content;
     console.log('ChatGPT raw content:', chatGPTContent); // Debug log
 
+    // Clean the response before parsing
+    const cleanedContent = cleanJsonResponse(chatGPTContent);
+    console.log('Cleaned content:', cleanedContent); // Debug log
+
     let parsedResponse;
     try {
-      parsedResponse = JSON.parse(chatGPTContent);
+      parsedResponse = JSON.parse(cleanedContent);
       console.log('Successfully parsed ChatGPT response:', parsedResponse); // Debug log
     } catch (parseError) {
       console.error('Failed to parse ChatGPT response:', parseError);
+      console.error('Content that failed to parse:', cleanedContent);
       throw new Error('Failed to parse ChatGPT response');
     }
 
