@@ -9,6 +9,12 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+function extractJSONFromMarkdown(text: string): string {
+  // Remove markdown code block indicators if present
+  const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+  return jsonMatch ? jsonMatch[1] : text;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -22,16 +28,7 @@ serve(async (req) => {
 
 Address: ${address}
 
-Please provide:
-1. An accurate estimated value in GBP (£)
-2. Brief analysis of the valuation
-3. Details about:
-   - Location and amenities
-   - Local education facilities
-   - Transport links
-   - Recent market activity
-
-Format your response as a JSON object with these exact fields:
+Analyze the property and respond ONLY with a JSON object (no markdown, no code blocks) that matches this exact structure:
 {
   "estimatedValue": number,
   "confidence": "low" | "medium" | "high",
@@ -56,6 +53,8 @@ Format your response as a JSON object with these exact fields:
   }
 }`;
 
+    console.log('Sending request to OpenAI...'); // Debug log
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -67,7 +66,7 @@ Format your response as a JSON object with these exact fields:
         messages: [
           {
             role: 'system',
-            content: 'You are an expert property valuation AI that provides detailed analysis and accurate valuations based on current market data. Always respond with properly formatted JSON.'
+            content: 'You are an expert property valuation AI. Always respond with ONLY a JSON object, no markdown formatting or code blocks.'
           },
           {
             role: 'user',
@@ -79,9 +78,23 @@ Format your response as a JSON object with these exact fields:
     });
 
     const data = await response.json();
-    const aiResponse = JSON.parse(data.choices[0].message.content);
+    console.log('OpenAI raw response:', data); // Debug log
 
-    // Ensure the response is properly formatted
+    if (!data.choices?.[0]?.message?.content) {
+      throw new Error('Invalid response from OpenAI');
+    }
+
+    const rawContent = data.choices[0].message.content;
+    console.log('Raw content:', rawContent); // Debug log
+
+    // Clean up the response content
+    const cleanedContent = extractJSONFromMarkdown(rawContent);
+    console.log('Cleaned content:', cleanedContent); // Debug log
+
+    // Parse the cleaned JSON
+    const aiResponse = JSON.parse(cleanedContent);
+    console.log('Parsed response:', aiResponse); // Debug log
+
     return new Response(JSON.stringify(aiResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
