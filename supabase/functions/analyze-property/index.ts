@@ -22,29 +22,21 @@ serve(async (req) => {
   try {
     const { address, propertyType } = await req.json();
 
-    const prompt = `As a UK property valuation expert, carefully analyze this ${propertyType} and provide a detailed valuation. 
+    const prompt = `You are tasked with providing an accurate valuation for this UK property:
 
-Address: ${address}
+${propertyType} at: ${address}
 
-Consider these CRUCIAL factors for an accurate valuation:
-1. Recent property sales in the area (within last 12 months)
-2. Current market conditions and trends
-3. Location-specific factors (transport links, schools, amenities)
-4. Property type and typical values for similar properties
-5. Regional property market performance
+Based on your knowledge of the UK property market:
+1. What is the EXACT current market value of this property?
+2. Use recent sales data, market conditions, and local factors
+3. The value must be precise and not rounded
+4. Must be based on actual property data from the area
 
-IMPORTANT: The estimated value MUST be:
-- In GBP (£)
-- A realistic market value for the specific UK location
-- Based on current market data
-- Rounded to the nearest thousand
-- Between £50,000 and £10,000,000
-
-Respond ONLY with a JSON object (no markdown, no code blocks) matching this structure:
+CRITICAL: Your response must ONLY include a JSON object with this structure:
 {
-  "estimatedValue": number,
+  "estimatedValue": number (exact value, not rounded),
   "confidence": "low" | "medium" | "high",
-  "analysis": "string explaining the valuation rationale",
+  "analysis": "detailed explanation of how you arrived at this specific value",
   "details": {
     "location": {
       "description": "string",
@@ -59,8 +51,8 @@ Respond ONLY with a JSON object (no markdown, no code blocks) matching this stru
       "links": ["string"]
     },
     "marketActivity": {
-      "recentSales": "string describing recent sales",
-      "priceChanges": "string describing price trends"
+      "recentSales": "string with specific recent sales data",
+      "priceChanges": "string with specific price trends"
     }
   }
 }`;
@@ -74,18 +66,18 @@ Respond ONLY with a JSON object (no markdown, no code blocks) matching this stru
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4',
         messages: [
           {
             role: 'system',
-            content: 'You are an expert UK property valuation AI with extensive knowledge of the UK property market, local areas, and current market conditions. Always provide realistic valuations based on actual market data and local property prices. Never provide valuations outside the range of £50,000 to £10,000,000.'
+            content: 'You are a UK property valuation expert with access to current market data. Always provide precise, unrounded valuations based on actual market data. Your valuations must be exact numbers.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.7
+        temperature: 0.1 // Lower temperature for more consistent, precise responses
       }),
     });
 
@@ -108,13 +100,13 @@ Respond ONLY with a JSON object (no markdown, no code blocks) matching this stru
     
     // Validate the response
     if (!aiResponse.estimatedValue || 
+        typeof aiResponse.estimatedValue !== 'number' || 
         aiResponse.estimatedValue < 50000 || 
         aiResponse.estimatedValue > 10000000) {
       throw new Error('Invalid property valuation amount');
     }
 
-    console.log('Parsed response:', aiResponse); // Debug log
-
+    // Return the exact value from ChatGPT without any modifications
     return new Response(JSON.stringify(aiResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
