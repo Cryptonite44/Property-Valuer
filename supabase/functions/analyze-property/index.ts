@@ -9,11 +9,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-function extractJSONFromMarkdown(text: string): string {
-  const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
-  return jsonMatch ? jsonMatch[1] : text;
-}
-
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -22,21 +17,25 @@ serve(async (req) => {
   try {
     const { address, propertyType } = await req.json();
 
-    const prompt = `You are tasked with providing an accurate valuation for this UK property:
+    console.log('Analyzing property:', { address, propertyType }); // Debug log
 
-${propertyType} at: ${address}
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'user',
+            content: `What is the exact current market value of this ${propertyType} at ${address}? Consider recent sales data and local market conditions. Provide ONLY a JSON response with this structure, no other text:
 
-Based on your knowledge of the UK property market:
-1. What is the EXACT current market value of this property?
-2. Use recent sales data, market conditions, and local factors
-3. The value must be precise and not rounded
-4. Must be based on actual property data from the area
-
-CRITICAL: Your response must ONLY include a JSON object with this structure:
 {
-  "estimatedValue": number (exact value, not rounded),
+  "estimatedValue": number,
   "confidence": "low" | "medium" | "high",
-  "analysis": "detailed explanation of how you arrived at this specific value",
+  "analysis": "string",
   "details": {
     "location": {
       "description": "string",
@@ -51,30 +50,11 @@ CRITICAL: Your response must ONLY include a JSON object with this structure:
       "links": ["string"]
     },
     "marketActivity": {
-      "recentSales": "string with specific recent sales data",
-      "priceChanges": "string with specific price trends"
+      "recentSales": "string",
+      "priceChanges": "string"
     }
   }
-}`;
-
-    console.log('Analyzing property:', { address, propertyType }); // Debug log
-
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are a UK property valuation expert. Return the exact valuation you calculate without any modifications or rounding.'
-          },
-          {
-            role: 'user',
-            content: prompt
+}`
           }
         ],
         temperature: 0.1
@@ -88,28 +68,15 @@ CRITICAL: Your response must ONLY include a JSON object with this structure:
       throw new Error('Invalid response from OpenAI');
     }
 
-    const rawContent = data.choices[0].message.content;
-    console.log('Raw content from ChatGPT:', rawContent); // Debug log
+    const content = data.choices[0].message.content;
+    console.log('Raw content from ChatGPT:', content); // Debug log
 
-    const cleanedContent = extractJSONFromMarkdown(rawContent);
-    console.log('Cleaned JSON content:', cleanedContent); // Debug log
-
-    const aiResponse = JSON.parse(cleanedContent);
+    // Parse the JSON response directly
+    const aiResponse = JSON.parse(content);
     console.log('Parsed AI response:', aiResponse); // Debug log
-    
-    if (!aiResponse.estimatedValue || typeof aiResponse.estimatedValue !== 'number') {
-      throw new Error('Invalid property valuation amount');
-    }
 
     // Return the exact ChatGPT response without any modification
-    const response_data = {
-      ...aiResponse,
-      estimatedValue: aiResponse.estimatedValue // Ensure we use the exact value
-    };
-
-    console.log('Final response being sent:', response_data); // Debug log
-
-    return new Response(JSON.stringify(response_data), {
+    return new Response(JSON.stringify(aiResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
