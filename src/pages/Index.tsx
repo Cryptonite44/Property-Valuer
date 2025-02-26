@@ -64,7 +64,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-8 space-y-6 relative"
+            className="text-center mb-8 space-y-6 relative px-4 sm:px-6"
           >
             <div className="relative">
               <motion.div
@@ -81,8 +81,8 @@ const Index = () => {
                   backgroundSize: "200% 200%",
                 }}
               />
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 relative z-10">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine relative">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 relative z-10 break-words">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine inline-block">
                   <TypewriterText 
                     texts={[
                       { text: "Superfast", delay: 50 },
@@ -102,10 +102,10 @@ const Index = () => {
               }}
               className="space-y-3"
             >
-              <p className="text-lg sm:text-xl font-medium text-purple-200/90 tracking-wider">
+              <p className="text-base sm:text-lg md:text-xl font-medium text-purple-200/90 tracking-wider px-2">
                 Get an AI-powered estimate based
               </p>
-              <p className="text-lg sm:text-xl font-medium text-blue-200/90 tracking-wider">
+              <p className="text-base sm:text-lg md:text-xl font-medium text-blue-200/90 tracking-wider px-2">
                 on local market data
               </p>
               <motion.div
