@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
-import { Sparkles } from "lucide-react";
+import { Building2, Home, Sun, Cloud, Star } from "lucide-react";
 
 export const IntroSection = () => {
   return (
@@ -12,6 +12,109 @@ export const IntroSection = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="text-center mb-8 space-y-6 relative w-full max-w-screen-lg mx-auto px-4 pt-20"
     >
+      {/* Animated House Scene */}
+      <div className="relative h-32 mb-8">
+        {/* Animated clouds */}
+        <motion.div
+          className="absolute left-1/4 top-0"
+          animate={{
+            x: [-20, 20, -20],
+            y: [-5, 5, -5],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <Cloud className="w-8 h-8 text-blue-300/30" />
+        </motion.div>
+        <motion.div
+          className="absolute right-1/3 top-4"
+          animate={{
+            x: [20, -20, 20],
+            y: [5, -5, 5],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <Cloud className="w-6 h-6 text-blue-300/20" />
+        </motion.div>
+
+        {/* Animated sun */}
+        <motion.div
+          className="absolute right-1/4 top-2"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.5, 0.7, 0.5],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <Sun className="w-10 h-10 text-yellow-500/30" />
+        </motion.div>
+
+        {/* House */}
+        <motion.div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="relative">
+            {/* Roof shine effect */}
+            <motion.div
+              className="absolute -inset-2 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10 blur-xl rounded-full"
+              animate={{
+                opacity: [0.3, 0.6, 0.3],
+                scale: [0.98, 1.02, 0.98],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="relative"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Home className="w-16 h-16 text-white" strokeWidth={1.5} />
+              {/* Animated stars */}
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute"
+                  style={{
+                    top: `-${i * 10 + 5}px`,
+                    left: `${i * 15 + 40}px`,
+                  }}
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.7, 0.3],
+                  }}
+                  transition={{
+                    duration: 2,
+                    delay: i * 0.3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <Star className="w-3 h-3 text-purple-400/50" fill="currentColor" />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
       <div className="relative">
         <motion.div
           className="absolute -inset-1 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 blur-3xl"
