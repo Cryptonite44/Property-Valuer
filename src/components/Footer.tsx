@@ -96,14 +96,18 @@ export const Footer = () => {
                   
                   <div className="flex items-center gap-4 md:gap-6">
                     <motion.a 
-                      href="/privacy"
+                      href="https://www.digitol.co.uk/privacy-policy"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-sm text-white/60 hover:text-white/90 transition-colors"
                       whileHover={{ scale: 1.02 }}
                     >
                       Privacy Policy
                     </motion.a>
                     <motion.a 
-                      href="/terms"
+                      href="https://www.digitol.co.uk/terms-conditions"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-sm text-white/60 hover:text-white/90 transition-colors"
                       whileHover={{ scale: 1.02 }}
                     >

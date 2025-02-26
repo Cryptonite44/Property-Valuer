@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -7,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { CustomerReview } from "@/components/CustomerReview";
 import { motion } from "framer-motion";
 import { Building2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface PropertyDetails {
   location: {
@@ -41,7 +41,6 @@ const Index = () => {
   const handleEstimate = (value: number, aiAnalysis?: AIAnalysis) => {
     console.log('Handling estimate:', { value, aiAnalysis }); // Debug log
     
-    // Only update states if we have valid data
     if (typeof value === 'number' && !isNaN(value)) {
       setEstimatedValue(value);
       setAnalysis(aiAnalysis);
@@ -165,7 +164,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm -z-10" />
         <div className="w-full">
           <div className="flex items-center justify-center py-3">
-            <div className="glass-panel py-2 px-4 relative overflow-hidden">
+            <Link to="/" className="glass-panel py-2 px-4 relative overflow-hidden">
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-pink-500/10"
                 animate={{
@@ -195,7 +194,7 @@ const Index = () => {
                   </div>
                 </motion.div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </motion.div>
