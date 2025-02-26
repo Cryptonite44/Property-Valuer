@@ -12,13 +12,6 @@ export const IntroSection = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="text-center mb-8 space-y-6 relative w-full max-w-screen-lg mx-auto px-4 pt-20"
     >
-      <div className="absolute top-0 right-4">
-        <div className="feature-pill">
-          <Sparkles className="w-4 h-4" />
-          <span className="text-sm font-medium">AI-Powered Property Valuation</span>
-        </div>
-      </div>
-
       <div className="relative">
         <motion.div
           className="absolute -inset-1 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 blur-3xl"
