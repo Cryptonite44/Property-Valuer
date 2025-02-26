@@ -47,14 +47,14 @@ const reviews: Review[] = [
 export const CustomerReview = () => {
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-3 grid-cols-1 gap-6 auto-rows-auto">
         {reviews.map((review) => (
           <motion.div
             key={review.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 * review.id, duration: 0.6 }}
-            className="bg-[#1A1F2C] border border-white/10 rounded-2xl p-6 shadow-xl hover:border-[#9b87f5]/30 transition-all duration-300 ease-in-out"
+            className="bg-[#1A1F2C] border border-white/10 rounded-2xl p-6 shadow-xl hover:border-[#9b87f5]/30 transition-all duration-300 ease-in-out flex-1 min-h-[fit-content]"
           >
             <Quote className="w-8 h-8 text-[#9b87f5] mb-4 opacity-50" />
             <div className="flex flex-col gap-4">
