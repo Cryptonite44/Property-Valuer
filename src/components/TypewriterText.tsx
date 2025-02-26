@@ -33,7 +33,7 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
 
   return (
     <div className={`inline-block ${className}`}>
-      <div className="whitespace-pre-line text-left">
+      <div className="whitespace-pre-line text-center">
         {currentText}
       </div>
       {currentTextIndex < texts.length && currentCharIndex < texts[currentTextIndex].text.length && (
