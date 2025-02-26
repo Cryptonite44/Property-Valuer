@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -141,10 +142,11 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                 Property Details
               </CardTitle>
               <CardDescription className="text-lg mt-2 text-white/70">
-                <div className="flex items-center justify-center gap-2 flex-wrap">
-                  <span className="inline-flex items-center">
-                    AI-powered property valuations in seconds
-                  </span>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="flex flex-col items-center">
+                    <span>AI-powered property</span>
+                    <span>valuations in seconds</span>
+                  </div>
                   <motion.div
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -154,7 +156,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                       stiffness: 200,
                       damping: 10
                     }}
-                    className="inline-flex"
+                    className="mt-2"
                   >
                     <Wand2 className="w-4 h-4 text-[#9b87f5]" />
                   </motion.div>
