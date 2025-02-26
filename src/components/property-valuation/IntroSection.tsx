@@ -33,16 +33,43 @@ export const IntroSection = () => {
               with AI Magic
             </div>
             <motion.div
-              className="absolute -bottom-2 left-0 right-0 h-1"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
+              className="absolute -bottom-2 left-0 right-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{
-                duration: 1,
-                delay: 0.5,
-                ease: [0.22, 1, 0.36, 1]
+                duration: 0.5,
+                delay: 0.5
               }}
             >
-              <div className="h-[3px] w-full bg-gradient-to-r from-[#9F7AEA] via-[#7C3AED] to-[#4F46E5] rounded-full" />
+              <svg
+                width="100%"
+                height="12"
+                viewBox="0 0 200 12"
+                fill="none"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <motion.path
+                  d="M0 3C20 3 30 9 50 9C70 9 80 3 100 3C120 3 130 9 150 9C170 9 180 3 200 3"
+                  stroke="url(#underline-gradient)"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{
+                    duration: 1.5,
+                    ease: "easeInOut",
+                    delay: 0.5
+                  }}
+                />
+                <defs>
+                  <linearGradient id="underline-gradient" x1="0" y1="0" x2="100%" y2="0">
+                    <stop stopColor="#9F7AEA" offset="0%" />
+                    <stop stopColor="#7C3AED" offset="50%" />
+                    <stop stopColor="#4F46E5" offset="100%" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </motion.div>
           </div>
         </h1>
