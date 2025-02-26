@@ -1,6 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Wand2 } from "lucide-react";
 import {
   CardHeader,
   CardTitle,
@@ -22,9 +23,22 @@ export const FormHeader = () => {
         <CardDescription className="text-lg mt-2 text-white/70">
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-col items-center">
-              <span>Get an AI-powered estimate</span>
-              <span>based on local market data</span>
+              <span>AI-powered property</span>
+              <span>valuations in seconds</span>
             </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ 
+                delay: 0.7,
+                type: "spring",
+                stiffness: 200,
+                damping: 10
+              }}
+              className="mt-2"
+            >
+              <Wand2 className="w-4 h-4 text-[#9b87f5]" />
+            </motion.div>
           </div>
         </CardDescription>
       </motion.div>
