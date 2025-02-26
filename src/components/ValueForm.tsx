@@ -1,24 +1,15 @@
 
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  TooltipProvider,
-} from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
-import { Wand2, Search } from "lucide-react";
 import { PropertyTypeSelector } from "./property-form/PropertyTypeSelector";
-import { AddressInput } from "./property-form/AddressInput";
 import { SubmitButton } from "./property-form/SubmitButton";
+import { FormHeader } from "./property-form/FormHeader";
+import { BackgroundEffects } from "./property-form/BackgroundEffects";
+import { AddressForm } from "./property-form/AddressForm";
 
 interface PropertyDetails {
   location: {
@@ -102,125 +93,25 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md mx-auto"
       >
-        <motion.div
-          className="absolute -inset-2 bg-gradient-to-r from-[#8B5CF6] via-[#D946EF] to-[#0EA5E9] opacity-75 blur-2xl rounded-lg"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.5, 0.8, 0.5],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute -inset-2 bg-gradient-to-r from-[#F97316] via-[#8B5CF6] to-[#D946EF] opacity-75 blur-2xl rounded-lg"
-          animate={{
-            scale: [1.1, 1, 1.1],
-            opacity: [0.5, 0.8, 0.5],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
+        <BackgroundEffects />
         
         <Card className="relative w-full bg-[#1A1F2C] border border-white/10 shadow-lg overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
-          
-          <CardHeader className="text-center">
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="relative z-10"
-            >
-              <CardTitle className="text-white text-3xl">
-                Property Details
-              </CardTitle>
-              <CardDescription className="text-lg mt-2 text-white/70">
-                <div className="flex flex-col items-center justify-center">
-                  <div className="flex flex-col items-center">
-                    <span>AI-powered property</span>
-                    <span>valuations in seconds</span>
-                  </div>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ 
-                      delay: 0.7,
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 10
-                    }}
-                    className="mt-2"
-                  >
-                    <Wand2 className="w-4 h-4 text-[#9b87f5]" />
-                  </motion.div>
-                </div>
-              </CardDescription>
-            </motion.div>
-          </CardHeader>
+          <FormHeader />
           <CardContent className="relative z-10">
             <form onSubmit={handleSubmit} className="space-y-6">
               <PropertyTypeSelector
                 selectedType={selectedType}
                 onTypeSelect={setSelectedType}
               />
-              <div className="space-y-2 text-center">
-                <Label htmlFor="address" className="text-sm text-white/70 block">
-                  Full Property Address
-                </Label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-4 h-4 z-20" />
-                  <Input
-                    id="address"
-                    placeholder="Enter the complete property address"
-                    value={address}
-                    onChange={handleAddressChange}
-                    className="relative bg-[#1A1F2C] border-white/10 focus:border-[#3b82f6]/50 transition-all duration-300 pl-10 rounded-lg text-white placeholder:text-white/30 focus:ring-4 focus:ring-[#3b82f6]/20 shadow-[0_0_30px_rgba(139,92,246,0.3)] focus:shadow-[0_0_40px_rgba(139,92,246,0.45),0_0_20px_rgba(139,92,246,0.35),inset_0_0_15px_rgba(139,92,246,0.25)] focus:bg-[#1A1F2C] z-10"
-                  />
-                </div>
-                <p className="text-xs text-white/50 text-center">
-                  Include postcode for more accurate results
-                </p>
-              </div>
+              <AddressForm 
+                address={address}
+                onChange={handleAddressChange}
+              />
               <SubmitButton isLoading={isLoading} />
             </form>
           </CardContent>
         </Card>
-        
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full mix-blend-overlay filter blur-xl"
-            animate={{
-              y: [0, 50, 0],
-              x: [0, 30, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-          <motion.div
-            className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full mix-blend-overlay filter blur-xl"
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 20, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          />
-        </div>
       </motion.div>
     </TooltipProvider>
   );
