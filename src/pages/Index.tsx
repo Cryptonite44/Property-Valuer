@@ -64,9 +64,9 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-8 space-y-6 relative px-4 sm:px-6"
+            className="text-center mb-8 space-y-6 relative px-4 sm:px-6 w-full"
           >
-            <div className="relative">
+            <div className="relative max-w-[90vw] mx-auto">
               <motion.div
                 className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-2xl"
                 animate={{
@@ -82,11 +82,12 @@ const Index = () => {
                 }}
               />
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 relative z-10 break-words">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine inline-block">
+                <span className="inline-block text-white [background:linear-gradient(to_right,theme(colors.white)_0%,theme(colors.purple.200)_50%,theme(colors.white)_100%)] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background-size:200%_auto] animate-text-shine">
                   <TypewriterText 
                     texts={[
                       { text: "Superfast", delay: 50 },
-                      { text: " Property Valuer", delay: 150 }
+                      { text: " Property", delay: 150 },
+                      { text: " Valuer", delay: 150 }
                     ]}
                   />
                 </span>
