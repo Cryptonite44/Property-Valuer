@@ -1,10 +1,11 @@
+
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
-import { Building2 } from "lucide-react";
+import { Building2, Lock } from "lucide-react";
 
 interface PropertyDetails {
   location: {
@@ -125,7 +126,7 @@ const Index = () => {
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="feature-pill"
                 >
-                  <FileText className="w-3.5 h-3.5 text-purple-400" />
+                  <Lock className="w-3.5 h-3.5 text-purple-400" />
                   <span className="text-[11px] font-medium text-white/90">No Long Forms</span>
                 </motion.div>
                 
@@ -135,7 +136,7 @@ const Index = () => {
                   transition={{ delay: 0.5, duration: 0.5 }}
                   className="feature-pill"
                 >
-                  <Clock className="w-3.5 h-3.5 text-blue-400" />
+                  <Lock className="w-3.5 h-3.5 text-blue-400" />
                   <span className="text-[11px] font-medium text-white/90">Quick & Easy</span>
                 </motion.div>
                 
@@ -145,7 +146,7 @@ const Index = () => {
                   transition={{ delay: 0.6, duration: 0.5 }}
                   className="feature-pill"
                 >
-                  <Zap className="w-3.5 h-3.5 text-yellow-400" />
+                  <Lock className="w-3.5 h-3.5 text-yellow-400" />
                   <span className="text-[11px] font-medium text-white/90">Instant Valuation</span>
                 </motion.div>
               </div>
