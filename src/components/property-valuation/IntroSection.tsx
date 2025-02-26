@@ -26,14 +26,11 @@ export const IntroSection = () => {
             backgroundSize: "200% 200%",
           }}
         />
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 relative z-10 break-words">
-          <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-white [background-size:200%_auto] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] will-change-transform">
-            <TypewriterText 
-              texts={[
-                { text: "AI-Powered\nProperty Valuations", delay: 50 }
-              ]}
-            />
-          </span>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 relative z-10 break-words space-y-2">
+          <div className="text-white">AI-Powered</div>
+          <div className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-400 to-blue-500">
+            Property Valuations
+          </div>
         </h1>
       </div>
       <motion.div
