@@ -1,10 +1,11 @@
-
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimationControls } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
 import { PoundSterling, TrendingUp, ChartBar } from "lucide-react";
 
 export const IntroSection = () => {
+  const controls = useAnimationControls();
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -13,13 +14,18 @@ export const IntroSection = () => {
       className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-12"
     >
       {/* Animated Value Scene */}
-      <div className="relative h-24 mb-4">
+      <motion.div 
+        className="relative h-24 mb-4"
+        whileInView={{ scale: [0.9, 1] }}
+        transition={{ duration: 0.5 }}
+      >
         {/* Value indicators */}
         <motion.div
           className="absolute left-[30%] top-0"
           animate={{
             y: [-5, 5, -5],
             opacity: [0.4, 0.8, 0.4],
+            rotate: [0, 5, -5, 0],
           }}
           transition={{
             duration: 3,
@@ -34,6 +40,7 @@ export const IntroSection = () => {
           animate={{
             y: [5, -5, 5],
             opacity: [0.4, 0.8, 0.4],
+            scale: [1, 1.1, 1],
           }}
           transition={{
             duration: 4,
@@ -48,6 +55,7 @@ export const IntroSection = () => {
           animate={{
             y: [-8, 8, -8],
             opacity: [0.4, 0.8, 0.4],
+            rotate: [0, -5, 5, 0],
           }}
           transition={{
             duration: 5,
@@ -63,7 +71,13 @@ export const IntroSection = () => {
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          whileHover={{ scale: 1.1 }}
+          transition={{ 
+            duration: 0.8, 
+            delay: 0.2,
+            type: "spring",
+            stiffness: 200,
+          }}
         >
           <div className="relative">
             {/* Value glow effect */}
@@ -72,17 +86,21 @@ export const IntroSection = () => {
               animate={{
                 opacity: [0.3, 0.6, 0.3],
                 scale: [0.98, 1.02, 0.98],
+                rotate: [0, 180],
               }}
               transition={{
-                duration: 4,
+                duration: 8,
                 repeat: Infinity,
-                ease: "easeInOut",
+                ease: "linear",
               }}
             />
             <motion.div
               className="relative"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              whileHover={{ 
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400 }
+              }}
+              whileTap={{ scale: 0.95 }}
             >
               <div className="relative">
                 <motion.div
@@ -91,17 +109,30 @@ export const IntroSection = () => {
                     y: [-2, 2, -2],
                     scale: [1, 1.05, 1],
                   }}
+                  whileHover={{
+                    backgroundColor: "rgba(255,255,255,0.1)",
+                    transition: { duration: 0.2 }
+                  }}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
                 >
-                  <PoundSterling className="w-5 h-5 text-green-400" />
+                  <motion.div
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <PoundSterling className="w-5 h-5 text-green-400" />
+                  </motion.div>
                   <motion.span 
                     className="text-sm font-semibold text-white/70"
                     animate={{
                       opacity: [0.7, 1, 0.7],
+                    }}
+                    whileHover={{
+                      color: "rgba(255,255,255,0.9)",
+                      scale: 1.05
                     }}
                     transition={{
                       duration: 3,
@@ -129,6 +160,11 @@ export const IntroSection = () => {
             animate={{
               y: [-8, 8, -8],
               opacity: [0.3, 0.7, 0.3],
+              rotate: [-5, 5, -5],
+            }}
+            whileHover={{
+              scale: 1.2,
+              opacity: 0.9
             }}
             transition={{
               duration: 3,
@@ -140,13 +176,14 @@ export const IntroSection = () => {
             <TrendingUp className="w-3 h-3 text-green-400/40" />
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <div className="relative">
         <motion.div
           className="absolute -inset-1 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 blur-3xl"
           animate={{
             backgroundPosition: ["0% 0%", "100% 100%"],
+            scale: [1, 1.1, 1],
           }}
           transition={{
             duration: 15,
@@ -157,12 +194,36 @@ export const IntroSection = () => {
             backgroundSize: "200% 200%",
           }}
         />
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 relative z-10 flex flex-col items-center gap-3">
-          <div className="text-white">Property Valuations</div>
+        <motion.h1 
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 relative z-10 flex flex-col items-center gap-3"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.3,
+            type: "spring",
+            stiffness: 100
+          }}
+        >
+          <motion.div 
+            className="text-white"
+            whileHover={{
+              scale: 1.02,
+              transition: { type: "spring", stiffness: 400 }
+            }}
+          >
+            Property Valuations
+          </motion.div>
           <div className="relative inline-block">
-            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 pb-2">
+            <motion.span 
+              className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 pb-2"
+              whileHover={{
+                scale: 1.05,
+                transition: { type: "spring", stiffness: 400 }
+              }}
+            >
               with AI Magic
-            </span>
+            </motion.span>
             <motion.div
               className="absolute -bottom-2 left-0 right-0"
               initial={{ opacity: 0 }}
@@ -203,7 +264,7 @@ export const IntroSection = () => {
               </svg>
             </motion.div>
           </div>
-        </h1>
+        </motion.h1>
       </div>
     </motion.div>
   );
