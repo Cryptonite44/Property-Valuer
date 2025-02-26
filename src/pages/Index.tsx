@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -49,29 +48,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="relative w-full h-full">
-          <motion.div 
-            className="absolute inset-0 flex items-center justify-center opacity-[0.02]"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.02 }}
-            transition={{ duration: 1 }}
-          >
-            <Home className="w-[45rem] h-[45rem] text-white rotate-[-5deg]" />
-          </motion.div>
-          <motion.div 
-            className="absolute inset-0 flex items-center justify-center opacity-[0.015]"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.015 }}
-            transition={{ duration: 1, delay: 0.2 }}
-          >
-            <Home className="w-[50rem] h-[50rem] text-purple-200 rotate-[5deg]" />
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Content */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -186,8 +162,11 @@ const Index = () => {
                 duration: 0.8,
                 ease: "easeOut"
               }}
-              className="w-full px-2"
+              className="w-full px-2 relative"
             >
+              <div className="absolute inset-0 -top-24 -bottom-24 flex items-center justify-center opacity-[0.02] pointer-events-none">
+                <Home className="w-full h-full max-w-[32rem] text-white" />
+              </div>
               <ValueForm onEstimate={handleEstimate} />
             </motion.div>
           </>
