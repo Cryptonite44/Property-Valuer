@@ -9,11 +9,11 @@ export const IntroSection = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="text-center mb-8 space-y-6 relative w-full max-w-screen-sm mx-auto px-4"
+      className="text-center mb-8 space-y-6 relative w-full max-w-screen-lg mx-auto px-4"
     >
       <div className="relative">
         <motion.div
-          className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-2xl"
+          className="absolute -inset-1 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10 blur-3xl"
           animate={{
             backgroundPosition: ["0% 0%", "100% 100%"],
           }}
@@ -26,11 +26,11 @@ export const IntroSection = () => {
             backgroundSize: "200% 200%",
           }}
         />
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 relative z-10 break-words space-y-3">
-          <div className="text-white tracking-tight glow animate-text-shine">AI-Powered</div>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 relative z-10 break-words space-y-2">
+          <div className="text-white">Get Property Values</div>
           <div className="relative inline-block">
-            <div className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#6366F1] to-[#3B82F6] animate-text-shine">
-              Property Valuations
+            <div className="inline-block whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-[#9F7AEA] via-[#7C3AED] to-[#4F46E5]">
+              with AI Magic
             </div>
             <motion.div
               className="absolute -bottom-1 left-0 right-0 h-[2px]"
@@ -58,26 +58,26 @@ export const IntroSection = () => {
                 />
                 <defs>
                   <linearGradient id="gradient" x1="0" y1="0" x2="400" y2="0">
-                    <stop offset="0%" stopColor="#8B5CF6">
+                    <stop offset="0%" stopColor="#9F7AEA">
                       <animate
                         attributeName="stop-color"
-                        values="#8B5CF6; #6366F1; #3B82F6; #8B5CF6"
+                        values="#9F7AEA; #7C3AED; #4F46E5; #9F7AEA"
                         dur="4s"
                         repeatCount="indefinite"
                       />
                     </stop>
-                    <stop offset="50%" stopColor="#6366F1">
+                    <stop offset="50%" stopColor="#7C3AED">
                       <animate
                         attributeName="stop-color"
-                        values="#6366F1; #3B82F6; #8B5CF6; #6366F1"
+                        values="#7C3AED; #4F46E5; #9F7AEA; #7C3AED"
                         dur="4s"
                         repeatCount="indefinite"
                       />
                     </stop>
-                    <stop offset="100%" stopColor="#3B82F6">
+                    <stop offset="100%" stopColor="#4F46E5">
                       <animate
                         attributeName="stop-color"
-                        values="#3B82F6; #8B5CF6; #6366F1; #3B82F6"
+                        values="#4F46E5; #9F7AEA; #7C3AED; #4F46E5"
                         dur="4s"
                         repeatCount="indefinite"
                       />
@@ -99,11 +99,8 @@ export const IntroSection = () => {
         }}
         className="space-y-3"
       >
-        <p className="text-base sm:text-lg md:text-xl font-medium text-purple-200/90 tracking-wider">
-          Get an AI-powered estimate based
-        </p>
-        <p className="text-base sm:text-lg md:text-xl font-medium text-blue-200/90 tracking-wider">
-          on local market data
+        <p className="text-base sm:text-lg md:text-xl font-medium text-white/80 tracking-wider">
+          Get instant property valuations powered by AI
         </p>
       </motion.div>
     </motion.div>
