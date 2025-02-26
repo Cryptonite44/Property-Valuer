@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -88,7 +89,8 @@ const Index = () => {
                   </div>
                 </motion.div>
 
-                <div className="grid grid-cols-2 gap-2">
+                {/* Security badges - hidden on mobile, visible on sm and up */}
+                <div className="hidden sm:grid grid-cols-2 gap-2">
                   <motion.div 
                     className="flex items-center justify-center space-x-2 px-3 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg"
                     whileHover={{ scale: 1.02 }}
