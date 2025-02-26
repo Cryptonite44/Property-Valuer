@@ -43,7 +43,7 @@ const Index = () => {
       />
       {/* Grid Background */}
       <div 
-        className="absolute inset-0 z-0 opacity-[0.12]"
+        className="absolute inset-0 z-0 opacity-[0.14]"
         style={{
           backgroundImage: `
             linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
