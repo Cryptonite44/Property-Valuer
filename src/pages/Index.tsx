@@ -1,11 +1,10 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
-import { Building2 } from "lucide-react";
+import { Building2, Home } from "lucide-react";
 
 interface PropertyDetails {
   location: {
@@ -49,6 +48,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-[0.03]">
+        <Home className="w-[40rem] h-[40rem] text-white" />
+      </div>
+
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -92,7 +95,7 @@ const Index = () => {
         </div>
       </motion.div>
 
-      <div className="flex-1 flex flex-col items-center justify-center w-full px-4 py-4">
+      <div className="flex-1 flex flex-col items-center justify-center w-full px-4 py-4 relative z-10">
         {!estimatedValue ? (
           <>
             <motion.div 
