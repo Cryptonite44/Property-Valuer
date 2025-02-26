@@ -108,24 +108,54 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
       >
         <BackgroundEffects />
         
-        <Card className="relative w-full bg-[#1A1F2C] border border-white/10 shadow-lg overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
-          <FormHeader />
-          <CardContent className="relative z-10 py-5">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <PropertyTypeSelector
-                selectedType={selectedType}
-                onTypeSelect={setSelectedType}
-              />
-              <AddressForm 
-                address={address}
-                onChange={handleAddressChange}
-              />
-              <div className="pt-1">
-                <SubmitButton isLoading={isLoading} />
-              </div>
-            </form>
-          </CardContent>
+        <Card className="relative w-full bg-gradient-to-b from-[#1A1F2C] to-[#151821] border border-white/10 shadow-xl overflow-hidden backdrop-blur-sm">
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/5 via-transparent to-blue-500/5" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent" />
+          </div>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="relative z-10"
+          >
+            <FormHeader />
+            <CardContent className="relative z-10 p-6">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <PropertyTypeSelector
+                    selectedType={selectedType}
+                    onTypeSelect={setSelectedType}
+                  />
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <AddressForm 
+                    address={address}
+                    onChange={handleAddressChange}
+                  />
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="pt-2"
+                >
+                  <SubmitButton isLoading={isLoading} />
+                </motion.div>
+              </form>
+            </CardContent>
+          </motion.div>
         </Card>
       </motion.div>
     </TooltipProvider>
