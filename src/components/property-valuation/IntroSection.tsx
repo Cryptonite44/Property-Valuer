@@ -16,7 +16,7 @@ export const IntroSection = () => {
       <div className="relative h-24 mb-4">
         {/* Value indicators */}
         <motion.div
-          className="absolute left-1/4 top-0"
+          className="absolute left-[30%] top-0"
           animate={{
             y: [-5, 5, -5],
             opacity: [0.4, 0.8, 0.4],
@@ -30,7 +30,7 @@ export const IntroSection = () => {
           <PoundSterling className="w-4 h-4 text-green-400/50" />
         </motion.div>
         <motion.div
-          className="absolute right-1/3 top-4"
+          className="absolute left-[45%] top-4"
           animate={{
             y: [5, -5, 5],
             opacity: [0.4, 0.8, 0.4],
@@ -44,7 +44,7 @@ export const IntroSection = () => {
           <TrendingUp className="w-4 h-4 text-blue-400/50" />
         </motion.div>
         <motion.div
-          className="absolute right-1/4 top-2"
+          className="absolute left-[60%] top-2"
           animate={{
             y: [-8, 8, -8],
             opacity: [0.4, 0.8, 0.4],
@@ -124,7 +124,7 @@ export const IntroSection = () => {
             className="absolute"
             style={{
               top: `${i * 12 + 8}px`,
-              left: `${i * 16 + 65}%`,
+              left: `${40 + (i * 10)}%`,
             }}
             animate={{
               y: [-8, 8, -8],
