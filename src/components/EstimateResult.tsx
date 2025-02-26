@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,35 +37,15 @@ import {
   Bus,
   Landmark,
 } from "lucide-react";
+import { AIAnalysis } from "@/types/property";
 
-interface PropertyDetails {
-  location: {
-    description: string;
-    amenities: string[];
-  };
-  education: {
-    description: string;
-    schools: string[];
-  };
-  transport: {
-    description: string;
-    links: string[];
-  };
-  marketActivity: {
-    recentSales: string;
-    priceChanges: string;
-  };
-}
-
-interface AIAnalysis {
-  estimatedValue: number;
-  confidence: 'low' | 'medium' | 'high';
-  analysis: string;
-  details: PropertyDetails;
+interface ValueRange {
+  lower: number;
+  upper: number;
 }
 
 interface EstimateResultProps {
-  value: number;
+  value: ValueRange;
   analysis?: AIAnalysis;
   onReset: () => void;
 }
@@ -146,7 +125,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
       const { error } = await supabase.functions.invoke('send-valuation-email', {
         body: {
           ...formData,
-          estimatedValue: formatCurrency(value)
+          estimatedValue: `${formatCurrency(value.lower)} - ${formatCurrency(value.upper)}`
         }
       });
 
@@ -207,9 +186,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
                 <div>
                   <p className="text-sm font-medium text-white/70">Estimated Value Range</p>
                   <h3 className="text-2xl md:text-3xl font-semibold text-white">
-                    {typeof value === 'object' && value.lower && value.upper
-                      ? `${formatCurrency(value.lower)} - ${formatCurrency(value.upper)}`
-                      : formatCurrency(value as number)}
+                    {formatCurrency(value.lower)} - {formatCurrency(value.upper)}
                   </h3>
                 </div>
               </div>

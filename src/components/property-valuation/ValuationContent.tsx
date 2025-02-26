@@ -7,10 +7,15 @@ import { CustomerReview } from "@/components/CustomerReview";
 import { IntroSection } from "./IntroSection";
 import { AIAnalysis } from "@/types/property";
 
+interface ValueRange {
+  lower: number;
+  upper: number;
+}
+
 interface ValuationContentProps {
-  estimatedValue: number | null;
+  estimatedValue: ValueRange | null;
   analysis?: AIAnalysis;
-  onEstimate: (value: number, analysis?: AIAnalysis) => void;
+  onEstimate: (value: ValueRange, analysis?: AIAnalysis) => void;
   onReset: () => void;
 }
 

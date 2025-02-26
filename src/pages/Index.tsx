@@ -5,14 +5,19 @@ import { Footer } from "@/components/Footer";
 import { ValuationContent } from "@/components/property-valuation/ValuationContent";
 import { AIAnalysis } from "@/types/property";
 
+interface ValueRange {
+  lower: number;
+  upper: number;
+}
+
 const Index = () => {
-  const [estimatedValue, setEstimatedValue] = useState<number | null>(null);
+  const [estimatedValue, setEstimatedValue] = useState<ValueRange | null>(null);
   const [analysis, setAnalysis] = useState<AIAnalysis | undefined>(undefined);
 
-  const handleEstimate = (value: number, aiAnalysis?: AIAnalysis) => {
+  const handleEstimate = (value: ValueRange, aiAnalysis?: AIAnalysis) => {
     console.log('Handling estimate:', { value, aiAnalysis }); // Debug log
     
-    if (typeof value === 'number' && !isNaN(value)) {
+    if (value && typeof value.lower === 'number' && typeof value.upper === 'number') {
       setEstimatedValue(value);
       setAnalysis(aiAnalysis);
     } else {
