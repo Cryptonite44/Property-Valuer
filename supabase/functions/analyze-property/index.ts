@@ -19,28 +19,29 @@ serve(async (req) => {
 
     console.log('Starting property analysis with Gemini:', { address, propertyType }); // Debug log
 
-    const prompt = `As a UK property valuation expert, provide the exact current market value for this ${propertyType} at ${address}. Consider recent sales data, local market conditions, and property characteristics. Return your response EXACTLY in this JSON format, with no additional text or formatting:
+    const prompt = `You are a UK property valuation expert. Analyze this ${propertyType} at ${address}. Provide a valuation considering local market data, property characteristics, and market trends.
 
+Return ONLY a JSON object in this EXACT format (no additional text, no markdown):
 {
-  "estimatedValue": number,
-  "confidence": "low" | "medium" | "high",
-  "analysis": "string explaining the valuation rationale",
+  "estimatedValue": [number representing property value in GBP],
+  "confidence": ["low" or "medium" or "high"],
+  "analysis": [brief explanation of valuation],
   "details": {
     "location": {
-      "description": "string describing the area",
-      "amenities": ["array of nearby amenities"]
+      "description": [area description],
+      "amenities": [array of 3-5 nearby amenities]
     },
     "education": {
-      "description": "string describing educational facilities",
-      "schools": ["array of nearby schools"]
+      "description": [education facilities description],
+      "schools": [array of 2-3 nearby schools]
     },
     "transport": {
-      "description": "string describing transport links",
-      "links": ["array of transport options"]
+      "description": [transport links description],
+      "links": [array of 2-3 transport options]
     },
     "marketActivity": {
-      "recentSales": "string describing recent sales",
-      "priceChanges": "string describing price trends"
+      "recentSales": [recent sales activity description],
+      "priceChanges": [price trends description]
     }
   }
 }`;
@@ -59,13 +60,14 @@ serve(async (req) => {
         generationConfig: {
           temperature: 0.1,
           topK: 1,
-          topP: 1
+          topP: 1,
+          maxOutputTokens: 1000
         }
       })
     });
 
     const geminiData = await geminiResponse.json();
-    console.log('Raw Gemini response:', geminiData); // Debug log
+    console.log('Raw Gemini response:', JSON.stringify(geminiData, null, 2)); // Debug log
 
     if (!geminiData.candidates?.[0]?.content?.parts?.[0]?.text) {
       console.error('Invalid Gemini response structure:', geminiData);
@@ -75,26 +77,30 @@ serve(async (req) => {
     const rawContent = geminiData.candidates[0].content.parts[0].text;
     console.log('Raw content from Gemini:', rawContent); // Debug log
 
+    // Clean and parse the response
     let parsedResponse;
     try {
-      // Remove any potential markdown formatting and parse JSON
-      const cleanJson = rawContent.replace(/```json\n?|\n?```/g, '').trim();
+      // First remove any markdown formatting if present
+      const cleanJson = rawContent.replace(/```(?:json)?\n?|\n?```/g, '').trim();
+      console.log('Cleaned JSON:', cleanJson); // Debug log
+      
       parsedResponse = JSON.parse(cleanJson);
-      console.log('Successfully parsed Gemini response:', parsedResponse); // Debug log
+      console.log('Parsed response:', parsedResponse); // Debug log
+
+      // Validate required fields
+      if (typeof parsedResponse.estimatedValue !== 'number' ||
+          !['low', 'medium', 'high'].includes(parsedResponse.confidence) ||
+          !parsedResponse.details?.location?.description ||
+          !Array.isArray(parsedResponse.details?.location?.amenities)) {
+        throw new Error('Missing required fields in response');
+      }
     } catch (parseError) {
-      console.error('Failed to parse Gemini response:', parseError);
-      console.error('Content that failed to parse:', rawContent);
-      throw new Error('Failed to parse Gemini response');
+      console.error('Parse error:', parseError);
+      console.error('Failed content:', rawContent);
+      throw new Error(`Failed to parse Gemini response: ${parseError.message}`);
     }
 
-    // Validate the response structure
-    if (!parsedResponse || typeof parsedResponse.estimatedValue !== 'number') {
-      console.error('Invalid response structure:', parsedResponse);
-      throw new Error('Invalid response structure from Gemini');
-    }
-
-    // Create a new Response with the exact parsed data
-    const finalResponse = new Response(
+    return new Response(
       JSON.stringify(parsedResponse),
       {
         headers: { 
@@ -103,17 +109,13 @@ serve(async (req) => {
         }
       }
     );
-
-    // Log the actual response being sent
-    const responseClone = finalResponse.clone();
-    const responseBody = await responseClone.json();
-    console.log('Final response being sent:', responseBody);
-
-    return finalResponse;
   } catch (error) {
     console.error('Error in analyze-property function:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        details: "Failed to analyze property. Please try again."
+      }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
