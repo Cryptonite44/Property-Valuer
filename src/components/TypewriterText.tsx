@@ -10,17 +10,21 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   texts,
   className = "",
 }) => {
-  const [currentText, setCurrentText] = useState("");
+  const [displayedText, setDisplayedText] = useState("");
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    if (currentTextIndex >= texts.length) return;
+    if (currentTextIndex >= texts.length) {
+      setIsDone(true);
+      return;
+    }
 
     const currentTextObj = texts[currentTextIndex];
     if (currentCharIndex < currentTextObj.text.length) {
       const timeout = setTimeout(() => {
-        setCurrentText(prev => prev + currentTextObj.text[currentCharIndex]);
+        setDisplayedText(prev => prev + currentTextObj.text[currentCharIndex]);
         setCurrentCharIndex(prev => prev + 1);
       }, currentTextObj.delay);
 
@@ -31,13 +35,16 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
     }
   }, [currentCharIndex, currentTextIndex, texts]);
 
+  // If animation is done, show full text to ensure visibility
+  const finalText = isDone ? texts.map(t => t.text).join("") : displayedText;
+
   return (
-    <div className={`inline-block ${className}`}>
-      <span className="font-light">{currentText}</span>
-      {currentTextIndex < texts.length && currentCharIndex < texts[currentTextIndex].text.length && (
+    <span className={`inline-block relative ${className}`}>
+      {finalText}
+      {!isDone && (
         <span className="animate-cursor-blink border-r-2 border-white ml-1" />
       )}
-    </div>
+    </span>
   );
 };
 
