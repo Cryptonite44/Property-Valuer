@@ -27,9 +27,9 @@ export const IntroSection = () => {
           }}
         />
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 relative z-10 break-words space-y-3">
-          <div className="text-white tracking-tight">AI-Powered</div>
+          <div className="text-white tracking-tight glow animate-text-shine">AI-Powered</div>
           <div className="relative inline-block">
-            <div className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#6366F1] to-[#3B82F6]">
+            <div className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#6366F1] to-[#3B82F6] animate-text-shine">
               Property Valuations
             </div>
             <motion.div
@@ -58,9 +58,30 @@ export const IntroSection = () => {
                 />
                 <defs>
                   <linearGradient id="gradient" x1="0" y1="0" x2="400" y2="0">
-                    <stop offset="0%" stopColor="#8B5CF6" />
-                    <stop offset="50%" stopColor="#6366F1" />
-                    <stop offset="100%" stopColor="#3B82F6" />
+                    <stop offset="0%" stopColor="#8B5CF6">
+                      <animate
+                        attributeName="stop-color"
+                        values="#8B5CF6; #6366F1; #3B82F6; #8B5CF6"
+                        dur="4s"
+                        repeatCount="indefinite"
+                      />
+                    </stop>
+                    <stop offset="50%" stopColor="#6366F1">
+                      <animate
+                        attributeName="stop-color"
+                        values="#6366F1; #3B82F6; #8B5CF6; #6366F1"
+                        dur="4s"
+                        repeatCount="indefinite"
+                      />
+                    </stop>
+                    <stop offset="100%" stopColor="#3B82F6">
+                      <animate
+                        attributeName="stop-color"
+                        values="#3B82F6; #8B5CF6; #6366F1; #3B82F6"
+                        dur="4s"
+                        repeatCount="indefinite"
+                      />
+                    </stop>
                   </linearGradient>
                 </defs>
               </svg>
