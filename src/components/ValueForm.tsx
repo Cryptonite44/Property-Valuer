@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -7,12 +8,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Label } from "@/components/ui/label"; // Added Label import
+import { Input } from "@/components/ui/input"; // Added Input import
 import { supabase } from "@/integrations/supabase/client";
 import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
-import { Wand2 } from "lucide-react";
+import { Wand2, Search } from "lucide-react"; // Added Search icon import
 import { PropertyTypeSelector } from "./property-form/PropertyTypeSelector";
 import { AddressInput } from "./property-form/AddressInput";
 import { SubmitButton } from "./property-form/SubmitButton";
