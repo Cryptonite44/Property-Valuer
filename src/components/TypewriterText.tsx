@@ -13,55 +13,27 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   const [currentText, setCurrentText] = useState("");
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    // Check if device is mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    // Initial check
-    checkMobile();
-
-    // Add listener for window resize
-    window.addEventListener('resize', checkMobile);
-
-    // Cleanup listener
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    // Always show typewriter effect regardless of device
     if (currentTextIndex >= texts.length) return;
 
     const currentTextObj = texts[currentTextIndex];
     if (currentCharIndex < currentTextObj.text.length) {
       const timeout = setTimeout(() => {
-        setCurrentText(prev => {
-          if (currentTextIndex > 0) {
-            return texts.slice(0, currentTextIndex).map(t => t.text).join("") + 
-                   currentTextObj.text.slice(0, currentCharIndex + 1);
-          }
-          return currentTextObj.text.slice(0, currentCharIndex + 1);
-        });
+        setCurrentText(prev => prev + currentTextObj.text[currentCharIndex]);
         setCurrentCharIndex(prev => prev + 1);
       }, currentTextObj.delay);
 
       return () => clearTimeout(timeout);
     } else if (currentTextIndex < texts.length - 1) {
-      const nextTextTimeout = setTimeout(() => {
-        setCurrentTextIndex(prev => prev + 1);
-        setCurrentCharIndex(0);
-      }, 500); // Small pause between texts
-
-      return () => clearTimeout(nextTextTimeout);
+      setCurrentTextIndex(prev => prev + 1);
+      setCurrentCharIndex(0);
     }
   }, [currentCharIndex, currentTextIndex, texts]);
 
   return (
-    <div className={`inline-block ${className} ${isMobile ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl' : 'text-3xl sm:text-4xl md:text-5xl'} font-semibold tracking-tight leading-none`}>
-      <span className="whitespace-nowrap">{currentText}</span>
+    <div className={`inline-block ${className}`}>
+      <span className="font-light">{currentText}</span>
       {currentTextIndex < texts.length && currentCharIndex < texts[currentTextIndex].text.length && (
         <span className="animate-cursor-blink border-r-2 border-white ml-1" />
       )}
