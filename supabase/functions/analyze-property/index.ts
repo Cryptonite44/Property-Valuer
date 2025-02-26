@@ -17,9 +17,9 @@ serve(async (req) => {
   try {
     const { address, propertyType } = await req.json();
 
-    console.log('Analyzing property:', { address, propertyType }); // Debug log
+    console.log('Starting property analysis for:', { address, propertyType }); // Debug log
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${openAIApiKey}`,
@@ -30,7 +30,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'user',
-            content: `What is the exact current market value of this ${propertyType} at ${address}? Consider recent sales data and local market conditions. Provide ONLY a JSON response with this structure, no other text:
+            content: `Provide the exact current market value for this ${propertyType} at ${address}. Return ONLY a JSON response with this exact structure:
 
 {
   "estimatedValue": number,
@@ -61,29 +61,56 @@ serve(async (req) => {
       }),
     });
 
-    const data = await response.json();
-    console.log('Raw OpenAI response:', data); // Debug log
+    const openAIData = await openAIResponse.json();
+    console.log('Raw OpenAI response:', openAIData); // Debug log
 
-    if (!data.choices?.[0]?.message?.content) {
-      throw new Error('Invalid response from OpenAI');
+    if (!openAIData.choices?.[0]?.message?.content) {
+      throw new Error('Invalid response structure from OpenAI');
     }
 
-    const content = data.choices[0].message.content;
-    console.log('Raw content from ChatGPT:', content); // Debug log
+    const chatGPTContent = openAIData.choices[0].message.content;
+    console.log('ChatGPT raw content:', chatGPTContent); // Debug log
 
-    // Parse the JSON response directly
-    const aiResponse = JSON.parse(content);
-    console.log('Parsed AI response:', aiResponse); // Debug log
+    let parsedResponse;
+    try {
+      parsedResponse = JSON.parse(chatGPTContent);
+      console.log('Successfully parsed ChatGPT response:', parsedResponse); // Debug log
+    } catch (parseError) {
+      console.error('Failed to parse ChatGPT response:', parseError);
+      throw new Error('Failed to parse ChatGPT response');
+    }
 
-    // Return the exact ChatGPT response without any modification
-    return new Response(JSON.stringify(aiResponse), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    // Validate the response structure
+    if (!parsedResponse || typeof parsedResponse.estimatedValue !== 'number') {
+      console.error('Invalid response structure:', parsedResponse);
+      throw new Error('Invalid response structure from ChatGPT');
+    }
+
+    // Create a new Response with the EXACT parsed data from ChatGPT
+    const finalResponse = new Response(
+      JSON.stringify(parsedResponse),
+      {
+        headers: { 
+          ...corsHeaders, 
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    // Log the actual response being sent
+    const responseClone = finalResponse.clone();
+    const responseBody = await responseClone.json();
+    console.log('Final response being sent:', responseBody);
+
+    return finalResponse;
   } catch (error) {
     console.error('Error in analyze-property function:', error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: error.message }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
