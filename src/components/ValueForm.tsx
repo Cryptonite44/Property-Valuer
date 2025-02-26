@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -8,14 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label"; // Added Label import
-import { Input } from "@/components/ui/input"; // Added Input import
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
-import { Wand2, Search } from "lucide-react"; // Added Search icon import
+import { Wand2, Search } from "lucide-react";
 import { PropertyTypeSelector } from "./property-form/PropertyTypeSelector";
 import { AddressInput } from "./property-form/AddressInput";
 import { SubmitButton } from "./property-form/SubmitButton";
@@ -102,7 +101,6 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-md mx-auto"
       >
-        {/* Powerful burst glow effect */}
         <motion.div
           className="absolute -inset-2 bg-gradient-to-r from-[#8B5CF6] via-[#D946EF] to-[#0EA5E9] opacity-75 blur-2xl rounded-lg"
           animate={{
@@ -142,26 +140,25 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
               <CardTitle className="text-white text-3xl">
                 Property Details
               </CardTitle>
-              <CardDescription className="text-lg mt-2 text-white/70 flex items-center justify-center gap-2">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  AI-powered property valuations in seconds
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ 
-                    delay: 0.7,
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 10
-                  }}
-                >
-                  <Wand2 className="w-4 h-4 text-[#9b87f5]" />
-                </motion.div>
+              <CardDescription className="text-lg mt-2 text-white/70">
+                <div className="flex items-center justify-center gap-2 flex-wrap">
+                  <span className="inline-flex items-center">
+                    AI-powered property valuations in seconds
+                  </span>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ 
+                      delay: 0.7,
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 10
+                    }}
+                    className="inline-flex"
+                  >
+                    <Wand2 className="w-4 h-4 text-[#9b87f5]" />
+                  </motion.div>
+                </div>
               </CardDescription>
             </motion.div>
           </CardHeader>
@@ -194,7 +191,6 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
           </CardContent>
         </Card>
         
-        {/* Add subtle floating shapes in the background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
             className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full mix-blend-overlay filter blur-xl"
