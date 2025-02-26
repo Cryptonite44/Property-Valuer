@@ -13,8 +13,8 @@ export const Header = () => {
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm -z-10" />
       <div className="w-full">
-        <div className="flex items-center justify-between py-3 px-4">
-          <Link to="/" className="glass-panel py-2 px-4 relative overflow-hidden">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 py-3 px-4">
+          <Link to="/" className="glass-panel py-2 px-4 relative overflow-hidden w-full sm:w-auto">
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-pink-500/10"
               animate={{
@@ -30,7 +30,7 @@ export const Header = () => {
               }}
             />
             
-            <div className="flex items-center relative z-10">
+            <div className="flex items-center justify-center sm:justify-start relative z-10">
               <motion.div 
                 className="flex items-center"
                 whileHover={{ scale: 1.02 }}
@@ -50,7 +50,7 @@ export const Header = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="glass-panel py-1.5 px-3 flex items-center gap-2"
+            className="glass-panel py-1.5 px-3 flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start"
           >
             <Activity className="w-3.5 h-3.5 text-green-400" />
             <span className="text-xs font-medium text-green-400">All Systems Nominal</span>
