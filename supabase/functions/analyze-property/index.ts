@@ -2,19 +2,12 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
-
-// Helper function to extract JSON from markdown code blocks if present
-function cleanJsonResponse(response: string): string {
-  // Try to extract JSON from markdown code blocks if present
-  const jsonMatch = response.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
-  return jsonMatch ? jsonMatch[1] : response;
-}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -24,85 +17,83 @@ serve(async (req) => {
   try {
     const { address, propertyType } = await req.json();
 
-    console.log('Starting property analysis for:', { address, propertyType }); // Debug log
+    console.log('Starting property analysis with Gemini:', { address, propertyType }); // Debug log
 
-    const openAIResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: 'You are a UK property valuation expert. Return only valid JSON with no markdown formatting or extra text.'
-          },
-          {
-            role: 'user',
-            content: `Provide the exact current market value for this ${propertyType} at ${address}. Return ONLY a JSON response with this exact structure:
+    const prompt = `As a UK property valuation expert, provide the exact current market value for this ${propertyType} at ${address}. Consider recent sales data, local market conditions, and property characteristics. Return your response EXACTLY in this JSON format, with no additional text or formatting:
 
 {
   "estimatedValue": number,
   "confidence": "low" | "medium" | "high",
-  "analysis": "string",
+  "analysis": "string explaining the valuation rationale",
   "details": {
     "location": {
-      "description": "string",
-      "amenities": ["string"]
+      "description": "string describing the area",
+      "amenities": ["array of nearby amenities"]
     },
     "education": {
-      "description": "string",
-      "schools": ["string"]
+      "description": "string describing educational facilities",
+      "schools": ["array of nearby schools"]
     },
     "transport": {
-      "description": "string",
-      "links": ["string"]
+      "description": "string describing transport links",
+      "links": ["array of transport options"]
     },
     "marketActivity": {
-      "recentSales": "string",
-      "priceChanges": "string"
+      "recentSales": "string describing recent sales",
+      "priceChanges": "string describing price trends"
     }
   }
-}`
-          }
-        ],
-        temperature: 0.1
-      }),
+}`;
+
+    const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${geminiApiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }],
+        generationConfig: {
+          temperature: 0.1,
+          topK: 1,
+          topP: 1
+        }
+      })
     });
 
-    const openAIData = await openAIResponse.json();
-    console.log('Raw OpenAI response:', openAIData); // Debug log
+    const geminiData = await geminiResponse.json();
+    console.log('Raw Gemini response:', geminiData); // Debug log
 
-    if (!openAIData.choices?.[0]?.message?.content) {
-      throw new Error('Invalid response structure from OpenAI');
+    if (!geminiData.candidates?.[0]?.content?.parts?.[0]?.text) {
+      console.error('Invalid Gemini response structure:', geminiData);
+      throw new Error('Invalid response structure from Gemini');
     }
 
-    const chatGPTContent = openAIData.choices[0].message.content;
-    console.log('ChatGPT raw content:', chatGPTContent); // Debug log
-
-    // Clean the response before parsing
-    const cleanedContent = cleanJsonResponse(chatGPTContent);
-    console.log('Cleaned content:', cleanedContent); // Debug log
+    const rawContent = geminiData.candidates[0].content.parts[0].text;
+    console.log('Raw content from Gemini:', rawContent); // Debug log
 
     let parsedResponse;
     try {
-      parsedResponse = JSON.parse(cleanedContent);
-      console.log('Successfully parsed ChatGPT response:', parsedResponse); // Debug log
+      // Remove any potential markdown formatting and parse JSON
+      const cleanJson = rawContent.replace(/```json\n?|\n?```/g, '').trim();
+      parsedResponse = JSON.parse(cleanJson);
+      console.log('Successfully parsed Gemini response:', parsedResponse); // Debug log
     } catch (parseError) {
-      console.error('Failed to parse ChatGPT response:', parseError);
-      console.error('Content that failed to parse:', cleanedContent);
-      throw new Error('Failed to parse ChatGPT response');
+      console.error('Failed to parse Gemini response:', parseError);
+      console.error('Content that failed to parse:', rawContent);
+      throw new Error('Failed to parse Gemini response');
     }
 
     // Validate the response structure
     if (!parsedResponse || typeof parsedResponse.estimatedValue !== 'number') {
       console.error('Invalid response structure:', parsedResponse);
-      throw new Error('Invalid response structure from ChatGPT');
+      throw new Error('Invalid response structure from Gemini');
     }
 
-    // Create a new Response with the EXACT parsed data from ChatGPT
+    // Create a new Response with the exact parsed data
     const finalResponse = new Response(
       JSON.stringify(parsedResponse),
       {
