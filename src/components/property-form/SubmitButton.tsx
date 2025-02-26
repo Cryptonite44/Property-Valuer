@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Loader, Brain, Building2, ChartLine } from "lucide-react";
+import { Loader, Brain, Building2, ChartLine, Search } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SubmitButtonProps {
@@ -117,7 +117,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
           </motion.div>
         ) : (
           <motion.div
-            className="relative flex items-center justify-center w-full"
+            className="relative flex items-center justify-center w-full gap-2"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
@@ -134,6 +134,7 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
               }}
             />
             
+            <Search className="w-5 h-5" />
             <motion.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
