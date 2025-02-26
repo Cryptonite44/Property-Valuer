@@ -26,9 +26,9 @@ export const IntroSection = () => {
             backgroundSize: "200% 200%",
           }}
         />
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 relative z-10 break-words space-y-2">
-          <div className="text-white">AI-Powered</div>
-          <div className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-violet-400 to-blue-500">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 relative z-10 break-words space-y-3">
+          <div className="text-white tracking-tight">AI-Powered</div>
+          <div className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#6366F1] to-[#3B82F6]">
             Property Valuations
           </div>
         </h1>
