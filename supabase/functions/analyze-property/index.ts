@@ -10,7 +10,6 @@ const corsHeaders = {
 };
 
 function extractJSONFromMarkdown(text: string): string {
-  // Remove markdown code block indicators if present
   const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
   return jsonMatch ? jsonMatch[1] : text;
 }
@@ -23,16 +22,29 @@ serve(async (req) => {
   try {
     const { address, propertyType } = await req.json();
 
-    // Craft a detailed prompt for the AI
-    const prompt = `As a professional property valuation expert, analyze this ${propertyType} and provide a detailed valuation with supporting information.
+    const prompt = `As a UK property valuation expert, carefully analyze this ${propertyType} and provide a detailed valuation. 
 
 Address: ${address}
 
-Analyze the property and respond ONLY with a JSON object (no markdown, no code blocks) that matches this exact structure:
+Consider these CRUCIAL factors for an accurate valuation:
+1. Recent property sales in the area (within last 12 months)
+2. Current market conditions and trends
+3. Location-specific factors (transport links, schools, amenities)
+4. Property type and typical values for similar properties
+5. Regional property market performance
+
+IMPORTANT: The estimated value MUST be:
+- In GBP (£)
+- A realistic market value for the specific UK location
+- Based on current market data
+- Rounded to the nearest thousand
+- Between £50,000 and £10,000,000
+
+Respond ONLY with a JSON object (no markdown, no code blocks) matching this structure:
 {
   "estimatedValue": number,
   "confidence": "low" | "medium" | "high",
-  "analysis": "string",
+  "analysis": "string explaining the valuation rationale",
   "details": {
     "location": {
       "description": "string",
@@ -47,8 +59,8 @@ Analyze the property and respond ONLY with a JSON object (no markdown, no code b
       "links": ["string"]
     },
     "marketActivity": {
-      "recentSales": "string",
-      "priceChanges": "string"
+      "recentSales": "string describing recent sales",
+      "priceChanges": "string describing price trends"
     }
   }
 }`;
@@ -66,7 +78,7 @@ Analyze the property and respond ONLY with a JSON object (no markdown, no code b
         messages: [
           {
             role: 'system',
-            content: 'You are an expert property valuation AI. Always respond with ONLY a JSON object, no markdown formatting or code blocks.'
+            content: 'You are an expert UK property valuation AI with extensive knowledge of the UK property market, local areas, and current market conditions. Always provide realistic valuations based on actual market data and local property prices. Never provide valuations outside the range of £50,000 to £10,000,000.'
           },
           {
             role: 'user',
@@ -93,6 +105,14 @@ Analyze the property and respond ONLY with a JSON object (no markdown, no code b
 
     // Parse the cleaned JSON
     const aiResponse = JSON.parse(cleanedContent);
+    
+    // Validate the response
+    if (!aiResponse.estimatedValue || 
+        aiResponse.estimatedValue < 50000 || 
+        aiResponse.estimatedValue > 10000000) {
+      throw new Error('Invalid property valuation amount');
+    }
+
     console.log('Parsed response:', aiResponse); // Debug log
 
     return new Response(JSON.stringify(aiResponse), {
