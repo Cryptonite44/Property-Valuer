@@ -38,9 +38,9 @@ const Index = () => {
   const [analysis, setAnalysis] = useState<AIAnalysis | undefined>(undefined);
 
   const handleEstimate = (value: number, aiAnalysis?: AIAnalysis) => {
-    console.log("Received estimate:", value, aiAnalysis); // Debug log
-    if (value) {
-      setEstimatedValue(value);
+    console.log('Handling estimate:', { value, aiAnalysis }); // Debug log
+    setEstimatedValue(value);
+    if (aiAnalysis) {
       setAnalysis(aiAnalysis);
     }
   };
@@ -49,6 +49,8 @@ const Index = () => {
     setEstimatedValue(null);
     setAnalysis(undefined);
   };
+
+  console.log('Current state:', { estimatedValue, analysis }); // Debug log
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
@@ -186,7 +188,6 @@ const Index = () => {
           </motion.div>
         )}
       </div>
-
       <Footer />
     </div>
   );

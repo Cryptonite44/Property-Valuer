@@ -59,29 +59,35 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
 
     setIsLoading(true);
     try {
-      console.log('Submitting analysis request...'); // Debug log
-      const { data, error } = await supabase.functions.invoke('analyze-property', {
+      const response = await supabase.functions.invoke('analyze-property', {
         body: { address, propertyType: selectedType }
       });
 
-      console.log('Response received:', { data, error }); // Debug log
+      console.log('Full response:', response); // Debug log
 
-      if (error) {
-        throw new Error(error.message || 'Failed to analyze property');
+      // Handle supabase error
+      if (response.error) {
+        throw new Error(response.error.message);
       }
 
-      if (!data || typeof data.estimatedValue !== 'number') {
+      // Extract data from response
+      const data = response.data;
+      console.log('Extracted data:', data); // Debug log
+
+      if (!data || !data.estimatedValue) {
         throw new Error('Invalid response format from analysis');
       }
 
+      // Show success toast
       toast({
-        title: `Analysis Complete`,
+        title: "Analysis Complete",
         description: "Based on historical sales data and market trends",
       });
 
-      onEstimate(data.estimatedValue, data);
+      // Call onEstimate with the complete data object
+      onEstimate(parseFloat(data.estimatedValue), data as AIAnalysis);
     } catch (error: any) {
-      console.error('Error analyzing property:', error);
+      console.error('Error in analysis:', error);
       toast({
         title: "Error analyzing property",
         description: error.message || "Please try again later",
