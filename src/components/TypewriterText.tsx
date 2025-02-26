@@ -60,8 +60,8 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   }, [currentCharIndex, currentTextIndex, texts, isMobile]);
 
   return (
-    <div className={`inline-block ${className}`}>
-      <span>{currentText}</span>
+    <div className={`inline-block ${className} ${isMobile ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl' : 'text-3xl sm:text-4xl md:text-5xl'}`}>
+      <span className="whitespace-nowrap">{currentText}</span>
       {!isMobile && currentTextIndex < texts.length && currentCharIndex < texts[currentTextIndex].text.length && (
         <span className="animate-cursor-blink border-r-2 border-white ml-1" />
       )}
