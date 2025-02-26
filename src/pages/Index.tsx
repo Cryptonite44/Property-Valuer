@@ -167,44 +167,20 @@ const Index = () => {
             >
               <div className="absolute inset-0 -top-24 -bottom-24 flex items-center justify-center pointer-events-none">
                 <div className="relative w-full h-full max-w-[32rem] flex items-center justify-center">
-                  {/* Roof glow */}
                   <motion.div
-                    className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80%] h-[40%] bg-gradient-to-b from-purple-500/10 to-transparent transform -skew-x-12 blur-2xl"
+                    className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 rounded-3xl blur-2xl"
                     animate={{
-                      opacity: [0.1, 0.15, 0.1],
+                      backgroundPosition: ["0% 0%", "100% 100%"],
                     }}
                     transition={{
-                      duration: 4,
+                      duration: 15,
                       repeat: Infinity,
                       repeatType: "reverse",
                     }}
-                  />
-                  <motion.div
-                    className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80%] h-[40%] bg-gradient-to-b from-purple-500/10 to-transparent transform skew-x-12 blur-2xl"
-                    animate={{
-                      opacity: [0.1, 0.15, 0.1],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      delay: 0.5,
+                    style={{
+                      backgroundSize: "200% 200%",
                     }}
                   />
-                  
-                  {/* House body glow */}
-                  <motion.div
-                    className="absolute top-[45%] left-1/2 -translate-x-1/2 w-[70%] h-[50%] bg-gradient-to-t from-blue-500/5 via-purple-500/5 to-transparent rounded-xl blur-2xl"
-                    animate={{
-                      opacity: [0.1, 0.2, 0.1],
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                    }}
-                  />
-                  
                   <Home className="w-full h-full text-[#E5DEFF] opacity-[0.08]" />
                 </div>
               </div>
