@@ -33,12 +33,12 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
 
   return (
     <div className={`inline-block ${className}`}>
-      <div className="whitespace-pre-line text-center">
+      <div className="whitespace-pre-line text-center inline">
         {currentText}
+        {currentTextIndex < texts.length && currentCharIndex < texts[currentTextIndex].text.length && (
+          <span className="animate-cursor-blink border-r-2 border-white/80 ml-1" />
+        )}
       </div>
-      {currentTextIndex < texts.length && currentCharIndex < texts[currentTextIndex].text.length && (
-        <span className="animate-cursor-blink border-r-2 border-white/80 ml-1" />
-      )}
     </div>
   );
 };
