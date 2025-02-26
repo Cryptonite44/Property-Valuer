@@ -1,8 +1,8 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
+import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 import { ShieldCheck, Building2, Lock, UserCheck, Search, Star, Shield, Clock, FileText, Zap } from "lucide-react";
 
@@ -101,7 +101,7 @@ const Index = () => {
         </div>
       </div>
       
-      <div className="relative z-10 w-full max-w-5xl mx-auto mt-24 md:mt-16 mb-20 md:mb-24 px-3 md:px-4">
+      <div className="relative z-10 w-full max-w-5xl mx-auto mt-24 md:mt-16 mb-32 px-3 md:px-4">
         {!estimatedValue ? (
           <>
             <motion.div 
@@ -179,6 +179,8 @@ const Index = () => {
           </motion.div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 };
