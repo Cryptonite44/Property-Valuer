@@ -33,7 +33,9 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
 
   return (
     <div className={`inline-block ${className}`}>
-      <span className="text-transparent">{currentText}</span>
+      <div className="whitespace-pre-line text-left">
+        {currentText}
+      </div>
       {currentTextIndex < texts.length && currentCharIndex < texts[currentTextIndex].text.length && (
         <span className="animate-cursor-blink border-r-2 border-white/80 ml-1" />
       )}
