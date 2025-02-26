@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
-import { Building2, Home, Sun, Cloud, Star, PoundSterling, TrendingUp, ChartBar } from "lucide-react";
+import { Home, PoundSterling, TrendingUp, ChartBar } from "lucide-react";
 
 export const IntroSection = () => {
   return (
@@ -85,7 +85,7 @@ export const IntroSection = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="relative">
-                <Building2 className="w-16 h-16 text-white" strokeWidth={1.5} />
+                <Home className="w-16 h-16 text-white" strokeWidth={1.5} />
                 {/* Value indicator */}
                 <motion.div
                   className="absolute -top-4 -right-2 flex items-center gap-1 bg-gradient-to-r from-green-500/20 to-blue-500/20 px-2 py-1 rounded-full"
