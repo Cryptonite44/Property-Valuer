@@ -4,6 +4,7 @@ import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { Footer } from "@/components/Footer";
+import { CustomerReview } from "@/components/CustomerReview";
 import { motion } from "framer-motion";
 import { Building2 } from "lucide-react";
 
@@ -133,6 +134,7 @@ const Index = () => {
           >
             <ValueForm onEstimate={handleEstimate} />
           </motion.div>
+          <CustomerReview />
         </>
       );
     }
