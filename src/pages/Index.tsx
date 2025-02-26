@@ -38,8 +38,11 @@ const Index = () => {
   const [analysis, setAnalysis] = useState<AIAnalysis | undefined>(undefined);
 
   const handleEstimate = (value: number, aiAnalysis?: AIAnalysis) => {
-    setEstimatedValue(value);
-    setAnalysis(aiAnalysis);
+    console.log("Received estimate:", value, aiAnalysis); // Debug log
+    if (value) {
+      setEstimatedValue(value);
+      setAnalysis(aiAnalysis);
+    }
   };
 
   const handleReset = () => {

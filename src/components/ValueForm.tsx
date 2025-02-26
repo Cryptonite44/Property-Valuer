@@ -59,12 +59,19 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
 
     setIsLoading(true);
     try {
+      console.log('Submitting analysis request...'); // Debug log
       const { data, error } = await supabase.functions.invoke('analyze-property', {
         body: { address, propertyType: selectedType }
       });
 
-      if (error || !data) {
-        throw new Error(error?.message || 'Failed to analyze property');
+      console.log('Response received:', { data, error }); // Debug log
+
+      if (error) {
+        throw new Error(error.message || 'Failed to analyze property');
+      }
+
+      if (!data || typeof data.estimatedValue !== 'number') {
+        throw new Error('Invalid response format from analysis');
       }
 
       toast({
@@ -73,7 +80,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
       });
 
       onEstimate(data.estimatedValue, data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error analyzing property:', error);
       toast({
         title: "Error analyzing property",
