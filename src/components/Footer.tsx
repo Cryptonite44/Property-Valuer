@@ -9,7 +9,7 @@ export const Footer = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
-      className="fixed bottom-0 left-0 right-0 z-20"
+      className="relative z-20 mt-auto" // Changed from fixed to relative
     >
       <div className="bg-gradient-to-t from-[#1A1F2C] to-transparent pt-16">
         <div className="bg-[#1A1F2C]/95 backdrop-blur-lg border-t border-white/5">

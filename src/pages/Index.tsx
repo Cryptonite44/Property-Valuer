@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -47,11 +48,12 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-2 md:p-8 relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
+    <div className="min-h-screen flex flex-col relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
+      {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="fixed top-0 left-0 right-0 w-full flex flex-col md:flex-row items-center justify-between p-3 md:p-4 z-20 bg-gradient-to-b from-[rgb(17,24,39)] to-transparent gap-2 md:gap-0"
+        className="sticky top-0 w-full flex flex-col md:flex-row items-center justify-between p-3 md:p-4 z-20 bg-gradient-to-b from-[rgb(17,24,39)] to-transparent gap-2 md:gap-0"
       >
         <motion.div 
           className="flex items-center space-x-2 text-white"
@@ -92,6 +94,7 @@ const Index = () => {
         </div>
       </motion.div>
 
+      {/* Background Effects */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]" />
         <div className="absolute top-0 left-0 w-full h-full opacity-50">
@@ -101,7 +104,8 @@ const Index = () => {
         </div>
       </div>
       
-      <div className="relative z-10 w-full max-w-5xl mx-auto mt-24 md:mt-16 mb-32 px-3 md:px-4">
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl mx-auto px-3 md:px-4 py-16">
         {!estimatedValue ? (
           <>
             <motion.div 
@@ -180,6 +184,7 @@ const Index = () => {
         )}
       </div>
 
+      {/* Footer */}
       <Footer />
     </div>
   );
