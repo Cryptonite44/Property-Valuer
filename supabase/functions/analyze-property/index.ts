@@ -19,38 +19,42 @@ serve(async (req) => {
 
     console.log('Request received:', { address, propertyType });
 
-    const prompt = `You are a UK property expert. Analyze this ${propertyType} at ${address} and provide a detailed response with:
-1. Estimated value
-2. Local area description and amenities
-3. Nearby schools and education facilities
-4. Transport links and accessibility
-5. Recent market activity and price trends
+    const prompt = `You are a UK property expert. Based on real market data, provide a highly accurate valuation for this ${propertyType} at ${address}. Consider:
+- Current UK property market trends
+- Local area house prices and recent sales
+- Property type and location specifics
+- Local amenities and transport links
+- Nearby schools and facilities
+
+Your valuation must be realistic for a ${propertyType} in ${address} based on current UK market data.
 
 Format your response EXACTLY as this JSON (no other text):
 
 {
-  "estimatedValue": [number without currency symbols or commas],
-  "confidence": "medium",
-  "analysis": [brief market analysis],
+  "estimatedValue": [realistic number without currency symbols or commas],
+  "confidence": ["low", "medium", or "high" based on data availability],
+  "analysis": [explain why you chose this value],
   "details": {
     "location": {
       "description": [detailed area description],
-      "amenities": [array of key local amenities]
+      "amenities": [array of actual local amenities]
     },
     "education": {
-      "description": [overview of educational facilities],
-      "schools": [array of nearby schools]
+      "description": [overview of real local schools],
+      "schools": [array of actual nearby schools]
     },
     "transport": {
-      "description": [overview of transport links],
-      "links": [array of transport options]
+      "description": [real transport links],
+      "links": [array of actual transport options]
     },
     "marketActivity": {
-      "recentSales": [description of recent sales],
-      "priceChanges": [description of price trends]
+      "recentSales": [actual recent sales data],
+      "priceChanges": [real local price trends]
     }
   }
-}`;
+}
+
+Be very careful with the estimated value - it must reflect real UK property prices for this location.`;
 
     console.log('Sending prompt to OpenAI:', prompt);
 
@@ -61,18 +65,18 @@ Format your response EXACTLY as this JSON (no other text):
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4o',  // Using the more powerful model for better accuracy
         messages: [
           {
             role: 'system',
-            content: 'You are a UK property valuation expert. Always respond with valid JSON.'
+            content: 'You are a UK property valuation expert with access to current market data. Your valuations must be realistic and based on actual market conditions. Be conservative in your estimates and ensure they align with real property prices in the specified area.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.3 // Reduced temperature for more consistent results
+        temperature: 0.2  // Lower temperature for more conservative estimates
       }),
     });
 
@@ -99,15 +103,20 @@ Format your response EXACTLY as this JSON (no other text):
     const parsed = JSON.parse(cleanJson);
     console.log('Parsed response object:', JSON.stringify(parsed, null, 2));
 
-    // Validate the essential fields
+    // More thorough validation
     if (!parsed || typeof parsed.estimatedValue !== 'number') {
       console.error('Validation failed:', parsed);
       throw new Error('Invalid response format - missing or invalid estimatedValue');
     }
 
+    // Validate the value is within reasonable bounds for UK property
+    if (parsed.estimatedValue < 50000 || parsed.estimatedValue > 10000000) {
+      console.error('Unrealistic property value:', parsed.estimatedValue);
+      throw new Error('Generated value outside realistic range for UK property');
+    }
+
     console.log('Final response being sent:', JSON.stringify(parsed, null, 2));
 
-    // Return the exact parsed response from ChatGPT without any modifications
     return new Response(
       JSON.stringify(parsed),
       { 
