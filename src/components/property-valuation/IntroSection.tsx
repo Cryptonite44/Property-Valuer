@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
-import { Building2, Home, Sun, Cloud, Star, PoundSterling, TrendingUp, ChartBar } from "lucide-react";
+import { PoundSterling, TrendingUp, ChartBar } from "lucide-react";
 
 export const IntroSection = () => {
   return (
@@ -12,7 +12,7 @@ export const IntroSection = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="text-center mb-8 space-y-6 relative w-full max-w-screen-lg mx-auto px-4 pt-20"
     >
-      {/* Animated House Scene */}
+      {/* Animated Value Scene */}
       <div className="relative h-32 mb-8">
         {/* Value indicators */}
         <motion.div
@@ -58,7 +58,7 @@ export const IntroSection = () => {
           <ChartBar className="w-6 h-6 text-purple-400/50" />
         </motion.div>
 
-        {/* House with value indicator */}
+        {/* Centered value indicator */}
         <motion.div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           initial={{ scale: 0.8, opacity: 0 }}
@@ -85,10 +85,8 @@ export const IntroSection = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <div className="relative">
-                <Building2 className="w-16 h-16 text-white" strokeWidth={1.5} />
-                {/* Value indicator */}
                 <motion.div
-                  className="absolute -top-4 -right-2 flex items-center gap-1 bg-gradient-to-r from-green-500/20 to-blue-500/20 px-2 py-1 rounded-full"
+                  className="flex items-center gap-2 bg-gradient-to-r from-green-500/20 to-blue-500/20 px-4 py-2 rounded-full"
                   animate={{
                     y: [-2, 2, -2],
                     scale: [1, 1.05, 1],
@@ -99,9 +97,9 @@ export const IntroSection = () => {
                     ease: "easeInOut",
                   }}
                 >
-                  <PoundSterling className="w-3 h-3 text-green-400" />
+                  <PoundSterling className="w-8 h-8 text-green-400" />
                   <motion.span 
-                    className="text-xs font-semibold text-white/70"
+                    className="text-lg font-semibold text-white/70"
                     animate={{
                       opacity: [0.7, 1, 0.7],
                     }}
