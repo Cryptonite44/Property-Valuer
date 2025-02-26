@@ -27,7 +27,7 @@ export const IntroSection = () => {
           }}
         />
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 relative z-10 break-words space-y-2">
-          <div className="text-white">Get Property Values</div>
+          <div className="text-white">Property Valuations</div>
           <div className="relative inline-block">
             <div className="inline-block whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-[#9F7AEA] via-[#7C3AED] to-[#4F46E5]">
               with AI Magic
