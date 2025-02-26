@@ -102,9 +102,6 @@ export const IntroSection = () => {
         }}
         className="space-y-3"
       >
-        <p className="text-base sm:text-lg md:text-xl font-medium text-white/80 tracking-wider">
-          Get instant property valuations powered by AI
-        </p>
       </motion.div>
     </motion.div>
   );
