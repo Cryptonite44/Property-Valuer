@@ -129,7 +129,7 @@ const Index = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ 
-                  delay: 3.5,
+                  delay: 1.5,
                   duration: 0.8,
                   ease: "easeOut"
                 }}
@@ -146,7 +146,7 @@ const Index = () => {
                   initial={{ width: 0 }}
                   animate={{ width: '6rem' }}
                   transition={{ 
-                    delay: 4,
+                    delay: 2,
                     duration: 1.2,
                     ease: "easeInOut"
                   }}
@@ -157,7 +157,7 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ 
-                delay: 4.5,
+                delay: 2.5,
                 duration: 0.8,
                 ease: "easeOut"
               }}
