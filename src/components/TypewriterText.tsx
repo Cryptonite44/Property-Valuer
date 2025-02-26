@@ -20,7 +20,13 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
     const currentTextObj = texts[currentTextIndex];
     if (currentCharIndex < currentTextObj.text.length) {
       const timeout = setTimeout(() => {
-        setCurrentText(prev => prev + currentTextObj.text[currentCharIndex]);
+        if (currentTextIndex > 0) {
+          // For subsequent texts, append to previous text
+          setCurrentText(texts.slice(0, currentTextIndex).map(t => t.text).join("") + currentTextObj.text.slice(0, currentCharIndex + 1));
+        } else {
+          // For first text, just show current progress
+          setCurrentText(currentTextObj.text.slice(0, currentCharIndex + 1));
+        }
         setCurrentCharIndex(prev => prev + 1);
       }, currentTextObj.delay);
 
