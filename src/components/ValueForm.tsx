@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
@@ -84,8 +83,8 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         description: "Based on historical sales data and market trends",
       });
 
-      // Call onEstimate with the complete data object
-      onEstimate(parseFloat(data.estimatedValue), data as AIAnalysis);
+      // Pass the exact value from ChatGPT to onEstimate
+      onEstimate(data.estimatedValue, data);
     } catch (error: any) {
       console.error('Error in analysis:', error);
       toast({

@@ -57,7 +57,7 @@ CRITICAL: Your response must ONLY include a JSON object with this structure:
   }
 }`;
 
-    console.log('Sending request to OpenAI...'); // Debug log
+    console.log('Analyzing property:', { address, propertyType }); // Debug log
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -70,44 +70,46 @@ CRITICAL: Your response must ONLY include a JSON object with this structure:
         messages: [
           {
             role: 'system',
-            content: 'You are a UK property valuation expert with access to current market data. Always provide precise, unrounded valuations based on actual market data. Your valuations must be exact numbers.'
+            content: 'You are a UK property valuation expert. Return the exact valuation you calculate without any modifications or rounding.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.1 // Lower temperature for more consistent, precise responses
+        temperature: 0.1
       }),
     });
 
     const data = await response.json();
-    console.log('OpenAI raw response:', data); // Debug log
+    console.log('Raw OpenAI response:', data); // Debug log
 
     if (!data.choices?.[0]?.message?.content) {
       throw new Error('Invalid response from OpenAI');
     }
 
     const rawContent = data.choices[0].message.content;
-    console.log('Raw content:', rawContent); // Debug log
+    console.log('Raw content from ChatGPT:', rawContent); // Debug log
 
-    // Clean up the response content
     const cleanedContent = extractJSONFromMarkdown(rawContent);
-    console.log('Cleaned content:', cleanedContent); // Debug log
+    console.log('Cleaned JSON content:', cleanedContent); // Debug log
 
-    // Parse the cleaned JSON
     const aiResponse = JSON.parse(cleanedContent);
+    console.log('Parsed AI response:', aiResponse); // Debug log
     
-    // Validate the response
-    if (!aiResponse.estimatedValue || 
-        typeof aiResponse.estimatedValue !== 'number' || 
-        aiResponse.estimatedValue < 50000 || 
-        aiResponse.estimatedValue > 10000000) {
+    if (!aiResponse.estimatedValue || typeof aiResponse.estimatedValue !== 'number') {
       throw new Error('Invalid property valuation amount');
     }
 
-    // Return the exact value from ChatGPT without any modifications
-    return new Response(JSON.stringify(aiResponse), {
+    // Return the exact ChatGPT response without any modification
+    const response_data = {
+      ...aiResponse,
+      estimatedValue: aiResponse.estimatedValue // Ensure we use the exact value
+    };
+
+    console.log('Final response being sent:', response_data); // Debug log
+
+    return new Response(JSON.stringify(response_data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
