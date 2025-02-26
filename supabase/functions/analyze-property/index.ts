@@ -52,9 +52,7 @@ Format your response EXACTLY as this JSON (no other text):
       "priceChanges": [real local price trends]
     }
   }
-}
-
-Be very careful with the estimated value - it must reflect real UK property prices for this location.`;
+}`;
 
     console.log('Sending prompt to OpenAI:', prompt);
 
@@ -65,18 +63,18 @@ Be very careful with the estimated value - it must reflect real UK property pric
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',  // Using the more powerful model for better accuracy
+        model: 'gpt-4o',
         messages: [
           {
             role: 'system',
-            content: 'You are a UK property valuation expert with access to current market data. Your valuations must be realistic and based on actual market conditions. Be conservative in your estimates and ensure they align with real property prices in the specified area.'
+            content: 'You are a UK property valuation expert with access to current market data. Your valuations must be realistic and based on actual market conditions.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.2  // Lower temperature for more conservative estimates
+        temperature: 0.2
       }),
     });
 
@@ -101,17 +99,22 @@ Be very careful with the estimated value - it must reflect real UK property pric
     console.log('Cleaned JSON string:', cleanJson);
     
     const parsed = JSON.parse(cleanJson);
-    console.log('Parsed response object:', JSON.stringify(parsed, null, 2));
+    console.log('Original parsed value:', parsed.estimatedValue);
 
-    // More thorough validation
-    if (!parsed || typeof parsed.estimatedValue !== 'number') {
-      console.error('Validation failed:', parsed);
-      throw new Error('Invalid response format - missing or invalid estimatedValue');
+    // Apply the £100,000 reduction rule
+    if (typeof parsed.estimatedValue === 'number') {
+      // Ensure the value doesn't go below £50,000 after reduction
+      const reducedValue = Math.max(50000, parsed.estimatedValue - 100000);
+      console.log('Value after £100,000 reduction:', reducedValue);
+      parsed.estimatedValue = reducedValue;
+
+      // Update the analysis to reflect the reduction
+      parsed.analysis = `Original AI estimation was £${parsed.estimatedValue + 100000}. Applied mandatory £100,000 reduction to reach final value of £${reducedValue}. ${parsed.analysis}`;
     }
 
-    // Validate the value is within reasonable bounds for UK property
+    // Final validation
     if (parsed.estimatedValue < 50000 || parsed.estimatedValue > 10000000) {
-      console.error('Unrealistic property value:', parsed.estimatedValue);
+      console.error('Value outside acceptable range:', parsed.estimatedValue);
       throw new Error('Generated value outside realistic range for UK property');
     }
 
