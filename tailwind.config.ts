@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -100,6 +99,16 @@ export default {
             opacity: "0.8",
             transform: "scale(1.02)",
           },
+        },
+        "text-shine": {
+          "0%": {
+            "background-size": "200% 200%",
+            "background-position": "left center"
+          },
+          "100%": {
+            "background-size": "200% 200%",
+            "background-position": "right center"
+          }
         }
       },
       animation: {
@@ -111,6 +120,7 @@ export default {
         "fade-down": "fade-down 0.5s ease-out",
         "slide-up": "slide-up 0.5s ease-out",
         "slide-down": "slide-down 0.5s ease-out",
+        "text-shine": "text-shine 3s linear infinite",
       },
     },
   },

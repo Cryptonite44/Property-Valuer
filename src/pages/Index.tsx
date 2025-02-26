@@ -99,23 +99,51 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-5 space-y-3"
+              className="text-center mb-8 space-y-6 relative"
             >
-              <div className="relative px-2">
-                <h1 className="text-xl sm:text-2xl font-light mb-2 text-gradient glow relative z-10 px-4">
-                  <TypewriterText text="Superfast Property Valuer" />
+              <div className="relative">
+                <motion.div
+                  className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-2xl"
+                  animate={{
+                    backgroundPosition: ["0% 0%", "100% 100%"],
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                  style={{
+                    backgroundSize: "200% 200%",
+                  }}
+                />
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 relative z-10">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine relative">
+                    <TypewriterText 
+                      text="Superfast Property Valuer" 
+                      delay={50}
+                    />
+                  </span>
                 </h1>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-3xl -z-10" />
               </div>
-              <motion.p 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-sm font-light text-muted-foreground px-6 flex flex-col gap-1"
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="space-y-2"
               >
-                <span>Get an AI-powered estimate based</span>
-                <span>on local market data</span>
-              </motion.p>
+                <p className="text-lg sm:text-xl font-medium text-purple-200/90 tracking-wide">
+                  Get an AI-powered estimate based
+                </p>
+                <p className="text-lg sm:text-xl font-medium text-blue-200/90 tracking-wide">
+                  on local market data
+                </p>
+                <motion.div
+                  className="w-24 h-1 mx-auto mt-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: '6rem' }}
+                  transition={{ delay: 1, duration: 0.8 }}
+                />
+              </motion.div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
