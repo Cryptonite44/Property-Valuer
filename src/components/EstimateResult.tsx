@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,19 +17,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
+import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import confetti from "canvas-confetti";
-import { 
-  TrendingUp, 
-  MapPin, 
-  BarChart3, 
-  HomeIcon, 
+import {
+  TrendingUp,
+  MapPin,
+  BarChart3,
+  HomeIcon,
   Info,
   HelpCircle,
   School,
@@ -137,13 +139,32 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
     }).format(value);
   };
 
-  const handleSubmitForm = (e: React.FormEvent) => {
+  const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Valuation Request Sent",
-      description: "We'll be in touch shortly to arrange your full valuation.",
-    });
-    setIsDialogOpen(false);
+    
+    try {
+      const { error } = await supabase.functions.invoke('send-valuation-email', {
+        body: {
+          ...formData,
+          estimatedValue: formatCurrency(value)
+        }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Valuation Request Sent",
+        description: "We'll be in touch shortly to arrange your full valuation.",
+      });
+      setIsDialogOpen(false);
+    } catch (error) {
+      console.error('Error sending valuation request:', error);
+      toast({
+        title: "Error",
+        description: "Failed to send valuation request. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
