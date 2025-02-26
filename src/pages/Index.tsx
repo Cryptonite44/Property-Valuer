@@ -5,7 +5,7 @@ import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
-import { Building2, Home } from "lucide-react";
+import { Building2 } from "lucide-react";
 
 interface PropertyDetails {
   location: {
@@ -92,7 +92,7 @@ const Index = () => {
         </div>
       </motion.div>
 
-      <div className="flex-1 flex flex-col items-center justify-center w-full px-4 py-4 relative z-10">
+      <div className="flex-1 flex flex-col items-center justify-center w-full px-4 py-4">
         {!estimatedValue ? (
           <>
             <motion.div 
@@ -138,10 +138,10 @@ const Index = () => {
                 className="space-y-3"
               >
                 <p className="text-lg sm:text-xl font-medium text-purple-200/90 tracking-wider">
-                  Get an AI-powered estimate
+                  Get an AI-powered estimate based
                 </p>
                 <p className="text-lg sm:text-xl font-medium text-blue-200/90 tracking-wider">
-                  based on local market data
+                  on local market data
                 </p>
                 <motion.div
                   className="w-24 h-1 mx-auto mt-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
@@ -163,27 +163,8 @@ const Index = () => {
                 duration: 0.8,
                 ease: "easeOut"
               }}
-              className="w-full px-2 relative"
+              className="w-full px-2"
             >
-              <div className="absolute inset-0 -top-24 -bottom-24 flex items-center justify-center pointer-events-none">
-                <div className="relative w-full h-full max-w-[32rem] flex items-center justify-center">
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 rounded-3xl blur-2xl"
-                    animate={{
-                      backgroundPosition: ["0% 0%", "100% 100%"],
-                    }}
-                    transition={{
-                      duration: 15,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                    }}
-                    style={{
-                      backgroundSize: "200% 200%",
-                    }}
-                  />
-                  <Home className="w-full h-full text-[#E5DEFF] opacity-[0.08]" />
-                </div>
-              </div>
               <ValueForm onEstimate={handleEstimate} />
             </motion.div>
           </>

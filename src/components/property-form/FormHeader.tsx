@@ -1,6 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Wand2 } from "lucide-react";
 import {
   CardHeader,
   CardTitle,
@@ -25,6 +26,19 @@ export const FormHeader = () => {
               <span>AI-powered property</span>
               <span>valuations in seconds</span>
             </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ 
+                delay: 0.7,
+                type: "spring",
+                stiffness: 200,
+                damping: 10
+              }}
+              className="mt-2"
+            >
+              <Wand2 className="w-4 h-4 text-[#9b87f5]" />
+            </motion.div>
           </div>
         </CardDescription>
       </motion.div>
