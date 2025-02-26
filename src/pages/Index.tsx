@@ -138,10 +138,10 @@ const Index = () => {
                 className="space-y-3"
               >
                 <p className="text-lg sm:text-xl font-medium text-purple-200/90 tracking-wider">
-                  Get an AI-powered estimate based
+                  Get an AI-powered estimate
                 </p>
                 <p className="text-lg sm:text-xl font-medium text-blue-200/90 tracking-wider">
-                  on local market data
+                  based on local market data
                 </p>
                 <motion.div
                   className="w-24 h-1 mx-auto mt-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
