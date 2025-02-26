@@ -294,11 +294,25 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
                 <h4 className="text-lg font-medium text-white">Market Activity</h4>
               </div>
               <div className="space-y-2">
+                <div className="text-sm text-white/70">
+                  <strong className="text-white">Recent Sales:</strong>{' '}
+                  {Array.isArray(analysis?.details.marketActivity.recentSales) ? (
+                    <div className="mt-2 space-y-2">
+                      {analysis?.details.marketActivity.recentSales.map((sale: any, index: number) => (
+                        <div key={index} className="text-xs bg-white/5 p-2 rounded">
+                          {sale.address && <div>Address: {sale.address}</div>}
+                          {sale.price && <div>Price: {formatCurrency(sale.price)}</div>}
+                          {sale.date && <div>Date: {sale.date}</div>}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <span>{analysis?.details.marketActivity.recentSales}</span>
+                  )}
+                </div>
                 <p className="text-sm text-white/70">
-                  Recent Sales: {analysis?.details.marketActivity.recentSales}
-                </p>
-                <p className="text-sm text-white/70">
-                  Price Changes: {analysis?.details.marketActivity.priceChanges}
+                  <strong className="text-white">Price Changes:</strong>{' '}
+                  {analysis?.details.marketActivity.priceChanges}
                 </p>
               </div>
             </div>
@@ -306,6 +320,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
         </CardContent>
       </Card>
 
+      {/* Dialog for full valuation request */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-md bg-[#1A1F2C] text-white border-white/10 p-6">
           <DialogHeader className="space-y-3">
