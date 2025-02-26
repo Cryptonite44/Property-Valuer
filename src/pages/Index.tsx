@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -164,8 +165,24 @@ const Index = () => {
               }}
               className="w-full px-2 relative"
             >
-              <div className="absolute inset-0 -top-24 -bottom-24 flex items-center justify-center opacity-[0.02] pointer-events-none">
-                <Home className="w-full h-full max-w-[32rem] text-white" />
+              <div className="absolute inset-0 -top-24 -bottom-24 flex items-center justify-center pointer-events-none">
+                <div className="relative w-full h-full max-w-[32rem] flex items-center justify-center">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 rounded-3xl blur-2xl"
+                    animate={{
+                      backgroundPosition: ["0% 0%", "100% 100%"],
+                    }}
+                    transition={{
+                      duration: 15,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                    }}
+                    style={{
+                      backgroundSize: "200% 200%",
+                    }}
+                  />
+                  <Home className="w-full h-full text-[#E5DEFF] opacity-[0.08]" />
+                </div>
               </div>
               <ValueForm onEstimate={handleEstimate} />
             </motion.div>
