@@ -28,8 +28,43 @@ export const IntroSection = () => {
         />
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 relative z-10 break-words space-y-3">
           <div className="text-white tracking-tight">AI-Powered</div>
-          <div className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#6366F1] to-[#3B82F6]">
-            Property Valuations
+          <div className="relative inline-block">
+            <div className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#6366F1] to-[#3B82F6]">
+              Property Valuations
+            </div>
+            <motion.div
+              className="absolute -bottom-1 left-0 right-0 h-[2px]"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{
+                duration: 1,
+                delay: 0.5,
+                ease: [0.22, 1, 0.36, 1]
+              }}
+            >
+              <svg
+                className="w-full"
+                height="3"
+                viewBox="0 0 400 3"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 1.5C83.5 1.5 152.5 1.5 400 1.5"
+                  stroke="url(#gradient)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  className="animate-draw"
+                />
+                <defs>
+                  <linearGradient id="gradient" x1="0" y1="0" x2="400" y2="0">
+                    <stop offset="0%" stopColor="#8B5CF6" />
+                    <stop offset="50%" stopColor="#6366F1" />
+                    <stop offset="100%" stopColor="#3B82F6" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </motion.div>
           </div>
         </h1>
       </div>
@@ -49,16 +84,6 @@ export const IntroSection = () => {
         <p className="text-base sm:text-lg md:text-xl font-medium text-blue-200/90 tracking-wider">
           on local market data
         </p>
-        <motion.div
-          className="w-24 h-1 mx-auto mt-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
-          initial={{ width: 0 }}
-          animate={{ width: '6rem' }}
-          transition={{ 
-            delay: 0.4,
-            duration: 1.2,
-            ease: "easeInOut"
-          }}
-        />
       </motion.div>
     </motion.div>
   );
