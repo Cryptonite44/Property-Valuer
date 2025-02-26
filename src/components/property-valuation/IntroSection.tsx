@@ -31,8 +31,7 @@ export const IntroSection = () => {
             <TypewriterText 
               texts={[
                 { text: "AI-Powered", delay: 50 },
-                { text: " Property", delay: 150 },
-                { text: " Valuations", delay: 150 }
+                { text: "\nProperty Valuations", delay: 150 }
               ]}
             />
           </span>
