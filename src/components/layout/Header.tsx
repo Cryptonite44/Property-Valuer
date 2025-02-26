@@ -35,8 +35,8 @@ export const Header = () => {
                 className="flex items-center"
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg">
-                  <Building2 className="w-5 h-5 text-[#9b87f5]" />
+                <div className="p-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg flex items-center justify-center" style={{ minWidth: '36px', minHeight: '36px' }}>
+                  <Building2 className="w-5 h-5 text-[#9b87f5] block" strokeWidth={2} />
                 </div>
                 <div className="flex items-center space-x-2 ml-3">
                   <span className="font-semibold text-base tracking-tight text-white/90">PropertyValuer</span>
