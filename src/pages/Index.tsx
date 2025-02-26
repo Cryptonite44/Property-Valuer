@@ -119,8 +119,10 @@ const Index = () => {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 relative z-10">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine relative">
                     <TypewriterText 
-                      text="Superfast Property Valuer" 
-                      delay={100}
+                      texts={[
+                        { text: "Superfast", delay: 50 },
+                        { text: " Property Valuer", delay: 150 }
+                      ]}
                     />
                   </span>
                 </h1>
@@ -129,7 +131,7 @@ const Index = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ 
-                  delay: 0.8,
+                  delay: 0.2,
                   duration: 0.8,
                   ease: "easeOut"
                 }}
@@ -146,7 +148,7 @@ const Index = () => {
                   initial={{ width: 0 }}
                   animate={{ width: '6rem' }}
                   transition={{ 
-                    delay: 1.2,
+                    delay: 0.4,
                     duration: 1.2,
                     ease: "easeInOut"
                   }}
@@ -157,7 +159,7 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ 
-                delay: 1.5,
+                delay: 0.6,
                 duration: 0.8,
                 ease: "easeOut"
               }}
