@@ -176,7 +176,6 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Value Display */}
           <div className="p-4 md:p-6 rounded-lg bg-white/5 border border-white/10 space-y-4">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-3">
@@ -207,9 +206,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
             )}
           </div>
 
-          {/* Analysis Sections */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Location Analysis */}
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
               <div className="flex items-center gap-2 mb-2">
                 <MapPin className="w-5 h-5 text-purple-400" />
@@ -228,7 +225,6 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
               </div>
             </div>
 
-            {/* Education Analysis */}
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
               <div className="flex items-center gap-2 mb-2">
                 <School className="w-5 h-5 text-blue-400" />
@@ -247,7 +243,6 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
               </div>
             </div>
 
-            {/* Transport Analysis */}
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
               <div className="flex items-center gap-2 mb-2">
                 <Bus className="w-5 h-5 text-yellow-400" />
@@ -266,29 +261,12 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
               </div>
             </div>
 
-            {/* Market Activity */}
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
               <div className="flex items-center gap-2 mb-2">
                 <Landmark className="w-5 h-5 text-green-400" />
                 <h4 className="text-lg font-medium text-white">Market Activity</h4>
               </div>
               <div className="space-y-2">
-                <div className="text-sm text-white/70">
-                  <strong className="text-white">Recent Sales:</strong>{' '}
-                  {Array.isArray(analysis?.details.marketActivity.recentSales) ? (
-                    <div className="mt-2 space-y-2">
-                      {analysis?.details.marketActivity.recentSales.map((sale: any, index: number) => (
-                        <div key={index} className="text-xs bg-white/5 p-2 rounded">
-                          {sale.address && <div>Address: {sale.address}</div>}
-                          {sale.price && <div>Price: {formatCurrency(sale.price)}</div>}
-                          {sale.date && <div>Date: {sale.date}</div>}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <span>{analysis?.details.marketActivity.recentSales}</span>
-                  )}
-                </div>
                 <p className="text-sm text-white/70">
                   <strong className="text-white">Price Changes:</strong>{' '}
                   {analysis?.details.marketActivity.priceChanges}
@@ -299,7 +277,6 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
         </CardContent>
       </Card>
 
-      {/* Dialog for full valuation request */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-md bg-[#1A1F2C] text-white border-white/10 p-6">
           <DialogHeader className="space-y-3">

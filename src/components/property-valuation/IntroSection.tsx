@@ -82,20 +82,6 @@ export const IntroSection = () => {
           </div>
         </h1>
       </div>
-
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          delay: 0.2,
-          duration: 0.8,
-          ease: "easeOut"
-        }}
-        className="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto"
-      >
-        Transform your property valuation process. Just describe what you need,
-        and watch AI do the heavy lifting.
-      </motion.p>
     </motion.div>
   );
 };
