@@ -31,25 +31,27 @@ export const BackgroundEffects = () => {
         }}
       />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating particles */}
-        {[...Array(6)].map((_, i) => (
+        {/* Floating particles with increased visibility */}
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full"
             style={{
-              width: Math.random() * 4 + 2 + "px",
-              height: Math.random() * 4 + 2 + "px",
+              width: Math.random() * 6 + 3 + "px", // Increased size
+              height: Math.random() * 6 + 3 + "px", // Increased size
               left: Math.random() * 100 + "%",
               top: Math.random() * 100 + "%",
-              background: `rgba(255, 255, 255, ${Math.random() * 0.3 + 0.1})`,
+              background: `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.3})`, // Increased opacity
+              boxShadow: '0 0 4px rgba(255, 255, 255, 0.5)', // Added glow effect
             }}
             animate={{
-              y: [0, -30, 0],
-              x: [0, Math.random() * 20 - 10, 0],
-              opacity: [0.3, 0.8, 0.3],
+              y: [0, -50, 0], // Increased movement range
+              x: [0, Math.random() * 40 - 20, 0], // Increased movement range
+              opacity: [0.4, 1, 0.4], // Increased opacity range
+              scale: [1, 1.2, 1], // Added scale animation
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: Math.random() * 4 + 3, // Slightly slower
               repeat: Infinity,
               ease: "easeInOut",
               delay: Math.random() * 2,
