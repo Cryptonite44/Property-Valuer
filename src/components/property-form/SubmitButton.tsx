@@ -16,20 +16,6 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
       transition={{ delay: 0.6 }}
       className="relative"
     >
-      {/* Animated background gradient */}
-      <motion.div
-        className="absolute -inset-1 bg-gradient-to-r from-[#9b87f5] via-[#8B5CF6] to-[#D6BCFA] opacity-75 blur-md rounded-lg"
-        animate={{
-          scale: [1, 1.02, 1],
-          opacity: [0.7, 0.9, 0.7],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      
       <Button 
         type="submit" 
         className={`w-full mt-8 relative overflow-hidden ${
