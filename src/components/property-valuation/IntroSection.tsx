@@ -26,14 +26,14 @@ export const IntroSection = () => {
             backgroundSize: "200% 200%",
           }}
         />
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 relative z-10 break-words space-y-4">
-          <div className="text-white mb-2">Property Valuations</div>
-          <div className="relative inline-block pb-12">
-            <div className="inline-block whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-[#9F7AEA] via-[#7C3AED] to-[#4F46E5] mb-4">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 relative z-10 break-words space-y-2">
+          <div className="text-white">Property Valuations</div>
+          <div className="relative inline-block">
+            <div className="inline-block whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-[#9F7AEA] via-[#7C3AED] to-[#4F46E5]">
               with AI Magic
             </div>
             <motion.div
-              className="absolute -bottom-4 left-0 right-0"
+              className="absolute -bottom-3 left-0 right-0"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
@@ -48,7 +48,6 @@ export const IntroSection = () => {
                 fill="none"
                 preserveAspectRatio="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="mt-2"
               >
                 <motion.path
                   d="M0 5C12 5 15 12 28 12S44 5 56 5 72 12 84 12 100 5 112 5s28 7 40 7S168 5 180 5s16 7 20 7"
