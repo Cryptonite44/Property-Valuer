@@ -10,34 +10,14 @@ import { SubmitButton } from "./property-form/SubmitButton";
 import { FormHeader } from "./property-form/FormHeader";
 import { BackgroundEffects } from "./property-form/BackgroundEffects";
 import { AddressForm } from "./property-form/AddressForm";
+import { AIAnalysis } from "@/types/property";
 
-interface PropertyDetails {
-  location: {
-    description: string;
-    amenities: string[];
-  };
-  education: {
-    description: string;
-    schools: string[];
-  };
-  transport: {
-    description: string;
-    links: string[];
-  };
-  marketActivity: {
-    recentSales: string;
-    priceChanges: string;
-  };
+interface ValueRange {
+  lower: number;
+  upper: number;
 }
 
-interface AIAnalysis {
-  estimatedValue: number;
-  confidence: 'low' | 'medium' | 'high';
-  analysis: string;
-  details: PropertyDetails;
-}
-
-const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAnalysis) => void }) => {
+const ValueForm = ({ onEstimate }: { onEstimate: (value: ValueRange, analysis?: AIAnalysis) => void }) => {
   const { toast } = useToast();
   const [address, setAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -74,7 +54,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
       const data = response.data;
       console.log('Extracted data:', data); // Debug log
 
-      if (!data || !data.estimatedValue) {
+      if (!data || !data.estimatedValue || !data.estimatedValue.lower || !data.estimatedValue.upper) {
         throw new Error('Invalid response format from analysis');
       }
 
@@ -85,7 +65,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
       });
 
       // Call onEstimate with the complete data object
-      onEstimate(parseFloat(data.estimatedValue), data as AIAnalysis);
+      onEstimate(data.estimatedValue as ValueRange, data as AIAnalysis);
     } catch (error: any) {
       console.error('Error in analysis:', error);
       toast({
