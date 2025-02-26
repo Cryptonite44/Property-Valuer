@@ -19,21 +19,24 @@ serve(async (req) => {
 
     console.log('Request received:', { address, propertyType });
 
-    const prompt = `You are a UK property expert. Based on real market data, provide a highly accurate valuation for this ${propertyType} at ${address}. Consider:
+    const prompt = `You are a UK property expert. Based on real market data, provide a highly accurate valuation RANGE for this ${propertyType} at ${address}. Consider:
 - Current UK property market trends
 - Local area house prices and recent sales
 - Property type and location specifics
 - Local amenities and transport links
 - Nearby schools and facilities
 
-Your valuation must be realistic for a ${propertyType} in ${address} based on current UK market data.
+Provide a realistic valuation range with a lower and upper bound, with approximately 10-15% difference between them.
 
 Format your response EXACTLY as this JSON (no other text):
 
 {
-  "estimatedValue": [realistic number without currency symbols or commas],
+  "estimatedValue": {
+    "lower": [realistic lower bound number without currency symbols or commas],
+    "upper": [realistic upper bound number without currency symbols or commas]
+  },
   "confidence": ["low", "medium", or "high" based on data availability],
-  "analysis": [explain why you chose this value],
+  "analysis": [explain why you chose this range],
   "details": {
     "location": {
       "description": [detailed area description],
@@ -67,7 +70,7 @@ Format your response EXACTLY as this JSON (no other text):
         messages: [
           {
             role: 'system',
-            content: 'You are a UK property valuation expert with access to current market data. Your valuations must be realistic and based on actual market conditions.'
+            content: 'You are a UK property valuation expert with access to current market data. Provide realistic valuation ranges based on actual market conditions.'
           },
           {
             role: 'user',
@@ -99,23 +102,35 @@ Format your response EXACTLY as this JSON (no other text):
     console.log('Cleaned JSON string:', cleanJson);
     
     const parsed = JSON.parse(cleanJson);
-    console.log('Original parsed value:', parsed.estimatedValue);
+    console.log('Original parsed values:', parsed.estimatedValue);
 
-    // Apply the £100,000 reduction rule
-    if (typeof parsed.estimatedValue === 'number') {
-      // Ensure the value doesn't go below £50,000 after reduction
-      const reducedValue = Math.max(50000, parsed.estimatedValue - 100000);
-      console.log('Value after £100,000 reduction:', reducedValue);
-      parsed.estimatedValue = reducedValue;
+    // Apply the £100,000 reduction rule to both bounds
+    if (parsed.estimatedValue && typeof parsed.estimatedValue.lower === 'number' && typeof parsed.estimatedValue.upper === 'number') {
+      const originalLower = parsed.estimatedValue.lower;
+      const originalUpper = parsed.estimatedValue.upper;
+
+      // Ensure values don't go below £50,000 after reduction
+      const reducedLower = Math.max(50000, originalLower - 100000);
+      const reducedUpper = Math.max(50000, originalUpper - 100000);
+
+      console.log('Values after £100,000 reduction:', { reducedLower, reducedUpper });
+      
+      parsed.estimatedValue = {
+        lower: reducedLower,
+        upper: reducedUpper
+      };
 
       // Update the analysis to reflect the reduction
-      parsed.analysis = `Original AI estimation was £${parsed.estimatedValue + 100000}. Applied mandatory £100,000 reduction to reach final value of £${reducedValue}. ${parsed.analysis}`;
+      parsed.analysis = `Original AI estimation range was £${originalLower.toLocaleString()} - £${originalUpper.toLocaleString()}. Applied mandatory £100,000 reduction to reach final range of £${reducedLower.toLocaleString()} - £${reducedUpper.toLocaleString()}. ${parsed.analysis}`;
     }
 
     // Final validation
-    if (parsed.estimatedValue < 50000 || parsed.estimatedValue > 10000000) {
+    if (!parsed.estimatedValue || 
+        parsed.estimatedValue.lower < 50000 || 
+        parsed.estimatedValue.upper > 10000000 || 
+        parsed.estimatedValue.lower > parsed.estimatedValue.upper) {
       console.error('Value outside acceptable range:', parsed.estimatedValue);
-      throw new Error('Generated value outside realistic range for UK property');
+      throw new Error('Generated values outside realistic range for UK property');
     }
 
     console.log('Final response being sent:', JSON.stringify(parsed, null, 2));

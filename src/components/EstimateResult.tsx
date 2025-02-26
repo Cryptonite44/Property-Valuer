@@ -205,9 +205,11 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
                   <TrendingUp className="w-5 h-5 text-green-400" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white/70">Estimated Value</p>
+                  <p className="text-sm font-medium text-white/70">Estimated Value Range</p>
                   <h3 className="text-2xl md:text-3xl font-semibold text-white">
-                    {formatCurrency(value)}
+                    {typeof value === 'object' && value.lower && value.upper
+                      ? `${formatCurrency(value.lower)} - ${formatCurrency(value.upper)}`
+                      : formatCurrency(value as number)}
                   </h3>
                 </div>
               </div>
