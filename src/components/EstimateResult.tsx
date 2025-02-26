@@ -1,5 +1,4 @@
-
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,12 +7,22 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { 
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
 import confetti from "canvas-confetti";
 import { 
   TrendingUp, 
@@ -60,6 +69,13 @@ interface EstimateResultProps {
   onReset: () => void;
 }
 
+interface ValuationFormData {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
 const ConfidenceLevels = {
   low: { 
     color: "text-orange-400",
@@ -76,6 +92,15 @@ const ConfidenceLevels = {
 };
 
 const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onReset }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [formData, setFormData] = useState<ValuationFormData>({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
+  const { toast } = useToast();
+
   useEffect(() => {
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
@@ -110,6 +135,22 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
       currency: "GBP",
       maximumFractionDigits: 0,
     }).format(value);
+  };
+
+  const handleSubmitForm = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Valuation Request Sent",
+      description: "We'll be in touch shortly to arrange your full valuation.",
+    });
+    setIsDialogOpen(false);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const renderAnalysisSection = () => {
@@ -208,11 +249,10 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
           
           <div className="flex flex-col sm:flex-row gap-2 pt-4">
             <Button
-              variant="outline"
-              className="flex-1 hover:bg-white/10 transition-colors"
-              onClick={() => window.open("mailto:contact@example.com", "_blank")}
+              className="flex-1 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white transition-colors"
+              onClick={() => setIsDialogOpen(true)}
             >
-              Contact an Estate Agent
+              Book Full Valuation
             </Button>
             <Button 
               variant="secondary"
@@ -224,6 +264,85 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
           </div>
         </CardContent>
       </Card>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-md bg-[#1A1F2C] text-white border-white/10">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-light text-gradient">Book Your Full Valuation</DialogTitle>
+            <DialogDescription className="text-white/70">
+              Please provide your details and we'll arrange a professional valuation of your property.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmitForm} className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-white/70">Full Name</Label>
+              <Input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+                className="bg-white/5 border-white/10 text-white placeholder:text-white/30"
+                placeholder="Enter your full name"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-white/70">Email Address</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className="bg-white/5 border-white/10 text-white placeholder:text-white/30"
+                placeholder="Enter your email address"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-white/70">Phone Number</Label>
+              <Input
+                id="phone"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleInputChange}
+                required
+                className="bg-white/5 border-white/10 text-white placeholder:text-white/30"
+                placeholder="Enter your phone number"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="address" className="text-white/70">Property Address</Label>
+              <Input
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                required
+                className="bg-white/5 border-white/10 text-white placeholder:text-white/30"
+                placeholder="Enter the property address"
+              />
+            </div>
+            <div className="flex justify-end gap-2 mt-6">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsDialogOpen(false)}
+                className="border-white/10 text-white/70 hover:bg-white/5"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white"
+              >
+                Submit Request
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </TooltipProvider>
   );
 };
