@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
-import { Building2, Home, Sun, Cloud, Star } from "lucide-react";
+import { Building2, Home, Sun, Cloud, Star, PoundSterling, TrendingUp, ChartBar } from "lucide-react";
 
 export const IntroSection = () => {
   return (
@@ -14,42 +14,26 @@ export const IntroSection = () => {
     >
       {/* Animated House Scene */}
       <div className="relative h-32 mb-8">
-        {/* Animated clouds */}
+        {/* Value indicators */}
         <motion.div
           className="absolute left-1/4 top-0"
           animate={{
-            x: [-20, 20, -20],
             y: [-5, 5, -5],
+            opacity: [0.4, 0.8, 0.4],
           }}
           transition={{
-            duration: 8,
+            duration: 3,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         >
-          <Cloud className="w-8 h-8 text-blue-300/30" />
+          <PoundSterling className="w-6 h-6 text-green-400/50" />
         </motion.div>
         <motion.div
           className="absolute right-1/3 top-4"
           animate={{
-            x: [20, -20, 20],
             y: [5, -5, 5],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <Cloud className="w-6 h-6 text-blue-300/20" />
-        </motion.div>
-
-        {/* Animated sun */}
-        <motion.div
-          className="absolute right-1/4 top-2"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.5, 0.7, 0.5],
+            opacity: [0.4, 0.8, 0.4],
           }}
           transition={{
             duration: 4,
@@ -57,10 +41,24 @@ export const IntroSection = () => {
             ease: "easeInOut",
           }}
         >
-          <Sun className="w-10 h-10 text-yellow-500/30" />
+          <TrendingUp className="w-6 h-6 text-blue-400/50" />
+        </motion.div>
+        <motion.div
+          className="absolute right-1/4 top-2"
+          animate={{
+            y: [-8, 8, -8],
+            opacity: [0.4, 0.8, 0.4],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <ChartBar className="w-6 h-6 text-purple-400/50" />
         </motion.div>
 
-        {/* House */}
+        {/* House with value indicator */}
         <motion.div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           initial={{ scale: 0.8, opacity: 0 }}
@@ -68,9 +66,9 @@ export const IntroSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="relative">
-            {/* Roof shine effect */}
+            {/* Value glow effect */}
             <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10 blur-xl rounded-full"
+              className="absolute -inset-4 bg-gradient-to-r from-green-500/10 via-blue-500/10 to-purple-500/10 blur-xl rounded-full"
               animate={{
                 opacity: [0.3, 0.6, 0.3],
                 scale: [0.98, 1.02, 0.98],
@@ -86,33 +84,64 @@ export const IntroSection = () => {
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Home className="w-16 h-16 text-white" strokeWidth={1.5} />
-              {/* Animated stars */}
-              {[...Array(3)].map((_, i) => (
+              <div className="relative">
+                <Building2 className="w-16 h-16 text-white" strokeWidth={1.5} />
+                {/* Value indicator */}
                 <motion.div
-                  key={i}
-                  className="absolute"
-                  style={{
-                    top: `-${i * 10 + 5}px`,
-                    left: `${i * 15 + 40}px`,
-                  }}
+                  className="absolute -top-4 -right-2 flex items-center gap-1 bg-gradient-to-r from-green-500/20 to-blue-500/20 px-2 py-1 rounded-full"
                   animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.7, 0.3],
+                    y: [-2, 2, -2],
+                    scale: [1, 1.05, 1],
                   }}
                   transition={{
-                    duration: 2,
-                    delay: i * 0.3,
+                    duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
                 >
-                  <Star className="w-3 h-3 text-purple-400/50" fill="currentColor" />
+                  <PoundSterling className="w-3 h-3 text-green-400" />
+                  <motion.span 
+                    className="text-xs font-semibold text-white/70"
+                    animate={{
+                      opacity: [0.7, 1, 0.7],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    Value
+                  </motion.span>
                 </motion.div>
-              ))}
+              </div>
             </motion.div>
           </div>
         </motion.div>
+
+        {/* Animated market indicators */}
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            style={{
+              top: `${i * 15 + 10}px`,
+              left: `${i * 20 + 65}%`,
+            }}
+            animate={{
+              y: [-8, 8, -8],
+              opacity: [0.3, 0.7, 0.3],
+            }}
+            transition={{
+              duration: 3,
+              delay: i * 0.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <TrendingUp className="w-4 h-4 text-green-400/40" />
+          </motion.div>
+        ))}
       </div>
 
       <div className="relative">
