@@ -39,9 +39,13 @@ const Index = () => {
 
   const handleEstimate = (value: number, aiAnalysis?: AIAnalysis) => {
     console.log('Handling estimate:', { value, aiAnalysis }); // Debug log
-    setEstimatedValue(value);
-    if (aiAnalysis) {
+    
+    // Only update states if we have valid data
+    if (typeof value === 'number' && !isNaN(value)) {
+      setEstimatedValue(value);
       setAnalysis(aiAnalysis);
+    } else {
+      console.error('Invalid value received:', value);
     }
   };
 
@@ -51,6 +55,102 @@ const Index = () => {
   };
 
   console.log('Current state:', { estimatedValue, analysis }); // Debug log
+
+  const renderContent = () => {
+    if (estimatedValue === null) {
+      return (
+        <>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center mb-8 space-y-6 relative"
+          >
+            <div className="relative">
+              <motion.div
+                className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-2xl"
+                animate={{
+                  backgroundPosition: ["0% 0%", "100% 100%"],
+                }}
+                transition={{
+                  duration: 15,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+                style={{
+                  backgroundSize: "200% 200%",
+                }}
+              />
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 relative z-10">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine relative">
+                  <TypewriterText 
+                    texts={[
+                      { text: "Superfast", delay: 50 },
+                      { text: " Property Valuer", delay: 150 }
+                    ]}
+                  />
+                </span>
+              </h1>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                delay: 0.2,
+                duration: 0.8,
+                ease: "easeOut"
+              }}
+              className="space-y-3"
+            >
+              <p className="text-lg sm:text-xl font-medium text-purple-200/90 tracking-wider">
+                Get an AI-powered estimate based
+              </p>
+              <p className="text-lg sm:text-xl font-medium text-blue-200/90 tracking-wider">
+                on local market data
+              </p>
+              <motion.div
+                className="w-24 h-1 mx-auto mt-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: '6rem' }}
+                transition={{ 
+                  delay: 0.4,
+                  duration: 1.2,
+                  ease: "easeInOut"
+                }}
+              />
+            </motion.div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ 
+              delay: 0.6,
+              duration: 0.8,
+              ease: "easeOut"
+            }}
+            className="w-full px-2"
+          >
+            <ValueForm onEstimate={handleEstimate} />
+          </motion.div>
+        </>
+      );
+    }
+
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="w-full px-2"
+      >
+        <EstimateResult
+          value={estimatedValue}
+          analysis={analysis}
+          onReset={handleReset}
+        />
+      </motion.div>
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
@@ -98,95 +198,7 @@ const Index = () => {
       </motion.div>
 
       <div className="flex-1 flex flex-col items-center justify-center w-full px-4 py-4">
-        {!estimatedValue ? (
-          <>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-center mb-8 space-y-6 relative"
-            >
-              <div className="relative">
-                <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-2xl"
-                  animate={{
-                    backgroundPosition: ["0% 0%", "100% 100%"],
-                  }}
-                  transition={{
-                    duration: 15,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                  style={{
-                    backgroundSize: "200% 200%",
-                  }}
-                />
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 relative z-10">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine relative">
-                    <TypewriterText 
-                      texts={[
-                        { text: "Superfast", delay: 50 },
-                        { text: " Property Valuer", delay: 150 }
-                      ]}
-                    />
-                  </span>
-                </h1>
-              </div>
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  delay: 0.2,
-                  duration: 0.8,
-                  ease: "easeOut"
-                }}
-                className="space-y-3"
-              >
-                <p className="text-lg sm:text-xl font-medium text-purple-200/90 tracking-wider">
-                  Get an AI-powered estimate based
-                </p>
-                <p className="text-lg sm:text-xl font-medium text-blue-200/90 tracking-wider">
-                  on local market data
-                </p>
-                <motion.div
-                  className="w-24 h-1 mx-auto mt-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: '6rem' }}
-                  transition={{ 
-                    delay: 0.4,
-                    duration: 1.2,
-                    ease: "easeInOut"
-                  }}
-                />
-              </motion.div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ 
-                delay: 0.6,
-                duration: 0.8,
-                ease: "easeOut"
-              }}
-              className="w-full px-2"
-            >
-              <ValueForm onEstimate={handleEstimate} />
-            </motion.div>
-          </>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="w-full px-2"
-          >
-            <EstimateResult
-              value={estimatedValue}
-              analysis={analysis}
-              onReset={handleReset}
-            />
-          </motion.div>
-        )}
+        {renderContent()}
       </div>
       <Footer />
     </div>
