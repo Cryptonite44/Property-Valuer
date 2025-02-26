@@ -16,16 +16,8 @@ export const FormHeader = () => {
         transition={{ delay: 0.3 }}
         className="relative z-10"
       >
-        <CardTitle className="text-white text-3xl">
-          Property Details
-        </CardTitle>
-        <CardDescription className="text-lg mt-2 text-white/70">
-          <div className="flex flex-col items-center justify-center">
-            <div className="flex flex-col items-center">
-              <span>AI-powered property</span>
-              <span>valuations in seconds</span>
-            </div>
-          </div>
+        <CardDescription className="text-lg mt-2 text-white/80">
+          Enter your property details below for an instant AI-powered valuation
         </CardDescription>
       </motion.div>
     </CardHeader>
