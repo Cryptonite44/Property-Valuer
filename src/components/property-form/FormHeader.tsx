@@ -23,7 +23,8 @@ export const FormHeader = () => {
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-col items-center space-y-1">
               <span>Get an AI-powered estimate</span>
-              <span>based on local market data</span>
+              <span>based</span>
+              <span>on local market data</span>
             </div>
           </div>
         </CardDescription>
