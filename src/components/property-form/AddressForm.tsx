@@ -11,8 +11,8 @@ interface AddressFormProps {
 
 export const AddressForm = ({ address, onChange }: AddressFormProps) => {
   return (
-    <div className="space-y-4">
-      <Label htmlFor="address" className="text-base text-white/70 block text-center mb-6">
+    <div className="space-y-6">
+      <Label htmlFor="address" className="text-base text-white/70 block text-center mb-4">
         Full Property Address
       </Label>
       <div className="relative">
@@ -27,7 +27,7 @@ export const AddressForm = ({ address, onChange }: AddressFormProps) => {
           className="relative bg-[#1A1F2C] border-white/10 focus:border-[#3b82f6]/50 transition-all duration-300 pl-10 rounded-lg text-white placeholder:text-white/30 focus:ring-4 focus:ring-[#3b82f6]/20 shadow-[0_0_30px_rgba(139,92,246,0.35)] focus:shadow-[0_0_40px_rgba(139,92,246,0.5),0_0_20px_rgba(139,92,246,0.4),inset_0_0_15px_rgba(139,92,246,0.3)] focus:bg-[#1A1F2C] z-10 h-12"
         />
       </div>
-      <p className="text-sm text-white/50 text-center mt-6">
+      <p className="text-sm text-white/50 text-center mt-4">
         Include postcode for more accurate results
       </p>
     </div>
