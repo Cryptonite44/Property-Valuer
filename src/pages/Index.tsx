@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -49,7 +48,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
-      {/* Improved Mobile Header */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -59,7 +57,6 @@ const Index = () => {
         <div className="w-full px-3">
           <div className="py-3">
             <div className="glass-panel py-3 px-4 relative overflow-hidden">
-              {/* Animated background gradient */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-pink-500/10"
                 animate={{
@@ -75,7 +72,6 @@ const Index = () => {
                 }}
               />
               
-              {/* Logo Section with Improved Mobile Layout */}
               <div className="flex flex-col gap-4 relative z-10">
                 <motion.div 
                   className="flex items-center justify-between"
@@ -92,7 +88,6 @@ const Index = () => {
                   </div>
                 </motion.div>
 
-                {/* Security Badges with Enhanced Mobile Layout */}
                 <div className="grid grid-cols-2 gap-2">
                   <motion.div 
                     className="flex items-center justify-center space-x-2 px-3 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg"
@@ -119,7 +114,6 @@ const Index = () => {
         </div>
       </motion.div>
 
-      {/* Enhanced Mobile Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center w-full px-4 py-4">
         {!estimatedValue ? (
           <>
@@ -139,12 +133,12 @@ const Index = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-sm font-light text-muted-foreground px-6"
+                className="text-sm font-light text-muted-foreground px-6 flex flex-col gap-1"
               >
-                Get an AI-powered estimate based on local market data
+                <span>Get an AI-powered estimate based</span>
+                <span>on local market data</span>
               </motion.p>
               
-              {/* Feature Pills with Enhanced Mobile Layout */}
               <div className="flex flex-wrap justify-center gap-2 mt-3 px-2">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
