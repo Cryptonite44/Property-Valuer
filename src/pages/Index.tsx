@@ -1,11 +1,10 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
 import EstimateResult from "@/components/EstimateResult";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
-import { ShieldCheck, Building2, Lock, UserCheck, Search, Star, Shield, Clock, FileText, Zap } from "lucide-react";
+import { Building2 } from "lucide-react";
 
 interface PropertyDetails {
   location: {
@@ -88,28 +87,6 @@ const Index = () => {
                     </div>
                   </div>
                 </motion.div>
-
-                {/* Security badges - hidden on mobile, visible on sm and up */}
-                <div className="hidden sm:grid grid-cols-2 gap-2">
-                  <motion.div 
-                    className="flex items-center justify-center space-x-2 px-3 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <Lock className="w-3.5 h-3.5 text-green-400" />
-                    <span className="text-[11px] font-semibold text-gray-300">SSL Secured</span>
-                  </motion.div>
-                  <motion.div 
-                    className="flex items-center justify-center space-x-2 px-3 py-2.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 shadow-lg"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5 text-green-400" />
-                    <span className="text-[11px] font-semibold text-gray-300">Secure Valuation</span>
-                  </motion.div>
-                </div>
               </div>
             </div>
           </div>

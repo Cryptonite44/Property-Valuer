@@ -1,7 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Building2, Copyright, Globe, Mail, Phone } from "lucide-react";
+import { Building2, Copyright, Globe, Mail, Lock, ShieldCheck } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -15,6 +15,28 @@ export const Footer = () => {
         <div className="bg-[#1A1F2C]/95 backdrop-blur-lg border-t border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="py-6 md:py-8">
+              {/* Security Badges Section */}
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                <motion.div 
+                  className="flex items-center justify-center space-x-2 px-3 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 shadow-lg"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <Lock className="w-3.5 h-3.5 text-green-400" />
+                  <span className="text-[11px] font-semibold text-gray-300">SSL Secured</span>
+                </motion.div>
+                <motion.div 
+                  className="flex items-center justify-center space-x-2 px-3 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 shadow-lg"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-green-400" />
+                  <span className="text-[11px] font-semibold text-gray-300">Secure Valuation</span>
+                </motion.div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
                 {/* Brand Section */}
                 <motion.div 
