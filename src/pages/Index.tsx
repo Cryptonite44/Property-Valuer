@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -53,44 +52,50 @@ const Index = () => {
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 w-full flex flex-col md:flex-row items-center justify-between p-4 md:p-6 z-20 bg-gradient-to-b from-[rgb(17,24,39)] to-transparent gap-3 md:gap-0"
+        className="sticky top-0 w-full z-20 bg-gradient-to-b from-[rgb(17,24,39)] to-transparent"
       >
-        <motion.div 
-          className="flex items-center space-x-3 text-white"
-          whileHover={{ scale: 1.02 }}
-        >
-          <Building2 className="w-7 md:w-8 h-7 md:h-8 text-white" />
-          <div>
-            <h2 className="font-semibold text-lg md:text-xl">PropertyValuer</h2>
-            <p className="text-xs md:text-sm text-gray-400">by Digitol</p>
-          </div>
-        </motion.div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-4 md:py-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+            <motion.div 
+              className="flex items-center space-x-3 text-white"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+                <Building2 className="w-6 md:w-7 h-6 md:h-7 text-[#9b87f5]" />
+              </div>
+              <div>
+                <h2 className="font-semibold text-lg md:text-xl tracking-tight">PropertyValuer</h2>
+                <p className="text-xs md:text-sm text-gray-400 font-medium">by Digitol</p>
+              </div>
+            </motion.div>
 
-        <div className="flex items-center gap-2 md:gap-4 flex-wrap justify-center">
-          <motion.div 
-            className="flex items-center space-x-2 px-3 md:px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <Lock className="w-4 h-4 text-green-400" />
-            <span className="text-sm text-gray-300">SSL Secured</span>
-          </motion.div>
-          <motion.div 
-            className="flex items-center space-x-2 px-3 md:px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <ShieldCheck className="w-4 h-4 text-green-400" />
-            <span className="text-sm text-gray-300">Secure Valuation</span>
-          </motion.div>
-          <motion.div 
-            className="hidden lg:flex items-center space-x-2 px-3 md:px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <Shield className="w-4 h-4 text-blue-400" />
-            <span className="text-sm text-gray-300">GDPR Compliant</span>
-          </motion.div>
+            <div className="flex items-center gap-2 md:gap-3 flex-wrap justify-center">
+              <motion.div 
+                className="flex items-center space-x-2 px-3 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Lock className="w-4 h-4 text-green-400" />
+                <span className="text-sm text-gray-300 whitespace-nowrap">SSL Secured</span>
+              </motion.div>
+              <motion.div 
+                className="flex items-center space-x-2 px-3 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <ShieldCheck className="w-4 h-4 text-green-400" />
+                <span className="text-sm text-gray-300 whitespace-nowrap">Secure Valuation</span>
+              </motion.div>
+              <motion.div 
+                className="hidden lg:flex items-center space-x-2 px-3 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Shield className="w-4 h-4 text-blue-400" />
+                <span className="text-sm text-gray-300 whitespace-nowrap">GDPR Compliant</span>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </motion.div>
 
