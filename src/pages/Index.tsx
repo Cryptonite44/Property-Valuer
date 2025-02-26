@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import TypewriterText from "@/components/TypewriterText";
 import ValueForm from "@/components/ValueForm";
@@ -49,53 +48,44 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
-      {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="sticky top-0 w-full z-20"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-4 md:py-6">
-            <div className="glass-panel py-3 px-4 md:px-6">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="w-full px-3 sm:px-4">
+          <div className="py-3">
+            <div className="glass-panel py-3 px-4">
+              <div className="flex flex-col gap-4">
                 <motion.div 
-                  className="flex items-center space-x-3 text-white self-start md:self-auto"
+                  className="flex items-center space-x-3 text-white"
                   whileHover={{ scale: 1.02 }}
                 >
                   <div className="p-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-                    <Building2 className="w-6 md:w-7 h-6 md:h-7 text-[#9b87f5]" />
+                    <Building2 className="w-6 h-6 text-[#9b87f5]" />
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-semibold text-lg md:text-xl tracking-tight">PropertyValuer</span>
-                    <span className="text-sm text-gray-400 whitespace-nowrap">by Digitol</span>
+                    <span className="font-semibold text-base tracking-tight">PropertyValuer</span>
+                    <span className="text-xs text-gray-400">by Digitol</span>
                   </div>
                 </motion.div>
 
-                <div className="flex items-center gap-2 md:gap-3 flex-wrap justify-center">
+                <div className="flex flex-wrap gap-2 -mx-1">
                   <motion.div 
-                    className="flex items-center space-x-2 px-3 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex-1 min-w-[140px] flex items-center justify-center space-x-2 px-3 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
+                    whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
                     <Lock className="w-4 h-4 text-green-400" />
-                    <span className="text-sm text-gray-300 whitespace-nowrap">SSL Secured</span>
+                    <span className="text-xs font-medium text-gray-300">SSL Secured</span>
                   </motion.div>
                   <motion.div 
-                    className="flex items-center space-x-2 px-3 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-                    whileHover={{ scale: 1.05 }}
+                    className="flex-1 min-w-[140px] flex items-center justify-center space-x-2 px-3 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
+                    whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                   >
                     <ShieldCheck className="w-4 h-4 text-green-400" />
-                    <span className="text-sm text-gray-300 whitespace-nowrap">Secure Valuation</span>
-                  </motion.div>
-                  <motion.div 
-                    className="hidden lg:flex items-center space-x-2 px-3 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                  >
-                    <Shield className="w-4 h-4 text-blue-400" />
-                    <span className="text-sm text-gray-300 whitespace-nowrap">GDPR Compliant</span>
+                    <span className="text-xs font-medium text-gray-300">Secure Valuation</span>
                   </motion.div>
                 </div>
               </div>
@@ -104,28 +94,17 @@ const Index = () => {
         </div>
       </motion.div>
 
-      {/* Background Effects */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]" />
-        <div className="absolute top-0 left-0 w-full h-full opacity-50">
-          <div className="absolute top-[10%] left-[5%] w-32 md:w-48 h-32 md:h-48 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob" />
-          <div className="absolute top-[20%] right-[5%] w-32 md:w-48 h-32 md:h-48 bg-yellow-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000" />
-          <div className="absolute bottom-[10%] left-[35%] w-32 md:w-48 h-32 md:h-48 bg-pink-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000" />
-        </div>
-      </div>
-      
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-16">
+      <div className="flex-1 flex flex-col items-center justify-center w-full px-4 py-6">
         {!estimatedValue ? (
           <>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-8 md:mb-12 space-y-6"
+              className="text-center mb-6 space-y-4"
             >
-              <div className="relative px-4 md:px-0">
-                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light mb-4 md:mb-6 text-gradient glow relative z-10">
+              <div className="relative px-2">
+                <h1 className="text-2xl font-light mb-3 text-gradient glow relative z-10">
                   <TypewriterText text="Superfast Property Valuer" />
                 </h1>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-3xl -z-10" />
@@ -134,40 +113,40 @@ const Index = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-base sm:text-lg md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto px-4 md:px-0"
+                className="text-base font-light text-muted-foreground px-4"
               >
                 Get an AI-powered estimate based on local market data
               </motion.p>
               
-              <div className="flex flex-wrap justify-center gap-3 mt-6 px-4 md:px-0">
+              <div className="flex flex-wrap justify-center gap-2 mt-4 px-2">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.5 }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
                   <FileText className="w-4 h-4 text-purple-400" />
-                  <span className="text-sm text-white/90">No Long Forms</span>
+                  <span className="text-xs font-medium text-white/90">No Long Forms</span>
                 </motion.div>
                 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.5 }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
                   <Clock className="w-4 h-4 text-blue-400" />
-                  <span className="text-sm text-white/90">Quick & Easy</span>
+                  <span className="text-xs font-medium text-white/90">Quick & Easy</span>
                 </motion.div>
                 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.5 }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
                 >
                   <Zap className="w-4 h-4 text-yellow-400" />
-                  <span className="text-sm text-white/90">Instant Valuation</span>
+                  <span className="text-xs font-medium text-white/90">Instant Valuation</span>
                 </motion.div>
               </div>
             </motion.div>
@@ -175,7 +154,7 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.6, duration: 0.5 }}
-              className="w-full max-w-xl mx-auto px-4 md:px-0"
+              className="w-full px-3"
             >
               <ValueForm onEstimate={handleEstimate} />
             </motion.div>
@@ -185,7 +164,7 @@ const Index = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="w-full max-w-2xl mx-auto px-4 md:px-0"
+            className="w-full px-3"
           >
             <EstimateResult
               value={estimatedValue}
@@ -196,7 +175,6 @@ const Index = () => {
         )}
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
