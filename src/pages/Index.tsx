@@ -98,7 +98,7 @@ const Index = () => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-center mb-8 space-y-6 relative"
             >
               <div className="relative">
@@ -108,7 +108,7 @@ const Index = () => {
                     backgroundPosition: ["0% 0%", "100% 100%"],
                   }}
                   transition={{
-                    duration: 10,
+                    duration: 15,
                     repeat: Infinity,
                     repeatType: "reverse",
                   }}
@@ -120,7 +120,7 @@ const Index = () => {
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine relative">
                     <TypewriterText 
                       text="Superfast Property Valuer" 
-                      delay={50}
+                      delay={150}
                     />
                   </span>
                 </h1>
@@ -128,27 +128,39 @@ const Index = () => {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                className="space-y-2"
+                transition={{ 
+                  delay: 3.5,
+                  duration: 0.8,
+                  ease: "easeOut"
+                }}
+                className="space-y-3"
               >
-                <p className="text-lg sm:text-xl font-medium text-purple-200/90 tracking-wide">
+                <p className="text-lg sm:text-xl font-medium text-purple-200/90 tracking-wider">
                   Get an AI-powered estimate based
                 </p>
-                <p className="text-lg sm:text-xl font-medium text-blue-200/90 tracking-wide">
+                <p className="text-lg sm:text-xl font-medium text-blue-200/90 tracking-wider">
                   on local market data
                 </p>
                 <motion.div
-                  className="w-24 h-1 mx-auto mt-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
+                  className="w-24 h-1 mx-auto mt-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
                   initial={{ width: 0 }}
                   animate={{ width: '6rem' }}
-                  transition={{ delay: 1, duration: 0.8 }}
+                  transition={{ 
+                    delay: 4,
+                    duration: 1.2,
+                    ease: "easeInOut"
+                  }}
                 />
               </motion.div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
+              transition={{ 
+                delay: 4.5,
+                duration: 0.8,
+                ease: "easeOut"
+              }}
               className="w-full px-2"
             >
               <ValueForm onEstimate={handleEstimate} />
