@@ -64,9 +64,9 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center mb-8 space-y-6 relative px-4 sm:px-6 w-full"
+            className="text-center mb-8 space-y-6 relative w-full max-w-screen-sm mx-auto px-4"
           >
-            <div className="relative max-w-[90vw] mx-auto">
+            <div className="relative">
               <motion.div
                 className="absolute -inset-1 bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-pink-500/20 blur-2xl"
                 animate={{
@@ -82,7 +82,7 @@ const Index = () => {
                 }}
               />
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 relative z-10 break-words">
-                <span className="inline-block text-white [background:linear-gradient(to_right,theme(colors.white)_0%,theme(colors.purple.200)_50%,theme(colors.white)_100%)] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background-size:200%_auto] animate-text-shine">
+                <span className="inline-block text-white [background:linear-gradient(to_right,theme(colors.white)_0%,theme(colors.purple.200)_50%,theme(colors.white)_100%)] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background-size:200%_auto] animate-text-shine whitespace-normal">
                   <TypewriterText 
                     texts={[
                       { text: "Superfast", delay: 50 },
@@ -103,10 +103,10 @@ const Index = () => {
               }}
               className="space-y-3"
             >
-              <p className="text-base sm:text-lg md:text-xl font-medium text-purple-200/90 tracking-wider px-2">
+              <p className="text-base sm:text-lg md:text-xl font-medium text-purple-200/90 tracking-wider">
                 Get an AI-powered estimate based
               </p>
-              <p className="text-base sm:text-lg md:text-xl font-medium text-blue-200/90 tracking-wider px-2">
+              <p className="text-base sm:text-lg md:text-xl font-medium text-blue-200/90 tracking-wider">
                 on local market data
               </p>
               <motion.div
@@ -129,7 +129,7 @@ const Index = () => {
               duration: 0.8,
               ease: "easeOut"
             }}
-            className="w-full px-2"
+            className="w-full max-w-screen-sm mx-auto px-4"
           >
             <ValueForm onEstimate={handleEstimate} />
           </motion.div>
@@ -198,7 +198,7 @@ const Index = () => {
         </div>
       </motion.div>
 
-      <div className="flex-1 flex flex-col items-center justify-center w-full px-4 py-4">
+      <div className="flex-1 flex flex-col items-center justify-center w-full">
         {renderContent()}
       </div>
       <Footer />
