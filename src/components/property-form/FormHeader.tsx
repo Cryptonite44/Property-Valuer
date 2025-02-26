@@ -22,8 +22,8 @@ export const FormHeader = () => {
         <CardDescription className="text-lg mt-2 text-white/70">
           <div className="flex flex-col items-center justify-center">
             <div className="flex flex-col items-center">
-              <span>AI-powered property</span>
-              <span>valuations in seconds</span>
+              <span>Get an AI-powered estimate</span>
+              <span>based on local market data</span>
             </div>
           </div>
         </CardDescription>
