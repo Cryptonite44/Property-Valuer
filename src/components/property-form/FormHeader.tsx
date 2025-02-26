@@ -17,7 +17,7 @@ export const FormHeader = () => {
         className="relative z-10"
       >
         <CardDescription className="text-lg text-white/90 leading-relaxed">
-          Enter your property details below for an instant AI-powered valuation
+          Instant property valuations powered by AI
         </CardDescription>
       </motion.div>
     </CardHeader>
