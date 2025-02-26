@@ -30,12 +30,19 @@ const Index = () => {
     setAnalysis(undefined);
   };
 
-  console.log('Current state:', { estimatedValue, analysis }); // Debug log
-
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden bg-[radial-gradient(ellipse_at_top,#1F2937_0%,#111827_100%)]">
+    <div className="min-h-screen flex flex-col relative overflow-hidden bg-[#0A0118]">
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          background: `
+            radial-gradient(circle at 15% 50%, rgba(188, 104, 252, 0.03), transparent 25%),
+            radial-gradient(circle at 85% 30%, rgba(88, 104, 252, 0.03), transparent 25%)
+          `
+        }}
+      />
       <Header />
-      <div className="flex-1 flex flex-col items-center justify-center w-full">
+      <div className="flex-1 flex flex-col items-center justify-center w-full relative z-10">
         <ValuationContent
           estimatedValue={estimatedValue}
           analysis={analysis}
