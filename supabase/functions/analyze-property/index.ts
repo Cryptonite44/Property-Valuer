@@ -19,28 +19,35 @@ serve(async (req) => {
 
     console.log('Starting property analysis:', { address, propertyType });
 
-    const prompt = `You are a UK property expert. Your task is to provide a realistic valuation for a ${propertyType} at ${address}. Respond ONLY with a JSON object containing the property value. Format:
+    const prompt = `You are a UK property expert. Analyze this ${propertyType} at ${address} and provide a detailed response with:
+1. Estimated value
+2. Local area description and amenities
+3. Nearby schools and education facilities
+4. Transport links and accessibility
+5. Recent market activity and price trends
+
+Format your response EXACTLY as this JSON (no other text):
 
 {
   "estimatedValue": [number without currency symbols or commas],
   "confidence": "medium",
-  "analysis": "Based on current market data",
+  "analysis": [brief market analysis],
   "details": {
     "location": {
-      "description": "Local area",
-      "amenities": ["Local amenities"]
+      "description": [detailed area description],
+      "amenities": [array of key local amenities]
     },
     "education": {
-      "description": "Local schools",
-      "schools": ["Local education"]
+      "description": [overview of educational facilities],
+      "schools": [array of nearby schools]
     },
     "transport": {
-      "description": "Transport links",
-      "links": ["Local transport"]
+      "description": [overview of transport links],
+      "links": [array of transport options]
     },
     "marketActivity": {
-      "recentSales": "Recent sales",
-      "priceChanges": "Market trends"
+      "recentSales": [description of recent sales],
+      "priceChanges": [description of price trends]
     }
   }
 }`;
@@ -56,14 +63,14 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are a UK property valuation expert. Always respond with valid JSON containing a realistic property value.'
+            content: 'You are a UK property valuation expert with detailed knowledge of local areas, schools, transport, and market trends. Always respond with valid JSON.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.1
+        temperature: 0.7
       }),
     });
 
@@ -90,27 +97,14 @@ serve(async (req) => {
     const parsed = JSON.parse(cleanJson);
     console.log('Parsed response:', parsed);
 
-    // Only validate the estimated value
-    if (typeof parsed.estimatedValue !== 'number') {
-      console.error('Invalid estimated value:', parsed.estimatedValue);
-      throw new Error('Invalid value format');
+    // Validate the response format
+    if (!parsed || typeof parsed.estimatedValue !== 'number') {
+      throw new Error('Invalid response format');
     }
 
-    // Return a minimal valid response
-    const responseData = {
-      estimatedValue: parsed.estimatedValue,
-      confidence: "medium",
-      analysis: "Based on current market data",
-      details: {
-        location: { description: "Local area", amenities: ["Local amenities"] },
-        education: { description: "Local schools", schools: ["Local education"] },
-        transport: { description: "Transport links", links: ["Local transport"] },
-        marketActivity: { recentSales: "Recent sales", priceChanges: "Market trends" }
-      }
-    };
-
+    // Use all the details from ChatGPT's response
     return new Response(
-      JSON.stringify(responseData),
+      JSON.stringify(parsed),
       { 
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -119,17 +113,28 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Function error:', error);
-    // Return a fallback response with default values
     return new Response(
       JSON.stringify({
         estimatedValue: 250000,
         confidence: "low",
-        analysis: "Estimated based on general market trends",
+        analysis: "Unable to process detailed analysis at this time",
         details: {
-          location: { description: "Area information unavailable", amenities: ["Local amenities"] },
-          education: { description: "Education information unavailable", schools: ["Local schools"] },
-          transport: { description: "Transport information unavailable", links: ["Local transport"] },
-          marketActivity: { recentSales: "Sales data unavailable", priceChanges: "Trends unavailable" }
+          location: {
+            description: "Area information temporarily unavailable",
+            amenities: ["Local amenities data unavailable"]
+          },
+          education: {
+            description: "Education information temporarily unavailable",
+            schools: ["School data unavailable"]
+          },
+          transport: {
+            description: "Transport information temporarily unavailable",
+            links: ["Transport data unavailable"]
+          },
+          marketActivity: {
+            recentSales: "Sales data temporarily unavailable",
+            priceChanges: "Market trend data unavailable"
+          }
         }
       }),
       {
