@@ -41,6 +41,18 @@ const Index = () => {
           `
         }}
       />
+      {/* Grid Background */}
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.07]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
+          backgroundPosition: '-1px -1px'
+        }}
+      />
       <Header />
       <div className="flex-1 flex flex-col items-center justify-center w-full relative z-10">
         <ValuationContent
