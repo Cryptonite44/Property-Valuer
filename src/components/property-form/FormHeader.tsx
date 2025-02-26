@@ -16,9 +16,6 @@ export const FormHeader = () => {
         transition={{ delay: 0.3 }}
         className="relative z-10"
       >
-        <CardDescription className="text-lg text-white/90 leading-relaxed">
-          Instant property valuations powered by AI
-        </CardDescription>
       </motion.div>
     </CardHeader>
   );
