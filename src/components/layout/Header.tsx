@@ -1,7 +1,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Building2 } from "lucide-react";
+import { Building2, Activity } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
@@ -13,7 +13,7 @@ export const Header = () => {
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm -z-10" />
       <div className="w-full">
-        <div className="flex items-center justify-center py-3">
+        <div className="flex items-center justify-between py-3 px-4">
           <Link to="/" className="glass-panel py-2 px-4 relative overflow-hidden">
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-pink-500/10"
@@ -45,6 +45,16 @@ export const Header = () => {
               </motion.div>
             </div>
           </Link>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="glass-panel py-1.5 px-3 flex items-center gap-2"
+          >
+            <Activity className="w-3.5 h-3.5 text-green-400" />
+            <span className="text-xs font-medium text-green-400">All Systems Nominal</span>
+          </motion.div>
         </div>
       </div>
     </motion.div>
