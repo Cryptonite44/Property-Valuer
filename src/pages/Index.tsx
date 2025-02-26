@@ -81,8 +81,8 @@ const Index = () => {
                   backgroundSize: "200% 200%",
                 }}
               />
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 relative z-10 break-words text-white/90">
-                <span className="inline-block bg-gradient-to-r from-white via-purple-200 to-white [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] [background-size:200%_auto] animate-text-shine whitespace-normal">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 relative z-10 break-words">
+                <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine [background-position:0_0] [background-size:200%_100%] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
                   <TypewriterText 
                     texts={[
                       { text: "Superfast", delay: 50 },
