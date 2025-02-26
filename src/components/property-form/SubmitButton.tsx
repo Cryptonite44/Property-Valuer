@@ -14,7 +14,22 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 }}
+      className="relative"
     >
+      {/* Animated background gradient */}
+      <motion.div
+        className="absolute -inset-1 bg-gradient-to-r from-[#9b87f5] via-[#8B5CF6] to-[#D6BCFA] opacity-75 blur-md rounded-lg"
+        animate={{
+          scale: [1, 1.02, 1],
+          opacity: [0.7, 0.9, 0.7],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
       <Button 
         type="submit" 
         className={`w-full mt-8 relative overflow-hidden ${
@@ -115,13 +130,32 @@ export const SubmitButton = ({ isLoading }: SubmitButtonProps) => {
             </div>
           </motion.div>
         ) : (
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="relative z-10 text-base"
+          <motion.div
+            className="relative flex items-center justify-center w-full"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            Get Estimate
-          </motion.span>
+            {/* Shine effect */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+              initial={{ x: "-200%" }}
+              animate={{ x: "200%" }}
+              transition={{
+                repeat: Infinity,
+                duration: 2,
+                ease: "easeInOut",
+                delay: 1,
+              }}
+            />
+            
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-lg font-medium text-white relative z-10"
+            >
+              Get Estimate
+            </motion.span>
+          </motion.div>
         )}
       </Button>
     </motion.div>
