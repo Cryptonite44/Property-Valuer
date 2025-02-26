@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -130,7 +129,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         <Card className="relative w-full bg-[#1A1F2C] border border-white/10 shadow-lg overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
           
-          <CardHeader>
+          <CardHeader className="text-center">
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -140,7 +139,7 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
               <CardTitle className="text-white text-3xl">
                 Property Details
               </CardTitle>
-              <CardDescription className="text-lg mt-2 text-white/70 flex items-center gap-2">
+              <CardDescription className="text-lg mt-2 text-white/70 flex items-center justify-center gap-2">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -169,10 +168,24 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
                 selectedType={selectedType}
                 onTypeSelect={setSelectedType}
               />
-              <AddressInput
-                address={address}
-                onChange={handleAddressChange}
-              />
+              <div className="space-y-2 text-center">
+                <Label htmlFor="address" className="text-sm text-white/70 block">
+                  Full Property Address
+                </Label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-4 h-4 z-20" />
+                  <Input
+                    id="address"
+                    placeholder="Enter the complete property address"
+                    value={address}
+                    onChange={handleAddressChange}
+                    className="relative bg-[#1A1F2C] border-white/10 focus:border-[#3b82f6]/50 transition-all duration-300 pl-10 rounded-lg text-white placeholder:text-white/30 focus:ring-4 focus:ring-[#3b82f6]/20 shadow-[0_0_30px_rgba(139,92,246,0.3)] focus:shadow-[0_0_40px_rgba(139,92,246,0.45),0_0_20px_rgba(139,92,246,0.35),inset_0_0_15px_rgba(139,92,246,0.25)] focus:bg-[#1A1F2C] z-10"
+                  />
+                </div>
+                <p className="text-xs text-white/50 text-center">
+                  Include postcode for more accurate results
+                </p>
+              </div>
               <SubmitButton isLoading={isLoading} />
             </form>
           </CardContent>
