@@ -120,7 +120,7 @@ const Index = () => {
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine relative">
                     <TypewriterText 
                       text="Superfast Property Valuer" 
-                      delay={150}
+                      delay={100}
                     />
                   </span>
                 </h1>
@@ -129,7 +129,7 @@ const Index = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ 
-                  delay: 1.5,
+                  delay: 0.8,
                   duration: 0.8,
                   ease: "easeOut"
                 }}
@@ -146,7 +146,7 @@ const Index = () => {
                   initial={{ width: 0 }}
                   animate={{ width: '6rem' }}
                   transition={{ 
-                    delay: 2,
+                    delay: 1.2,
                     duration: 1.2,
                     ease: "easeInOut"
                   }}
@@ -157,7 +157,7 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ 
-                delay: 2.5,
+                delay: 1.5,
                 duration: 0.8,
                 ease: "easeOut"
               }}
