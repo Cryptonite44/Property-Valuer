@@ -2,12 +2,17 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
+const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+function extractJSONFromMarkdown(text: string): string {
+  const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+  return jsonMatch ? jsonMatch[1] : text;
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -17,120 +22,99 @@ serve(async (req) => {
   try {
     const { address, propertyType } = await req.json();
 
-    console.log('Starting property analysis:', { address, propertyType });
+    const prompt = `You are tasked with providing an accurate valuation for this UK property:
 
-    const prompt = `You are a UK property expert. For ${address}, what is the current average price for a ${propertyType}? Respond ONLY with a JSON object in this exact format (no other text):
+${propertyType} at: ${address}
 
+Based on your knowledge of the UK property market:
+1. What is the EXACT current market value of this property?
+2. Use recent sales data, market conditions, and local factors
+3. The value must be precise and not rounded
+4. Must be based on actual property data from the area
+
+CRITICAL: Your response must ONLY include a JSON object with this structure:
 {
-  "estimatedValue": [number without currency symbols or commas],
-  "confidence": "medium",
-  "analysis": "Based on current market data",
+  "estimatedValue": number (exact value, not rounded),
+  "confidence": "low" | "medium" | "high",
+  "analysis": "detailed explanation of how you arrived at this specific value",
   "details": {
     "location": {
-      "description": "Local area",
-      "amenities": ["Local amenities"]
+      "description": "string",
+      "amenities": ["string"]
     },
     "education": {
-      "description": "Local schools",
-      "schools": ["Local education"]
+      "description": "string",
+      "schools": ["string"]
     },
     "transport": {
-      "description": "Transport links",
-      "links": ["Local transport"]
+      "description": "string",
+      "links": ["string"]
     },
     "marketActivity": {
-      "recentSales": "Recent sales",
-      "priceChanges": "Market trends"
+      "recentSales": "string with specific recent sales data",
+      "priceChanges": "string with specific price trends"
     }
   }
 }`;
 
-    const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${geminiApiKey}`, {
+    console.log('Sending request to OpenAI...'); // Debug log
+
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
+        'Authorization': `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: prompt
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.1,
-          maxOutputTokens: 1000,
-        }
-      })
+        model: 'gpt-4',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a UK property valuation expert with access to current market data. Always provide precise, unrounded valuations based on actual market data. Your valuations must be exact numbers.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        temperature: 0.1 // Lower temperature for more consistent, precise responses
+      }),
     });
 
-    if (!geminiResponse.ok) {
-      console.error('Gemini API error status:', geminiResponse.status);
-      throw new Error('Gemini API request failed');
+    const data = await response.json();
+    console.log('OpenAI raw response:', data); // Debug log
+
+    if (!data.choices?.[0]?.message?.content) {
+      throw new Error('Invalid response from OpenAI');
     }
 
-    const geminiData = await geminiResponse.json();
-    console.log('Gemini raw response:', geminiData);
+    const rawContent = data.choices[0].message.content;
+    console.log('Raw content:', rawContent); // Debug log
 
-    if (!geminiData.candidates?.[0]?.content?.parts?.[0]?.text) {
-      console.error('Invalid response structure:', geminiData);
-      throw new Error('Invalid response from Gemini');
-    }
+    // Clean up the response content
+    const cleanedContent = extractJSONFromMarkdown(rawContent);
+    console.log('Cleaned content:', cleanedContent); // Debug log
 
-    const rawText = geminiData.candidates[0].content.parts[0].text;
-    console.log('Raw text from Gemini:', rawText);
-
-    // Clean the response and parse it
-    const cleanJson = rawText.replace(/```(?:json)?\n?|\n?```/g, '').trim();
-    console.log('Cleaned JSON:', cleanJson);
+    // Parse the cleaned JSON
+    const aiResponse = JSON.parse(cleanedContent);
     
-    const parsed = JSON.parse(cleanJson);
-    console.log('Parsed response:', parsed);
-
-    // Only validate the estimated value
-    if (typeof parsed.estimatedValue !== 'number') {
-      console.error('Invalid estimated value:', parsed.estimatedValue);
-      throw new Error('Invalid value format');
+    // Validate the response
+    if (!aiResponse.estimatedValue || 
+        typeof aiResponse.estimatedValue !== 'number' || 
+        aiResponse.estimatedValue < 50000 || 
+        aiResponse.estimatedValue > 10000000) {
+      throw new Error('Invalid property valuation amount');
     }
 
-    // Return a minimal valid response
-    const response = {
-      estimatedValue: parsed.estimatedValue,
-      confidence: "medium",
-      analysis: "Based on current market data",
-      details: {
-        location: { description: "Local area", amenities: ["Local amenities"] },
-        education: { description: "Local schools", schools: ["Local education"] },
-        transport: { description: "Transport links", links: ["Local transport"] },
-        marketActivity: { recentSales: "Recent sales", priceChanges: "Market trends" }
-      }
-    };
-
-    return new Response(
-      JSON.stringify(response),
-      { 
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
-    );
-
+    // Return the exact value from ChatGPT without any modifications
+    return new Response(JSON.stringify(aiResponse), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
-    console.error('Function error:', error);
-    return new Response(
-      JSON.stringify({
-        estimatedValue: 250000, // Fallback value
-        confidence: "low",
-        analysis: "Estimated based on general market trends",
-        details: {
-          location: { description: "Area information unavailable", amenities: ["Local amenities"] },
-          education: { description: "Education information unavailable", schools: ["Local schools"] },
-          transport: { description: "Transport information unavailable", links: ["Local transport"] },
-          marketActivity: { recentSales: "Sales data unavailable", priceChanges: "Trends unavailable" }
-        }
-      }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
+    console.error('Error in analyze-property function:', error);
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

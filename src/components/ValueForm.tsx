@@ -74,40 +74,9 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
       const data = response.data;
       console.log('Extracted data:', data); // Debug log
 
-      // Check if there's an error in the response data
-      if (data.error) {
-        throw new Error(data.error);
-      }
-
-      // Validate the response format
-      if (!data || typeof data.estimatedValue !== 'number') {
+      if (!data || !data.estimatedValue) {
         throw new Error('Invalid response format from analysis');
       }
-
-      // Ensure all required fields are present
-      const analysisData: AIAnalysis = {
-        estimatedValue: data.estimatedValue,
-        confidence: data.confidence || 'medium',
-        analysis: data.analysis || `Based on current market data for ${address}`,
-        details: {
-          location: {
-            description: data.details?.location?.description || 'Area information not available',
-            amenities: data.details?.location?.amenities || ['Local amenities']
-          },
-          education: {
-            description: data.details?.education?.description || 'Education information not available',
-            schools: data.details?.education?.schools || ['Local schools']
-          },
-          transport: {
-            description: data.details?.transport?.description || 'Transport information not available',
-            links: data.details?.transport?.links || ['Local transport']
-          },
-          marketActivity: {
-            recentSales: data.details?.marketActivity?.recentSales || 'Recent sales data not available',
-            priceChanges: data.details?.marketActivity?.priceChanges || 'Price trends not available'
-          }
-        }
-      };
 
       // Show success toast
       toast({
@@ -115,8 +84,8 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: number, analysis?: AIAn
         description: "Based on historical sales data and market trends",
       });
 
-      // Call onEstimate with validated data
-      onEstimate(analysisData.estimatedValue, analysisData);
+      // Call onEstimate with the complete data object
+      onEstimate(parseFloat(data.estimatedValue), data as AIAnalysis);
     } catch (error: any) {
       console.error('Error in analysis:', error);
       toast({
