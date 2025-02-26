@@ -30,9 +30,9 @@ export const IntroSection = () => {
           <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-white animate-text-shine [background-position:0_0] [background-size:200%_100%] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
             <TypewriterText 
               texts={[
-                { text: "Superfast", delay: 50 },
+                { text: "AI-Powered", delay: 50 },
                 { text: " Property", delay: 150 },
-                { text: " Valuer", delay: 150 }
+                { text: " Valuations", delay: 150 }
               ]}
             />
           </span>
