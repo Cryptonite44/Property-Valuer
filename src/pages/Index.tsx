@@ -53,69 +53,69 @@ const Index = () => {
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="sticky top-0 w-full flex flex-col md:flex-row items-center justify-between p-3 md:p-4 z-20 bg-gradient-to-b from-[rgb(17,24,39)] to-transparent gap-2 md:gap-0"
+        className="sticky top-0 w-full flex flex-col md:flex-row items-center justify-between p-4 md:p-6 z-20 bg-gradient-to-b from-[rgb(17,24,39)] to-transparent gap-3 md:gap-0"
       >
         <motion.div 
-          className="flex items-center space-x-2 text-white"
+          className="flex items-center space-x-3 text-white"
           whileHover={{ scale: 1.02 }}
         >
-          <Building2 className="w-6 md:w-8 h-6 md:h-8 text-white" />
+          <Building2 className="w-7 md:w-8 h-7 md:h-8 text-white" />
           <div>
-            <h2 className="font-semibold text-base md:text-lg">PropertyValuer</h2>
-            <p className="text-xs text-gray-400">by Digitol</p>
+            <h2 className="font-semibold text-lg md:text-xl">PropertyValuer</h2>
+            <p className="text-xs md:text-sm text-gray-400">by Digitol</p>
           </div>
         </motion.div>
 
         <div className="flex items-center gap-2 md:gap-4 flex-wrap justify-center">
           <motion.div 
-            className="flex items-center space-x-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+            className="flex items-center space-x-2 px-3 md:px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <Lock className="w-3 md:w-4 h-3 md:h-4 text-green-400" />
-            <span className="text-xs md:text-sm text-gray-300">SSL Secured</span>
+            <Lock className="w-4 h-4 text-green-400" />
+            <span className="text-sm text-gray-300">SSL Secured</span>
           </motion.div>
           <motion.div 
-            className="flex items-center space-x-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+            className="flex items-center space-x-2 px-3 md:px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <ShieldCheck className="w-3 md:w-4 h-3 md:h-4 text-green-400" />
-            <span className="text-xs md:text-sm text-gray-300">Secure Valuation</span>
+            <ShieldCheck className="w-4 h-4 text-green-400" />
+            <span className="text-sm text-gray-300">Secure Valuation</span>
           </motion.div>
           <motion.div 
-            className="hidden lg:flex items-center space-x-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
+            className="hidden lg:flex items-center space-x-2 px-3 md:px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <Shield className="w-3 md:w-4 h-3 md:h-4 text-blue-400" />
-            <span className="text-xs md:text-sm text-gray-300">GDPR Compliant</span>
+            <Shield className="w-4 h-4 text-blue-400" />
+            <span className="text-sm text-gray-300">GDPR Compliant</span>
           </motion.div>
         </div>
       </motion.div>
 
       {/* Background Effects */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]" />
         <div className="absolute top-0 left-0 w-full h-full opacity-50">
-          <div className="absolute top-[10%] left-[5%] w-48 h-48 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob" />
-          <div className="absolute top-[20%] right-[5%] w-48 h-48 bg-yellow-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000" />
-          <div className="absolute bottom-[10%] left-[35%] w-48 h-48 bg-pink-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000" />
+          <div className="absolute top-[10%] left-[5%] w-32 md:w-48 h-32 md:h-48 bg-purple-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob" />
+          <div className="absolute top-[20%] right-[5%] w-32 md:w-48 h-32 md:h-48 bg-yellow-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000" />
+          <div className="absolute bottom-[10%] left-[35%] w-32 md:w-48 h-32 md:h-48 bg-pink-500/30 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000" />
         </div>
       </div>
       
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl mx-auto px-3 md:px-4 py-16">
+      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-5xl mx-auto px-4 md:px-6 py-8 md:py-16">
         {!estimatedValue ? (
           <>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-8 md:mb-12 space-y-4 md:space-y-6"
+              className="text-center mb-8 md:mb-12 space-y-6"
             >
-              <div className="relative">
-                <h1 className="text-3xl md:text-6xl font-light mb-3 md:mb-4 text-gradient glow relative z-10">
+              <div className="relative px-4 md:px-0">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-light mb-4 md:mb-6 text-gradient glow relative z-10">
                   <TypewriterText text="Superfast Property Valuer" />
                 </h1>
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-3xl -z-10" />
@@ -124,12 +124,12 @@ const Index = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-lg md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto"
+                className="text-base sm:text-lg md:text-2xl font-light text-muted-foreground max-w-2xl mx-auto px-4 md:px-0"
               >
                 Get an AI-powered estimate based on local market data
               </motion.p>
               
-              <div className="flex flex-wrap justify-center gap-4 mt-6">
+              <div className="flex flex-wrap justify-center gap-3 mt-6 px-4 md:px-0">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -165,6 +165,7 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.6, duration: 0.5 }}
+              className="w-full max-w-xl mx-auto px-4 md:px-0"
             >
               <ValueForm onEstimate={handleEstimate} />
             </motion.div>
@@ -174,6 +175,7 @@ const Index = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
+            className="w-full max-w-2xl mx-auto px-4 md:px-0"
           >
             <EstimateResult
               value={estimatedValue}

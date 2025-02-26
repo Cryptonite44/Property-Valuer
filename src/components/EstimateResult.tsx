@@ -222,79 +222,147 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
 
   return (
     <TooltipProvider>
-      <Card className="w-full max-w-2xl mx-auto glass-panel animate-fade-up">
-        <CardHeader className="text-center pb-4">
-          <CardTitle className="text-3xl font-light text-gradient">
-            Property Value Estimate
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="text-center mb-4">
-            <div className="text-5xl font-light mb-2 bg-gradient-to-r from-[#9b87f5] via-[#8B5CF6] to-[#D6BCFA] bg-clip-text text-transparent">
-              {formatCurrency(value)}
+      <Card className="w-full bg-[#1A1F2C]/50 border-white/10 backdrop-blur-sm relative overflow-hidden">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
+            <div className="space-y-1">
+              <CardTitle className="text-2xl md:text-3xl font-light text-gradient">
+                Property Valuation
+              </CardTitle>
+              <CardDescription className="text-white/70">
+                Based on our AI-powered analysis
+              </CardDescription>
             </div>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center justify-center gap-2 cursor-help">
-                  <p className="text-sm text-muted-foreground">
-                    Confidence Level:{" "}
-                    <span className={`font-medium ${ConfidenceLevels[analysis?.confidence || 'medium'].color}`}>
-                      {analysis?.confidence.toUpperCase()}
-                    </span>
-                  </p>
-                  <HelpCircle className="w-4 h-4 text-muted-foreground" />
+            <Button
+              variant="outline"
+              onClick={onReset}
+              className="border-white/10 text-white/70 hover:bg-white/5"
+            >
+              New Valuation
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Value Display */}
+          <div className="p-4 md:p-6 rounded-lg bg-white/5 border border-white/10 space-y-4">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-white/5">
+                  <TrendingUp className="w-5 h-5 text-green-400" />
                 </div>
+                <div>
+                  <p className="text-sm font-medium text-white/70">Estimated Value</p>
+                  <h3 className="text-2xl md:text-3xl font-semibold text-white">
+                    {formatCurrency(value)}
+                  </h3>
+                </div>
+              </div>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={() => setIsDialogOpen(true)}
+                  className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white px-6 py-2 h-auto"
+                >
+                  Full Valuation
+                </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                <p className="max-w-xs">
-                  {ConfidenceLevels[analysis?.confidence || 'medium'].description}
-                </p>
-              </TooltipContent>
-            </Tooltip>
+            </div>
+            {analysis?.confidence && (
+              <div className="flex items-center gap-2 text-sm">
+                <Info className="w-4 h-4 text-blue-400" />
+                <span className="text-white/70">
+                  Confidence Level: <span className="text-white">{analysis.confidence}</span>
+                </span>
+              </div>
+            )}
           </div>
 
-          {analysis && (
-            <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-gradient-to-r from-white/5 to-white/10">
-                <div className="flex items-center gap-2 mb-3">
-                  <Landmark className="w-5 h-5 text-[#FFD700]" />
-                  <h3 className="font-medium text-white">Recent Market Activity</h3>
-                </div>
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  {analysis.details.marketActivity.recentSales}
+          {/* Analysis Sections */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Location Analysis */}
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+              <div className="flex items-center gap-2 mb-2">
+                <MapPin className="w-5 h-5 text-purple-400" />
+                <h4 className="text-lg font-medium text-white">Location</h4>
+              </div>
+              <p className="text-sm text-white/70">{analysis?.details.location.description}</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {analysis?.details.location.amenities.map((amenity, index) => (
+                  <span
+                    key={index}
+                    className="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60"
+                  >
+                    {amenity}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Education Analysis */}
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+              <div className="flex items-center gap-2 mb-2">
+                <School className="w-5 h-5 text-blue-400" />
+                <h4 className="text-lg font-medium text-white">Education</h4>
+              </div>
+              <p className="text-sm text-white/70">{analysis?.details.education.description}</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {analysis?.details.education.schools.map((school, index) => (
+                  <span
+                    key={index}
+                    className="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60"
+                  >
+                    {school}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Transport Analysis */}
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+              <div className="flex items-center gap-2 mb-2">
+                <Bus className="w-5 h-5 text-yellow-400" />
+                <h4 className="text-lg font-medium text-white">Transport</h4>
+              </div>
+              <p className="text-sm text-white/70">{analysis?.details.transport.description}</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {analysis?.details.transport.links.map((link, index) => (
+                  <span
+                    key={index}
+                    className="text-xs px-2 py-1 rounded-full bg-white/5 text-white/60"
+                  >
+                    {link}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Market Activity */}
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
+              <div className="flex items-center gap-2 mb-2">
+                <Landmark className="w-5 h-5 text-green-400" />
+                <h4 className="text-lg font-medium text-white">Market Activity</h4>
+              </div>
+              <div className="space-y-2">
+                <p className="text-sm text-white/70">
+                  Recent Sales: {analysis?.details.marketActivity.recentSales}
+                </p>
+                <p className="text-sm text-white/70">
+                  Price Changes: {analysis?.details.marketActivity.priceChanges}
                 </p>
               </div>
-              {renderAnalysisSection()}
             </div>
-          )}
-          
-          <div className="flex flex-col sm:flex-row gap-2 pt-4">
-            <Button
-              className="flex-1 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white transition-colors"
-              onClick={() => setIsDialogOpen(true)}
-            >
-              Book Full Valuation
-            </Button>
-            <Button 
-              variant="secondary"
-              className="flex-1 hover:bg-white/10 transition-colors" 
-              onClick={onReset}
-            >
-              New Estimate
-            </Button>
           </div>
         </CardContent>
       </Card>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-md bg-[#1A1F2C] text-white border-white/10">
-          <DialogHeader>
+        <DialogContent className="max-w-md bg-[#1A1F2C] text-white border-white/10 p-6">
+          <DialogHeader className="space-y-3">
             <DialogTitle className="text-xl font-light text-gradient">Book Your Full Valuation</DialogTitle>
             <DialogDescription className="text-white/70">
               Please provide your details and we'll arrange a professional valuation of your property.
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleSubmitForm} className="space-y-4 mt-4">
+          <form onSubmit={handleSubmitForm} className="space-y-4 mt-6">
             <div className="space-y-2">
               <Label htmlFor="name" className="text-white/70">Full Name</Label>
               <Input
@@ -345,7 +413,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
                 placeholder="Enter the property address"
               />
             </div>
-            <div className="flex justify-end gap-2 mt-6">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 mt-6">
               <Button
                 type="button"
                 variant="outline"
