@@ -191,10 +191,10 @@ export const IntroSection = () => {
           }}
         />
         
-        {/* New integrated title with more cohesive design - removed Sparkles icon */}
+        {/* Updated title to display on two lines */}
         <div className="relative z-10">
           <motion.div 
-            className="inline-flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3"
+            className="inline-flex flex-col items-center justify-center gap-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
