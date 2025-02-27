@@ -115,11 +115,11 @@ export const IntroSection = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-12"
+      className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-8 sm:pt-12"
     >
-      {/* Live valuation notifications - in a row at the top */}
+      {/* Live valuation notifications - responsive row/column layout */}
       <motion.div 
-        className="flex flex-wrap justify-center gap-3 mb-6 relative z-20"
+        className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-2 sm:gap-3 mb-6 relative z-20"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -128,17 +128,17 @@ export const IntroSection = () => {
           {recentValuations.map((valuation) => (
             <motion.div
               key={valuation.id}
-              className="w-auto max-w-[32%] sm:max-w-[30%]"
+              className="w-full sm:w-auto sm:max-w-[32%]"
               initial={{ opacity: 0, y: -10, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -5, scale: 0.9 }}
               transition={{ duration: 0.4 }}
             >
               <div 
-                className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg"
+                className="flex items-center gap-2 px-3 py-2 sm:py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg"
               >
                 <div className="relative">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+                  <CheckCircle2 className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-green-400" />
                   <motion.div
                     className="absolute -inset-1 rounded-full bg-green-400/20"
                     animate={{
@@ -153,10 +153,10 @@ export const IntroSection = () => {
                   />
                 </div>
                 <div className="flex flex-col items-start text-left">
-                  <span className="text-xs text-white font-medium truncate max-w-[140px] sm:max-w-[180px]">
+                  <span className="text-sm sm:text-xs text-white font-medium truncate max-w-[240px] sm:max-w-[140px] md:max-w-[180px]">
                     {valuation.address}
                   </span>
-                  <span className="text-[10px] text-green-300">{valuation.time}</span>
+                  <span className="text-xs sm:text-[10px] text-green-300">{valuation.time}</span>
                 </div>
               </div>
             </motion.div>
