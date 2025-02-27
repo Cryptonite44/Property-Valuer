@@ -172,29 +172,10 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: ValueRange, analysis?: 
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    <motion.h2 
-                      className="text-3xl md:text-4xl font-bold text-white mb-8"
-                      animate={{
-                        opacity: [0.8, 1, 0.8],
-                        textShadow: [
-                          "0 0 8px rgba(255, 255, 255, 0.3)",
-                          "0 0 16px rgba(255, 255, 255, 0.5)",
-                          "0 0 8px rgba(255, 255, 255, 0.3)"
-                        ]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        repeatType: "reverse"
-                      }}
-                    >
-                      AI Property Valuation in Progress
-                    </motion.h2>
-                    
                     {/* Advanced AI analysis visualization */}
                     <div className="relative mb-12">
                       <motion.div
-                        className="relative flex items-center justify-center mb-16"
+                        className="relative flex items-center justify-center mb-24" // Increased bottom margin
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ 
@@ -303,16 +284,16 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: ValueRange, analysis?: 
                         </motion.div>
                       </motion.div>
                       
-                      {/* Processing status text */}
+                      {/* Processing status text - repositioned and styled to prevent overlap */}
                       <motion.div
-                        className="flex flex-col items-center space-y-3"
+                        className="flex flex-col items-center space-y-5 absolute left-0 right-0"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8 }}
                       >
                         {/* Status text that changes */}
                         <motion.div 
-                          className="h-6 overflow-hidden relative w-64"
+                          className="h-6 overflow-hidden relative w-64 mx-auto"
                         >
                           {["Analyzing location data", "Processing market trends", "Evaluating property features", "Comparing recent sales"].map((text, index) => (
                             <motion.div
@@ -336,12 +317,12 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: ValueRange, analysis?: 
                           ))}
                         </motion.div>
                         
-                        {/* Loading dots */}
-                        <motion.div className="flex space-x-2 items-center">
+                        {/* Loading dots - with increased spacing */}
+                        <motion.div className="flex space-x-3 items-center mt-4">
                           {[0, 1, 2].map((dot) => (
                             <motion.div
                               key={dot}
-                              className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-blue-500"
+                              className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-purple-400 to-blue-500"
                               animate={{
                                 scale: [1, 1.5, 1],
                                 opacity: [0.5, 1, 0.5],
