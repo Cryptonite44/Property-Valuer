@@ -174,7 +174,7 @@ export const RecentValuations = () => {
     },
     {
       price: "£420,000",
-      address: "Maple Lane, Surrey",
+      address: "Maple Lane, Wales",
       bedrooms: 2,
       bathrooms: 1,
       size: "850 ft²",
