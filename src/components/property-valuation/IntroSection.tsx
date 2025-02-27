@@ -409,7 +409,7 @@ export const IntroSection = () => {
                 </motion.div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
           
           {/* Mobile-specific subtitle with enhanced styling */}
           <motion.div 
