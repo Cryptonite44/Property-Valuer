@@ -1,8 +1,6 @@
 
 import React from "react";
 import { motion, useAnimationControls } from "framer-motion";
-import TypewriterText from "@/components/TypewriterText";
-import { PoundSterling, TrendingUp, ChartBar } from "lucide-react";
 import { AnimatedPropertyCard } from "./AnimatedPropertyCard";
 
 export const IntroSection = () => {
@@ -15,171 +13,6 @@ export const IntroSection = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-12"
     >
-      {/* Animated Value Scene */}
-      <motion.div 
-        className="relative h-24 mb-4"
-        whileInView={{ scale: [0.9, 1] }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* Value indicators */}
-        <motion.div
-          className="absolute left-[30%] top-0"
-          animate={{
-            y: [-5, 5, -5],
-            opacity: [0.4, 0.8, 0.4],
-            rotate: [0, 5, -5, 0],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <PoundSterling className="w-4 h-4 text-green-400/50" />
-        </motion.div>
-        <motion.div
-          className="absolute left-[45%] top-4"
-          animate={{
-            y: [5, -5, 5],
-            opacity: [0.4, 0.8, 0.4],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <TrendingUp className="w-4 h-4 text-blue-400/50" />
-        </motion.div>
-        <motion.div
-          className="absolute left-[60%] top-2"
-          animate={{
-            y: [-8, 8, -8],
-            opacity: [0.4, 0.8, 0.4],
-            rotate: [0, -5, 5, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <ChartBar className="w-4 h-4 text-purple-400/50" />
-        </motion.div>
-
-        {/* Centered value indicator */}
-        <motion.div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          whileHover={{ scale: 1.1 }}
-          transition={{ 
-            duration: 0.8, 
-            delay: 0.2,
-            type: "spring",
-            stiffness: 200,
-          }}
-        >
-          <div className="relative">
-            {/* Value glow effect */}
-            <motion.div
-              className="absolute -inset-2 bg-gradient-to-r from-green-500/10 via-blue-500/10 to-purple-500/10 blur-lg rounded-full"
-              animate={{
-                opacity: [0.3, 0.6, 0.3],
-                scale: [0.98, 1.02, 0.98],
-                rotate: [0, 180],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-            <motion.div
-              className="relative"
-              whileHover={{ 
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400 }
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="relative">
-                <motion.div
-                  className="flex items-center gap-1.5 bg-gradient-to-r from-green-500/20 to-blue-500/20 px-3 py-1.5 rounded-full"
-                  animate={{
-                    y: [-2, 2, -2],
-                    scale: [1, 1.05, 1],
-                  }}
-                  whileHover={{
-                    backgroundColor: "rgba(255,255,255,0.1)",
-                    transition: { duration: 0.2 }
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <PoundSterling className="w-5 h-5 text-green-400" />
-                  </motion.div>
-                  <motion.span 
-                    className="text-sm font-semibold text-white/70"
-                    animate={{
-                      opacity: [0.7, 1, 0.7],
-                    }}
-                    whileHover={{
-                      color: "rgba(255,255,255,0.9)",
-                      scale: 1.05
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    Value
-                  </motion.span>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Animated market indicators */}
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute"
-            style={{
-              top: `${i * 12 + 8}px`,
-              left: `${40 + (i * 10)}%`,
-            }}
-            animate={{
-              y: [-8, 8, -8],
-              opacity: [0.3, 0.7, 0.3],
-              rotate: [-5, 5, -5],
-            }}
-            whileHover={{
-              scale: 1.2,
-              opacity: 0.9
-            }}
-            transition={{
-              duration: 3,
-              delay: i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <TrendingUp className="w-3 h-3 text-green-400/40" />
-          </motion.div>
-        ))}
-      </motion.div>
-
       <div className="relative">
         <motion.div
           className="absolute -inset-1 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 blur-3xl"
@@ -272,14 +105,14 @@ export const IntroSection = () => {
       {/* Add the animated property card */}
       <AnimatedPropertyCard />
 
-      {/* Additional floating elements */}
+      {/* Background floating elements with varying sizes */}
       <motion.div
-        className="absolute top-20 left-10 w-24 h-24 rounded-full bg-purple-500/5 hidden lg:block"
+        className="absolute top-20 left-[15%] w-16 h-16 rounded-full bg-purple-500/5 hidden lg:block"
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3],
-          x: [-10, 10, -10],
-          y: [-10, 10, -10],
+          opacity: [0.2, 0.4, 0.2],
+          x: [-5, 5, -5],
+          y: [-5, 5, -5],
         }}
         transition={{
           duration: 15,
@@ -288,18 +121,80 @@ export const IntroSection = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-blue-500/5 hidden lg:block"
+        className="absolute bottom-20 right-[15%] w-24 h-24 rounded-full bg-blue-500/5 hidden lg:block"
         animate={{
           scale: [1.2, 1, 1.2],
-          opacity: [0.2, 0.5, 0.2],
-          x: [10, -10, 10],
-          y: [10, -10, 10],
+          opacity: [0.1, 0.3, 0.1],
+          x: [5, -5, 5],
+          y: [5, -5, 5],
         }}
         transition={{
           duration: 20,
           repeat: Infinity,
           ease: "easeInOut",
           delay: 2,
+        }}
+      />
+      {/* Small floating elements */}
+      <motion.div
+        className="absolute top-[40%] left-[25%] w-8 h-8 rounded-full bg-indigo-500/5 hidden lg:block"
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.15, 0.3, 0.15],
+          x: [-3, 3, -3],
+          y: [-3, 3, -3],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1,
+        }}
+      />
+      <motion.div
+        className="absolute top-[30%] right-[20%] w-12 h-12 rounded-full bg-green-500/5 hidden lg:block"
+        animate={{
+          scale: [1.1, 0.9, 1.1],
+          opacity: [0.1, 0.25, 0.1],
+          x: [3, -3, 3],
+          y: [3, -3, 3],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 3,
+        }}
+      />
+      {/* Tiny elements */}
+      <motion.div
+        className="absolute top-[60%] left-[10%] w-5 h-5 rounded-full bg-pink-500/5 hidden lg:block"
+        animate={{
+          scale: [1, 1.4, 1],
+          opacity: [0.1, 0.2, 0.1],
+          x: [-2, 2, -2],
+          y: [-2, 2, -2],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 4,
+        }}
+      />
+      <motion.div
+        className="absolute top-[20%] right-[30%] w-6 h-6 rounded-full bg-amber-500/5 hidden lg:block"
+        animate={{
+          scale: [0.9, 1.2, 0.9],
+          opacity: [0.1, 0.2, 0.1],
+          x: [2, -2, 2],
+          y: [2, -2, 2],
+        }}
+        transition={{
+          duration: 14,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 5,
         }}
       />
     </motion.div>
