@@ -1,27 +1,16 @@
 
 import React, { useState, useEffect } from "react";
-import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Building2, Activity, Sparkles, Star, Zap, Flame } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
-  const logoControls = useAnimationControls();
   const [hoverLogo, setHoverLogo] = useState(false);
   
   // Random sparkle generation
   const [sparkles, setSparkles] = useState<{id: number, x: number, y: number, size: number}[]>([]);
   
   useEffect(() => {
-    // Initial animation sequence
-    const sequence = async () => {
-      await logoControls.start({ scale: 1.2, rotate: 5 });
-      await logoControls.start({ scale: 1, rotate: 0 });
-      await logoControls.start({ y: -5 });
-      await logoControls.start({ y: 0 });
-    };
-    
-    sequence();
-    
     // Create sparkles periodically
     const interval = setInterval(() => {
       if (sparkles.length < 15) {
@@ -51,7 +40,7 @@ export const Header = () => {
       clearInterval(interval);
       clearInterval(cleanup);
     };
-  }, [logoControls, sparkles.length]);
+  }, [sparkles.length]);
 
   return (
     <motion.div 
@@ -206,67 +195,20 @@ export const Header = () => {
             </div>
             
             <div className="flex items-center justify-center sm:justify-start relative z-10 w-full">
-              <motion.div 
-                className="flex items-center"
-                animate={logoControls}
-                whileHover={{ scale: 1.05 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 10
-                }}
-              >
-                <motion.div 
+              <div className="flex items-center">
+                <div 
                   className="p-2 rounded-xl bg-gradient-to-br from-purple-600/30 to-blue-600/30 backdrop-blur-sm border border-white/30 shadow-lg flex items-center justify-center group-hover:border-white/50 transition-all duration-300"
                   style={{ minWidth: '40px', minHeight: '40px' }}
-                  whileHover={{ 
-                    boxShadow: "0 0 20px rgba(139, 92, 246, 0.6)",
-                  }}
-                  animate={{ 
-                    boxShadow: "0 0 10px rgba(139, 92, 246, 0.3)"
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
                 >
-                  <motion.div
-                    animate={{
-                      rotate: hoverLogo ? [0, 10, -10, 0] : 0,
-                      scale: hoverLogo ? [1, 1.1, 1] : 1,
-                    }}
-                    transition={{ 
-                      duration: 0.5,
-                      type: "spring",
-                    }}
-                  >
-                    <Building2 className="w-6 h-6 text-white block group-hover:text-purple-200 transition-colors" strokeWidth={2} />
-                  </motion.div>
-                </motion.div>
+                  <Building2 className="w-6 h-6 text-white block group-hover:text-purple-200 transition-colors" strokeWidth={2} />
+                </div>
                 
                 <div className="flex flex-col ml-3">
                   <div className="flex items-center space-x-2">
-                    <motion.div
-                      className="relative"
-                      whileHover={{ scale: 1.03 }}
-                    >
-                      <motion.span 
-                        className="font-bold text-base sm:text-lg tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-white group-hover:from-white group-hover:via-purple-200 group-hover:to-white transition-all duration-500"
-                        animate={{
-                          backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"],
-                        }}
-                        transition={{
-                          duration: 8,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
-                        style={{
-                          backgroundSize: "200% 100%",
-                        }}
-                      >
+                    <div className="relative">
+                      <span className="font-bold text-base sm:text-lg tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-white group-hover:from-white group-hover:via-purple-200 group-hover:to-white transition-all duration-500">
                         PropertyValuer
-                      </motion.span>
+                      </span>
                       {/* Animated underline effect */}
                       <motion.div 
                         className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 rounded-full"
@@ -274,57 +216,14 @@ export const Header = () => {
                         animate={{ width: hoverLogo ? "100%" : "0%" }}
                         transition={{ duration: 0.3 }}
                       />
-                    </motion.div>
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8, rotate: -20 }}
-                      animate={{ 
-                        opacity: 1, 
-                        scale: 1,
-                        rotate: 0,
-                      }}
-                      transition={{ 
-                        delay: 0.2, 
-                        duration: 0.3,
-                        type: "spring",
-                      }}
-                    >
-                      <motion.div
-                        animate={{ 
-                          rotate: [0, 10, -10, 0],
-                          scale: [1, 1.2, 1],
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          ease: "easeInOut",
-                        }}
-                      >
-                        <Sparkles className="h-4 w-4 text-purple-400" />
-                      </motion.div>
-                    </motion.div>
+                    </div>
+                    <Sparkles className="h-4 w-4 text-purple-400" />
                   </div>
-                  <motion.div
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                    <motion.span 
-                      className="text-xs font-medium text-gray-400 group-hover:text-gray-300 transition-colors"
-                      animate={{
-                        opacity: [0.7, 1],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        repeatType: "reverse"
-                      }}
-                    >
-                      by Digitol
-                    </motion.span>
-                  </motion.div>
+                  <span className="text-xs font-medium text-gray-400 group-hover:text-gray-300 transition-colors">
+                    by Digitol
+                  </span>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </Link>
 
@@ -360,21 +259,7 @@ export const Header = () => {
               transition={{ delay: 0.7 }}
             >
               <span className="text-xs font-medium text-green-400 group-hover:text-green-300 transition-colors">All Systems Nominal</span>
-              <motion.div
-                animate={{
-                  rotate: [0, 10, -10, 0],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: "mirror",
-                  ease: "easeInOut",
-                  delay: 1,
-                }}
-              >
-                <Star className="w-3 h-3 text-amber-400" fill="#FCD34D" />
-              </motion.div>
+              <Star className="w-3 h-3 text-amber-400" fill="#FCD34D" />
             </motion.div>
           </motion.div>
           
@@ -393,11 +278,7 @@ export const Header = () => {
               }
             }}
           >
-            <motion.div 
-              className="relative"
-              whileHover={{ rotate: [0, -10, 10, 0] }}
-              transition={{ duration: 0.4 }}
-            >
+            <div className="relative">
               <Flame className="w-3.5 h-3.5 text-orange-400 group-hover:text-orange-300" />
               <motion.div
                 className="absolute -inset-1 rounded-full bg-orange-400/20"
@@ -411,13 +292,8 @@ export const Header = () => {
                   repeatType: "reverse",
                 }}
               />
-            </motion.div>
-            <motion.div
-              className="relative"
-              initial={{ x: -5, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.9 }}
-            >
+            </div>
+            <div className="relative">
               <span className="text-xs font-medium text-white/80 group-hover:text-white transition-colors">Pro Features</span>
               <motion.div
                 className="absolute -right-2.5 -top-1.5 flex items-center justify-center w-3 h-3 rounded-full bg-purple-400/30"
@@ -433,7 +309,7 @@ export const Header = () => {
               >
                 <Zap className="w-2 h-2 text-purple-200" />
               </motion.div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </div>
