@@ -198,37 +198,129 @@ export const IntroSection = () => {
                 }}
               />
               
-              <motion.h1
-                className="relative text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[0.8] md:leading-[0.9] py-4 px-6"
-                initial={{ scale: 0.9 }}
-                animate={{ 
-                  scale: 1,
-                  textShadow: [
-                    "0 0 10px rgba(139, 92, 246, 0.5), 0 0 30px rgba(139, 92, 246, 0.3)", 
-                    "0 0 20px rgba(139, 92, 246, 0.7), 0 0 40px rgba(139, 92, 246, 0.4)",
-                    "0 0 10px rgba(139, 92, 246, 0.5), 0 0 30px rgba(139, 92, 246, 0.3)"
-                  ]
-                }}
-                transition={{
-                  textShadow: {
+              {/* Animated popping title with individual letter animations */}
+              <div className="relative overflow-hidden py-4 px-6">
+                {/* Main title text with 3D effects */}
+                <motion.h1
+                  className="relative text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[0.8] md:leading-[0.9]"
+                  initial={{ scale: 0.9 }}
+                  animate={{ 
+                    scale: 1
+                  }}
+                  transition={{
+                    duration: 0.8,
+                    type: "spring",
+                    stiffness: 300
+                  }}
+                >
+                  {/* Animated letters for "PROPERTY" */}
+                  <div className="inline-flex overflow-hidden">
+                    {"PROPERTY".split("").map((letter, index) => (
+                      <motion.span
+                        key={`property-${index}`}
+                        className="inline-block text-transparent bg-clip-text bg-gradient-to-br from-fuchsia-500 via-violet-600 to-indigo-500"
+                        initial={{ y: 40, opacity: 0 }}
+                        animate={{ 
+                          y: 0, 
+                          opacity: 1,
+                          scale: [1, 1.15, 1],
+                          rotate: [0, index % 2 === 0 ? 3 : -3, 0]
+                        }}
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.05 * index,
+                          scale: {
+                            repeat: Infinity,
+                            repeatType: "reverse",
+                            duration: 3 + (index * 0.2),
+                            repeatDelay: Math.random(),
+                            ease: "easeInOut"
+                          },
+                          rotate: {
+                            repeat: Infinity,
+                            repeatType: "reverse",
+                            duration: 4 + (index * 0.3),
+                            repeatDelay: Math.random() * 2,
+                            ease: "easeInOut"
+                          }
+                        }}
+                        whileHover={{
+                          scale: 1.2,
+                          color: "#D946EF",
+                          transition: { duration: 0.2 }
+                        }}
+                      >
+                        {letter}
+                      </motion.span>
+                    ))}
+                  </div>
+                  
+                  <br />
+                  
+                  {/* Animated letters for "VALUATIONS" */}
+                  <div className="inline-flex overflow-hidden">
+                    {"VALUATIONS".split("").map((letter, index) => (
+                      <motion.span
+                        key={`valuations-${index}`}
+                        className="inline-block text-transparent bg-clip-text bg-gradient-to-br from-fuchsia-500 via-blue-600 to-cyan-500"
+                        initial={{ y: 40, opacity: 0 }}
+                        animate={{ 
+                          y: 0, 
+                          opacity: 1,
+                          scale: [1, 1.15, 1],
+                          rotate: [0, index % 2 === 0 ? -3 : 3, 0]
+                        }}
+                        transition={{
+                          duration: 0.5,
+                          delay: 0.05 * index + 0.3,
+                          scale: {
+                            repeat: Infinity,
+                            repeatType: "reverse",
+                            duration: 3 + (index * 0.2),
+                            repeatDelay: Math.random(),
+                            ease: "easeInOut"
+                          },
+                          rotate: {
+                            repeat: Infinity,
+                            repeatType: "reverse",
+                            duration: 4 + (index * 0.3),
+                            repeatDelay: Math.random() * 2,
+                            ease: "easeInOut"
+                          }
+                        }}
+                        whileHover={{
+                          scale: 1.2,
+                          color: "#0EA5E9",
+                          transition: { duration: 0.2 }
+                        }}
+                      >
+                        {letter}
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.h1>
+                  
+                {/* Animated bursting effect in the background */}
+                <motion.div
+                  className="absolute -inset-4 -z-10 opacity-70"
+                  initial={{ scale: 0 }}
+                  animate={{ 
+                    scale: [0.6, 1.2, 0.6],
+                    opacity: [0, 0.2, 0]
+                  }}
+                  transition={{
                     duration: 3,
                     repeat: Infinity,
-                    repeatType: "reverse"
-                  }
-                }}
-                whileHover={{
-                  scale: 1.03,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                PROPERTY
-                <br />
-                VALUATIONS
-              </motion.h1>
+                    repeatType: "loop"
+                  }}
+                >
+                  <div className="w-full h-full rounded-full bg-gradient-to-r from-fuchsia-500/20 via-violet-500/20 to-indigo-500/20 blur-lg" />
+                </motion.div>
+              </div>
               
               {/* Animated border underneath */}
               <motion.div
-                className="absolute bottom-0 left-[10%] right-[10%] h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full"
+                className="absolute bottom-0 left-[10%] right-[10%] h-1 bg-gradient-to-r from-transparent via-fuchsia-500 to-transparent rounded-full"
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{ 
                   scaleX: 1, 
