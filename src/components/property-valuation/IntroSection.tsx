@@ -2,6 +2,7 @@
 import React from "react";
 import { motion, useAnimationControls } from "framer-motion";
 import { RecentValuations } from "./AnimatedPropertyCard";
+import { Sparkles } from "lucide-react";
 
 export const IntroSection = () => {
   const controls = useAnimationControls();
@@ -14,8 +15,9 @@ export const IntroSection = () => {
       className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-12"
     >
       <div className="relative">
+        {/* Enhanced background glow effect */}
         <motion.div
-          className="absolute -inset-1 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 blur-3xl"
+          className="absolute -inset-1 bg-gradient-to-r from-purple-600/10 via-blue-600/15 to-purple-600/10 rounded-3xl blur-3xl"
           animate={{
             backgroundPosition: ["0% 0%", "100% 100%"],
             scale: [1, 1.1, 1],
@@ -29,8 +31,9 @@ export const IntroSection = () => {
             backgroundSize: "200% 200%",
           }}
         />
+        
         <motion.h1 
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 relative z-10 flex flex-col items-center gap-3"
+          className="relative z-10 flex flex-col items-center gap-4 md:gap-6 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
@@ -40,67 +43,145 @@ export const IntroSection = () => {
             stiffness: 100
           }}
         >
-          <motion.div 
-            className="text-white"
-            whileHover={{
-              scale: 1.02,
-              transition: { type: "spring", stiffness: 400 }
-            }}
-          >
-            Property Valuations
-          </motion.div>
-          <div className="relative inline-block">
-            <motion.span 
-              className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 pb-2"
+          {/* First part of title with highlight effect */}
+          <div className="relative">
+            <motion.div
+              className="absolute -inset-1 opacity-70 rounded-lg blur-xl bg-gradient-to-r from-purple-600/20 via-blue-500/20 to-indigo-600/20"
+              animate={{
+                backgroundPosition: ["0% 0%", "100% 100%"],
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              style={{
+                backgroundSize: "200% 200%",
+              }}
+            />
+            <motion.div 
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white relative inline-block px-4 py-2"
               whileHover={{
-                scale: 1.05,
+                scale: 1.02,
                 transition: { type: "spring", stiffness: 400 }
               }}
             >
-              with AI Magic
-            </motion.span>
+              Property Valuations
+            </motion.div>
+          </div>
+          
+          {/* Second part of title with more dramatic effect */}
+          <div className="relative">
+            {/* Dramatic lighting effect */}
             <motion.div
-              className="absolute -bottom-2 left-0 right-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.5
+              className="absolute -inset-8 bg-gradient-to-r from-purple-600/10 via-indigo-600/15 to-blue-600/10 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.3, 0.5, 0.3],
+                rotate: [0, 5, 0],
               }}
-            >
-              <svg
-                width="100%"
-                height="15"
-                viewBox="0 0 200 15"
-                fill="none"
-                preserveAspectRatio="none"
-                xmlns="http://www.w3.org/2000/svg"
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+            />
+            
+            <div className="relative flex items-center justify-center">
+              <motion.span 
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 inline-block"
+                whileHover={{
+                  scale: 1.05,
+                  transition: { type: "spring", stiffness: 400 }
+                }}
+                animate={{
+                  backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"],
+                }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  repeatType: "mirror",
+                }}
+                style={{
+                  backgroundSize: "200% 100%",
+                }}
               >
-                <motion.path
-                  d="M0 5C12 5 15 12 28 12S44 5 56 5 72 12 84 12 100 5 112 5s28 7 40 7S168 5 180 5s16 7 20 7"
-                  stroke="url(#underline-gradient)"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
+                with AI Magic
+              </motion.span>
+              
+              {/* Floating Sparkles icon */}
+              <motion.div
+                className="ml-2 relative"
+                animate={{
+                  y: [0, -5, 0],
+                  rotate: [0, 10, 0],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                }}
+              >
+                <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-purple-300" />
+                
+                {/* Glow effect behind sparkles */}
+                <motion.div 
+                  className="absolute inset-0 rounded-full bg-purple-500/20 blur-md -z-10"
+                  animate={{ 
+                    scale: [1, 1.3, 1],
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
                   transition={{
-                    duration: 1.5,
-                    ease: [0.43, 0.13, 0.23, 0.96],
-                    delay: 0.5
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse",
                   }}
                 />
-                <defs>
-                  <linearGradient id="underline-gradient" x1="0" y1="0" x2="100%" y2="0">
-                    <stop stopColor="#C084FC" offset="0%" />
-                    <stop stopColor="#818CF8" offset="50%" />
-                    <stop stopColor="#60A5FA" offset="100%" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </motion.div>
+              </motion.div>
+            </div>
+            
+            {/* Colorful particles floating around */}
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className={`absolute rounded-full ${
+                  i % 3 === 0 ? 'bg-purple-400/60' : i % 3 === 1 ? 'bg-blue-400/60' : 'bg-indigo-400/60'
+                }`}
+                style={{
+                  width: 4 + (i % 3) * 2,
+                  height: 4 + (i % 3) * 2,
+                  top: `${20 + (i * 10)}%`,
+                  left: `${10 + (i * 15)}%`,
+                }}
+                animate={{
+                  y: [0, -15, 0],
+                  x: [0, i % 2 === 0 ? 10 : -10, 0],
+                  opacity: [0.4, 0.8, 0.4],
+                }}
+                transition={{
+                  duration: 3 + i,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: i * 0.2,
+                }}
+              />
+            ))}
           </div>
         </motion.h1>
       </div>
+
+      {/* Mobile-specific enhancements */}
+      <motion.div 
+        className="sm:hidden w-full max-w-xs mx-auto -mt-2 mb-6"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        <div className="h-1 w-20 bg-gradient-to-r from-purple-500/50 to-blue-500/50 rounded-full mx-auto mb-6"></div>
+        <p className="text-white/80 text-sm">
+          Get instant property valuations powered by advanced AI algorithms
+        </p>
+      </motion.div>
 
       {/* Add the animated property cards as recent valuations */}
       <RecentValuations />
