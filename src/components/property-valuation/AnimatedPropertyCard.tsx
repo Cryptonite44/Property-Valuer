@@ -2,7 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { Home, Bed, Bath, Square } from "lucide-react";
+import { Building2, Home, Bed, Bath, Square, TreeDeciduous, Store } from "lucide-react";
+import { PropertyTypeIcons } from "../property-form/PropertyTypeSelector";
 
 interface AnimatedPropertyCardProps {
   position: {
@@ -21,6 +22,7 @@ interface AnimatedPropertyCardProps {
   isNew?: boolean;
   rotateDirection?: 1 | -1;
   imgSrc: string;
+  propertyType?: string;
 }
 
 export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
@@ -35,7 +37,16 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
   isNew = false,
   rotateDirection = 1,
   imgSrc,
+  propertyType = "house",
 }) => {
+  // Get property type icon and colors
+  const propertyTypeInfo = PropertyTypeIcons.find(p => p.type === propertyType) || PropertyTypeIcons[0];
+  
+  // Get border color class based on property type
+  const getBorderClass = () => {
+    return propertyTypeInfo.border || 'border-white/10';
+  };
+  
   return (
     <motion.div
       className="absolute z-10 hidden md:block"
@@ -74,7 +85,7 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
       dragElastic={0.1}
       dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
     >
-      <Card className="w-48 overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md shadow-xl">
+      <Card className={`w-48 overflow-hidden ${getBorderClass()} bg-white/5 backdrop-blur-md shadow-xl`}>
         <div className="relative h-24 overflow-hidden">
           <motion.img 
             src={imgSrc}
@@ -88,6 +99,13 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
               Instant Valuation
             </div>
           )}
+          
+          {/* Property type indicator */}
+          <div className={`absolute top-2 right-2 ${propertyTypeInfo.gradient} w-6 h-6 rounded-full flex items-center justify-center ${propertyTypeInfo.border}`}>
+            <span className="text-white/90 scale-75">
+              {React.cloneElement(propertyTypeInfo.icon as React.ReactElement, { className: 'w-3.5 h-3.5' })}
+            </span>
+          </div>
         </div>
         <CardContent className="p-2">
           <div className="flex items-center justify-between mb-1">
@@ -129,7 +147,7 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
       
       {/* Floating dots */}
       <motion.div 
-        className="absolute -top-2 -right-2 w-2 h-2 rounded-full bg-purple-500/50"
+        className={`absolute -top-2 -right-2 w-2 h-2 rounded-full bg-purple-500/50`}
         animate={{
           scale: [1, 1.5, 1],
           opacity: [0.5, 0.8, 0.5],
@@ -141,7 +159,7 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
         }}
       />
       <motion.div 
-        className="absolute -bottom-1 -left-1 w-1.5 h-1.5 rounded-full bg-blue-500/50"
+        className={`absolute -bottom-1 -left-1 w-1.5 h-1.5 rounded-full bg-blue-500/50`}
         animate={{
           scale: [1, 1.3, 1],
           opacity: [0.5, 0.8, 0.5],
@@ -165,12 +183,13 @@ export const RecentValuations = () => {
       bedrooms: 4,
       bathrooms: 3,
       size: "2,400 ft²",
-      position: { top: "110%", right: "8%" }, // Changed from 70% to 110% (moving down 40% more)
+      position: { top: "110%", right: "8%" },
       delay: 0.3,
       isFeatured: true,
       isNew: false,
       rotateDirection: 1 as const,
-      imgSrc: "/lovable-uploads/fa0d9c4f-855d-4893-99fd-30a6f7544366.png"
+      imgSrc: "/lovable-uploads/fa0d9c4f-855d-4893-99fd-30a6f7544366.png",
+      propertyType: "house"
     },
     {
       price: "£420,000",
@@ -183,7 +202,8 @@ export const RecentValuations = () => {
       isFeatured: true,
       isNew: false,
       rotateDirection: -1 as const,
-      imgSrc: "/lovable-uploads/5bda7107-c273-4b16-be60-1da69b59b36f.png"
+      imgSrc: "/lovable-uploads/5bda7107-c273-4b16-be60-1da69b59b36f.png",
+      propertyType: "apartment"
     }
   ];
 
