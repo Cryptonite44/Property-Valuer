@@ -14,8 +14,10 @@ export const Header = () => {
   useEffect(() => {
     // Initial animation sequence
     const sequence = async () => {
-      await logoControls.start({ scale: [1, 1.2, 1], rotate: [0, 5, 0] });
-      await logoControls.start({ y: [0, -5, 0] });
+      await logoControls.start({ scale: 1.2, rotate: 5 });
+      await logoControls.start({ scale: 1, rotate: 0 });
+      await logoControls.start({ y: -5 });
+      await logoControls.start({ y: 0 });
     };
     
     sequence();
@@ -78,13 +80,14 @@ export const Header = () => {
         <motion.div
           className="absolute -top-[200px] -left-[100px] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-purple-500/10 via-violet-500/5 to-transparent blur-3xl"
           animate={{
-            x: [0, 30, 0],
-            opacity: [0.3, 0.5, 0.3],
-            scale: [1, 1.1, 1],
+            x: [0, 30],
+            opacity: [0.3, 0.5],
+            scale: [1, 1.1],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
+            repeatType: "reverse",
             ease: "easeInOut",
           }}
         />
@@ -92,13 +95,14 @@ export const Header = () => {
         <motion.div
           className="absolute -bottom-[200px] -right-[100px] w-[500px] h-[500px] rounded-full bg-gradient-to-r from-blue-500/10 via-indigo-500/5 to-transparent blur-3xl"
           animate={{
-            x: [0, -30, 0],
-            opacity: [0.2, 0.4, 0.2],
-            scale: [1, 1.1, 1],
+            x: [0, -30],
+            opacity: [0.2, 0.4],
+            scale: [1, 1.1],
           }}
           transition={{
             duration: 10,
             repeat: Infinity,
+            repeatType: "reverse",
             ease: "easeInOut",
             delay: 2,
           }}
@@ -122,7 +126,7 @@ export const Header = () => {
               animate={{ 
                 opacity: [0, 0.7, 0],
                 scale: [0, 1, 0],
-                y: [0, -20],
+                y: [-0, -20],
               }}
               exit={{ opacity: 0, scale: 0 }}
               transition={{ 
@@ -147,19 +151,11 @@ export const Header = () => {
               className="absolute inset-0 bg-gradient-to-r from-purple-700/10 via-blue-600/20 to-pink-700/10 opacity-70"
               animate={{
                 backgroundPosition: ["0% 0%", "100% 100%"],
-                scale: hoverLogo ? [1, 1.03, 1] : 1,
               }}
               transition={{
-                backgroundPosition: {
-                  duration: 8,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                },
-                scale: {
-                  duration: 1.5,
-                  repeat: hoverLogo ? Infinity : 0,
-                  repeatType: "reverse",
-                },
+                duration: 8,
+                repeat: Infinity,
+                repeatType: "reverse",
               }}
               style={{
                 backgroundSize: "200% 200%",
@@ -227,16 +223,12 @@ export const Header = () => {
                     boxShadow: "0 0 20px rgba(139, 92, 246, 0.6)",
                   }}
                   animate={{ 
-                    boxShadow: hoverLogo 
-                      ? ["0 0 10px rgba(139, 92, 246, 0.3)", "0 0 25px rgba(139, 92, 246, 0.6)", "0 0 10px rgba(139, 92, 246, 0.3)"] 
-                      : "0 0 10px rgba(139, 92, 246, 0.3)" 
+                    boxShadow: "0 0 10px rgba(139, 92, 246, 0.3)"
                   }}
                   transition={{
-                    boxShadow: {
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                    }
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse",
                   }}
                 >
                   <motion.div
@@ -320,11 +312,11 @@ export const Header = () => {
                     <motion.span 
                       className="text-xs font-medium text-gray-400 group-hover:text-gray-300 transition-colors"
                       animate={{
-                        opacity: hoverLogo ? [0.7, 1, 0.7] : 0.7
+                        opacity: [0.7, 1],
                       }}
                       transition={{
                         duration: 1.5,
-                        repeat: hoverLogo ? Infinity : 0,
+                        repeat: Infinity,
                         repeatType: "reverse"
                       }}
                     >
@@ -351,13 +343,13 @@ export const Header = () => {
               <motion.div
                 className="absolute -inset-1.5 rounded-full bg-green-400/20"
                 animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0, 0.4, 0],
+                  scale: [1, 1.5],
+                  opacity: [0, 0.4],
                 }}
                 transition={{
                   duration: 2,
                   repeat: Infinity,
-                  repeatType: "loop",
+                  repeatType: "reverse",
                 }}
               />
             </div>
@@ -410,13 +402,13 @@ export const Header = () => {
               <motion.div
                 className="absolute -inset-1 rounded-full bg-orange-400/20"
                 animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [0, 0.3, 0],
+                  scale: [1, 1.3],
+                  opacity: [0, 0.3],
                 }}
                 transition={{
                   duration: 1.5,
                   repeat: Infinity,
-                  repeatType: "loop",
+                  repeatType: "reverse",
                 }}
               />
             </motion.div>
@@ -430,8 +422,8 @@ export const Header = () => {
               <motion.div
                 className="absolute -right-2.5 -top-1.5 flex items-center justify-center w-3 h-3 rounded-full bg-purple-400/30"
                 animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [0.5, 1, 0.5],
+                  scale: [1, 1.3],
+                  opacity: [0.5, 1],
                 }}
                 transition={{
                   duration: 2,
