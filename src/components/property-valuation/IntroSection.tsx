@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { motion, useAnimationControls } from "framer-motion";
+import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 import { RecentValuations } from "./AnimatedPropertyCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Users, Home, Sparkles, CheckCircle2 } from "lucide-react";
