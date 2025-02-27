@@ -10,7 +10,7 @@ export const IntroSection = () => {
   const [activeUsers, setActiveUsers] = useState(0);
   const [liveValueCount, setLiveValueCount] = useState(0);
   const [recentValuations, setRecentValuations] = useState<
-    { address: string; time: string; id: number }[]
+    { address: string; time: string; id: number; position: string }[]
   >([]);
 
   // Simulate active users and valuations
@@ -33,24 +33,75 @@ export const IntroSection = () => {
       
       // Add a new valuation notification
       if (Math.random() > 0.6) {
-        const addresses = [
-          "Highfield Road, London",
-          "Park Lane, Manchester",
-          "Maple Drive, Birmingham",
-          "Forest Avenue, Edinburgh",
-          "Oak Street, Glasgow",
-          "Cedar Lane, Bristol",
-          "Willow Close, Cardiff",
-          "Birch Road, Leeds",
-          "Pine Street, Liverpool",
-          "Elm Avenue, Newcastle"
+        // South East UK locations
+        const southEastLocations = [
+          // Kent
+          "Canterbury, Kent",
+          "Maidstone, Kent",
+          "Tunbridge Wells, Kent",
+          "Dover, Kent",
+          "Folkestone, Kent",
+          "Whitstable, Kent",
+          "Margate, Kent",
+          "Ashford, Kent",
+          "Sevenoaks, Kent",
+          "Rochester, Kent",
+          // Sussex
+          "Brighton, Sussex",
+          "Eastbourne, Sussex",
+          "Hastings, Sussex",
+          "Chichester, Sussex",
+          "Worthing, Sussex",
+          "Crawley, Sussex",
+          "Horsham, Sussex",
+          "Bexhill-on-Sea, Sussex",
+          "Lewes, Sussex",
+          "Arundel, Sussex",
+          // Surrey
+          "Guildford, Surrey",
+          "Woking, Surrey",
+          "Farnham, Surrey",
+          "Epsom, Surrey",
+          "Redhill, Surrey",
+          "Reigate, Surrey",
+          "Dorking, Surrey",
+          "Camberley, Surrey",
+          "Esher, Surrey",
+          "Leatherhead, Surrey",
+          // Hampshire
+          "Southampton, Hampshire",
+          "Portsmouth, Hampshire",
+          "Winchester, Hampshire",
+          "Basingstoke, Hampshire",
+          "Eastleigh, Hampshire",
+          "Fareham, Hampshire",
+          "Andover, Hampshire",
+          "Aldershot, Hampshire",
+          "Fleet, Hampshire",
+          "Farnborough, Hampshire",
+          // Berkshire
+          "Reading, Berkshire",
+          "Windsor, Berkshire",
+          "Maidenhead, Berkshire",
+          "Bracknell, Berkshire",
+          "Wokingham, Berkshire",
+          "Newbury, Berkshire",
+          "Ascot, Berkshire",
+          "Slough, Berkshire",
+          "Sandhurst, Berkshire",
+          "Thatcham, Berkshire",
         ];
+
+        // Random position - alternating left/right and different heights
+        const positions = ["left", "right"];
+        const position = positions[Math.floor(Math.random() * positions.length)];
         
         setRecentValuations((prev) => [
           {
-            address: addresses[Math.floor(Math.random() * addresses.length)],
+            address: southEastLocations[Math.floor(Math.random() * southEastLocations.length)],
             time: "Just now",
-            id: Date.now()
+            id: Date.now(),
+            position: position
           },
           ...prev
         ].slice(0, 3)); // Keep only the 3 most recent
@@ -172,17 +223,23 @@ export const IntroSection = () => {
         </motion.div>
       </motion.div>
       
-      {/* Live valuation notifications */}
-      <div className="absolute left-4 sm:left-8 top-16 sm:top-20 z-10 w-56 max-w-[90%] flex flex-col gap-2">
-        <AnimatePresence>
-          {recentValuations.map((valuation) => (
-            <motion.div
-              key={valuation.id}
+      {/* Live valuation notifications - appear above property cards */}
+      <AnimatePresence>
+        {recentValuations.map((valuation) => (
+          <motion.div
+            key={valuation.id}
+            className={`absolute z-20 w-56 max-w-[90%] ${
+              valuation.position === 'left' 
+                ? 'top-[30%] md:top-[20%] left-4 sm:left-[10%]' 
+                : 'top-[25%] md:top-[15%] right-4 sm:right-[10%]'
+            }`}
+            initial={{ opacity: 0, y: -20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.9 }}
+            transition={{ duration: 0.4 }}
+          >
+            <div 
               className="flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg"
-              initial={{ opacity: 0, x: -50, scale: 0.9 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: -20, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
             >
               <div className="relative">
                 <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
@@ -205,10 +262,10 @@ export const IntroSection = () => {
                 </span>
                 <span className="text-[10px] text-green-300">{valuation.time}</span>
               </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+            </div>
+          </motion.div>
+        ))}
+      </AnimatePresence>
 
       <div className="relative">
         <motion.div
