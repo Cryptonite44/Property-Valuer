@@ -175,7 +175,7 @@ export const RecentValuations = () => {
       bedrooms: 2,
       bathrooms: 1,
       size: "850 ft²",
-      position: { top: "50%", left: "8%" },
+      position: { top: "190%", left: "8%" },
       delay: 0.5,
       isFeatured: true,
       isNew: false,
