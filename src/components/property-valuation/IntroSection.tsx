@@ -208,7 +208,7 @@ export const IntroSection = () => {
               transition: { type: "spring", stiffness: 400 }
             }}
           >
-            Property Valuations
+            AI Powered
           </motion.div>
           <div className="relative inline-block">
             <motion.span 
@@ -218,7 +218,7 @@ export const IntroSection = () => {
                 transition: { type: "spring", stiffness: 400 }
               }}
             >
-              with AI Magic
+              Property Valuations
             </motion.span>
             <motion.div
               className="absolute -bottom-2 left-0 right-0"
