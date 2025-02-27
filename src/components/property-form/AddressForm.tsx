@@ -51,7 +51,7 @@ export const AddressForm = ({ address, onChange }: AddressFormProps) => {
         >
           ✦
         </motion.div>
-        Enter your full address including postcode for the most accurate results
+        Include postcode for the most accurate results
       </div>
     </div>
   );
