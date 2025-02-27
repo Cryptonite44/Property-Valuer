@@ -234,8 +234,8 @@ export const RecentValuations = () => {
       bedrooms: 4,
       bathrooms: 3,
       size: "2,400 ft²",
-      position: { top: "110%", right: "8%" }, // Changed from 70% to 110% (moving down 40% more)
-      mobilePosition: { top: "100%", right: "5%" }, // Mobile position
+      position: { top: "5%", right: "5%" }, // Positioned near the title
+      mobilePosition: { top: "10%", right: "5%" }, // Mobile position near title
       delay: 0.3,
       isFeatured: true,
       isNew: false,
@@ -248,8 +248,8 @@ export const RecentValuations = () => {
       bedrooms: 2,
       bathrooms: 1,
       size: "850 ft²",
-      position: { top: "190%", left: "8%" },
-      mobilePosition: { top: "160%", left: "5%" }, // Mobile position
+      position: { top: "15%", left: "5%" }, // Positioned near the title on the left
+      mobilePosition: { top: "40%", left: "5%" }, // Mobile position
       delay: 0.5,
       isFeatured: true,
       isNew: false,
