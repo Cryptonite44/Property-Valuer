@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/Footer";
 import { ValuationContent } from "@/components/property-valuation/ValuationContent";
+import { CardBackgroundEffects } from "@/components/property-valuation/CardBackgroundEffects";
 import { AIAnalysis } from "@/types/property";
 
 interface ValueRange {
@@ -53,6 +54,10 @@ const Index = () => {
           backgroundPosition: '-1px -1px'
         }}
       />
+      
+      {/* Add the map-like background effects */}
+      <CardBackgroundEffects />
+      
       <Header />
       <div className="flex-1 flex flex-col items-center justify-center w-full relative z-10">
         <ValuationContent

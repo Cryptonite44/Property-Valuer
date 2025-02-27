@@ -1,7 +1,9 @@
+
 import React from "react";
 import { motion, useAnimationControls } from "framer-motion";
 import TypewriterText from "@/components/TypewriterText";
 import { PoundSterling, TrendingUp, ChartBar } from "lucide-react";
+import { AnimatedPropertyCard } from "./AnimatedPropertyCard";
 
 export const IntroSection = () => {
   const controls = useAnimationControls();
@@ -266,6 +268,40 @@ export const IntroSection = () => {
           </div>
         </motion.h1>
       </div>
+
+      {/* Add the animated property card */}
+      <AnimatedPropertyCard />
+
+      {/* Additional floating elements */}
+      <motion.div
+        className="absolute top-20 left-10 w-24 h-24 rounded-full bg-purple-500/5 hidden lg:block"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.6, 0.3],
+          x: [-10, 10, -10],
+          y: [-10, 10, -10],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-blue-500/5 hidden lg:block"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.2, 0.5, 0.2],
+          x: [10, -10, 10],
+          y: [10, -10, 10],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      />
     </motion.div>
   );
 };
