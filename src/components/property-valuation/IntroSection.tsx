@@ -190,77 +190,72 @@ export const IntroSection = () => {
             backgroundSize: "200% 200%",
           }}
         />
-        <motion.h1 
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 relative z-10 flex flex-col items-center gap-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.3,
-            type: "spring",
-            stiffness: 100
-          }}
-        >
+        
+        {/* New integrated title with more cohesive design */}
+        <div className="relative z-10">
           <motion.div 
-            className="text-white"
-            whileHover={{
-              scale: 1.02,
-              transition: { type: "spring", stiffness: 400 }
+            className="inline-flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.3,
+              type: "spring",
+              stiffness: 100
             }}
           >
-            AI Powered
-          </motion.div>
-          <div className="relative inline-block">
-            <motion.span 
-              className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 pb-2"
-              whileHover={{
-                scale: 1.05,
-                transition: { type: "spring", stiffness: 400 }
-              }}
-            >
-              Property Valuations
-            </motion.span>
-            <motion.div
-              className="absolute -bottom-2 left-0 right-0"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.5
-              }}
-            >
-              <svg
-                width="100%"
-                height="15"
-                viewBox="0 0 200 15"
-                fill="none"
-                preserveAspectRatio="none"
-                xmlns="http://www.w3.org/2000/svg"
+            <div className="flex items-center gap-1.5 sm:gap-3 mb-1 sm:mb-0">
+              <motion.div
+                className="relative"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
               >
-                <motion.path
-                  d="M0 5C12 5 15 12 28 12S44 5 56 5 72 12 84 12 100 5 112 5s28 7 40 7S168 5 180 5s16 7 20 7"
-                  stroke="url(#underline-gradient)"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
+                <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-purple-400" />
+                <motion.div
+                  className="absolute -inset-1 rounded-full bg-purple-500/20"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.3, 0.1, 0.3],
+                  }}
                   transition={{
-                    duration: 1.5,
-                    ease: [0.43, 0.13, 0.23, 0.96],
-                    delay: 0.5
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse",
                   }}
                 />
-                <defs>
-                  <linearGradient id="underline-gradient" x1="0" y1="0" x2="100%" y2="0">
-                    <stop stopColor="#C084FC" offset="0%" />
-                    <stop stopColor="#818CF8" offset="50%" />
-                    <stop stopColor="#60A5FA" offset="100%" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </motion.div>
-          </div>
-        </motion.h1>
+              </motion.div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 inline-block">
+                Smart Property
+              </h1>
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white">
+              Valuations
+            </h1>
+          </motion.div>
+          
+          {/* Subtitle with AI reference */}
+          <motion.p
+            className="text-sm sm:text-base text-white/80 mt-2 sm:mt-3 max-w-lg mx-auto"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+          >
+            <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">AI-powered</span> insights for accurate property pricing in seconds
+          </motion.p>
+          
+          {/* Fancy underline effect */}
+          <motion.div
+            className="w-24 h-1 bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 rounded-full mx-auto mt-4"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 96, opacity: 1 }}
+            transition={{
+              delay: 0.8,
+              duration: 0.6,
+              ease: "easeOut"
+            }}
+          />
+        </div>
       </div>
 
       {/* Add the animated property cards as recent valuations */}
