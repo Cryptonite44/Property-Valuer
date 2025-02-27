@@ -164,8 +164,8 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: ValueRange, analysis?: 
                   />
                 </motion.div>
                 
-                {/* Central content */}
-                <div className="z-10 text-center">
+                {/* Central content - visual elements only, no text */}
+                <div className="z-10">
                   <motion.div
                     className="flex flex-col items-center"
                     initial={{ y: 20, opacity: 0 }}
@@ -173,9 +173,9 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: ValueRange, analysis?: 
                     transition={{ delay: 0.2 }}
                   >
                     {/* Advanced AI analysis visualization */}
-                    <div className="relative mb-12">
+                    <div className="relative">
                       <motion.div
-                        className="relative flex items-center justify-center mb-24" // Increased bottom margin
+                        className="relative flex items-center justify-center"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ 
@@ -284,45 +284,18 @@ const ValueForm = ({ onEstimate }: { onEstimate: (value: ValueRange, analysis?: 
                         </motion.div>
                       </motion.div>
                       
-                      {/* Processing status text - repositioned and styled to prevent overlap */}
+                      {/* Loading dots only - no text */}
                       <motion.div
-                        className="flex flex-col items-center space-y-5 absolute left-0 right-0"
+                        className="flex items-center justify-center mt-12"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8 }}
                       >
-                        {/* Status text that changes */}
-                        <motion.div 
-                          className="h-6 overflow-hidden relative w-64 mx-auto"
-                        >
-                          {["Analyzing location data", "Processing market trends", "Evaluating property features", "Comparing recent sales"].map((text, index) => (
-                            <motion.div
-                              key={index}
-                              className="absolute w-full text-center text-white font-medium"
-                              initial={{ y: 30, opacity: 0 }}
-                              animate={{ 
-                                y: [30, 0, 0, -30], 
-                                opacity: [0, 1, 1, 0] 
-                              }}
-                              transition={{
-                                duration: 4,
-                                times: [0, 0.1, 0.9, 1],
-                                repeat: Infinity,
-                                repeatDelay: 0,
-                                delay: index * 4
-                              }}
-                            >
-                              {text}
-                            </motion.div>
-                          ))}
-                        </motion.div>
-                        
-                        {/* Loading dots - with increased spacing */}
-                        <motion.div className="flex space-x-3 items-center mt-4">
+                        <motion.div className="flex space-x-4 items-center">
                           {[0, 1, 2].map((dot) => (
                             <motion.div
                               key={dot}
-                              className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-purple-400 to-blue-500"
+                              className="w-3 h-3 rounded-full bg-gradient-to-r from-purple-400 to-blue-500"
                               animate={{
                                 scale: [1, 1.5, 1],
                                 opacity: [0.5, 1, 0.5],
