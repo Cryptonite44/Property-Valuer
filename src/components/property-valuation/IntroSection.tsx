@@ -9,7 +9,27 @@ export const IntroSection = () => {
   const [liveValueCount, setLiveValueCount] = useState(0);
   const [recentValuations, setRecentValuations] = useState<
     { address: string; time: string; id: number; index: number }[]
-  >([]);
+  >([
+    // Initialize with placeholder items to prevent layout jumps
+    {
+      address: "Canterbury, Kent",
+      time: "Just now",
+      id: 1,
+      index: 0
+    },
+    {
+      address: "Brighton, Sussex",
+      time: "Just now",
+      id: 2,
+      index: 1
+    },
+    {
+      address: "Guildford, Surrey",
+      time: "Just now",
+      id: 3,
+      index: 2
+    }
+  ]);
 
   // Simulate valuations
   useEffect(() => {
@@ -20,148 +40,135 @@ export const IntroSection = () => {
     const valuationInterval = setInterval(() => {
       setLiveValueCount((prev) => prev + 1);
       
-      // Add a new valuation notification
-      if (Math.random() > 0.6 || recentValuations.length < 3) {
-        // South East UK locations
-        const southEastLocations = [
-          // Kent
-          "Canterbury, Kent",
-          "Maidstone, Kent",
-          "Tunbridge Wells, Kent",
-          "Dover, Kent",
-          "Folkestone, Kent",
-          "Whitstable, Kent",
-          "Margate, Kent",
-          "Ashford, Kent",
-          "Sevenoaks, Kent",
-          "Rochester, Kent",
-          // Sussex
-          "Brighton, Sussex",
-          "Eastbourne, Sussex",
-          "Hastings, Sussex",
-          "Chichester, Sussex",
-          "Worthing, Sussex",
-          "Crawley, Sussex",
-          "Horsham, Sussex",
-          "Bexhill-on-Sea, Sussex",
-          "Lewes, Sussex",
-          "Arundel, Sussex",
-          // Surrey
-          "Guildford, Surrey",
-          "Woking, Surrey",
-          "Farnham, Surrey",
-          "Epsom, Surrey",
-          "Redhill, Surrey",
-          "Reigate, Surrey",
-          "Dorking, Surrey",
-          "Camberley, Surrey",
-          "Esher, Surrey",
-          "Leatherhead, Surrey",
-          // Hampshire
-          "Southampton, Hampshire",
-          "Portsmouth, Hampshire",
-          "Winchester, Hampshire",
-          "Basingstoke, Hampshire",
-          "Eastleigh, Hampshire",
-          "Fareham, Hampshire",
-          "Andover, Hampshire",
-          "Aldershot, Hampshire",
-          "Fleet, Hampshire",
-          "Farnborough, Hampshire",
-          // Berkshire
-          "Reading, Berkshire",
-          "Windsor, Berkshire",
-          "Maidenhead, Berkshire",
-          "Bracknell, Berkshire",
-          "Wokingham, Berkshire",
-          "Newbury, Berkshire",
-          "Ascot, Berkshire",
-          "Slough, Berkshire",
-          "Sandhurst, Berkshire",
-          "Thatcham, Berkshire",
-        ];
-        
-        // Find available indices (0, 1, or 2) that aren't being used
-        const usedIndices = recentValuations.map(v => v.index);
-        const availableIndices = [0, 1, 2].filter(idx => !usedIndices.includes(idx));
-        const indexToUse = availableIndices.length > 0 
-          ? availableIndices[Math.floor(Math.random() * availableIndices.length)]
-          : Math.floor(Math.random() * 3); // If all positions filled, replace a random one
-        
-        setRecentValuations(prev => {
-          // Remove any existing valuation at this index
-          const filtered = prev.filter(v => v.index !== indexToUse);
-          // Add new valuation at this index
-          return [
-            ...filtered,
-            {
-              address: southEastLocations[Math.floor(Math.random() * southEastLocations.length)],
-              time: "Just now",
-              id: Date.now(),
-              index: indexToUse
-            }
-          ].slice(0, 3); // Keep only 3 most recent
-        });
-      }
+      // South East UK locations
+      const southEastLocations = [
+        // Kent
+        "Canterbury, Kent",
+        "Maidstone, Kent",
+        "Tunbridge Wells, Kent",
+        "Dover, Kent",
+        "Folkestone, Kent",
+        "Whitstable, Kent",
+        "Margate, Kent",
+        "Ashford, Kent",
+        "Sevenoaks, Kent",
+        "Rochester, Kent",
+        // Sussex
+        "Brighton, Sussex",
+        "Eastbourne, Sussex",
+        "Hastings, Sussex",
+        "Chichester, Sussex",
+        "Worthing, Sussex",
+        "Crawley, Sussex",
+        "Horsham, Sussex",
+        "Bexhill-on-Sea, Sussex",
+        "Lewes, Sussex",
+        "Arundel, Sussex",
+        // Surrey
+        "Guildford, Surrey",
+        "Woking, Surrey",
+        "Farnham, Surrey",
+        "Epsom, Surrey",
+        "Redhill, Surrey",
+        "Reigate, Surrey",
+        "Dorking, Surrey",
+        "Camberley, Surrey",
+        "Esher, Surrey",
+        "Leatherhead, Surrey",
+        // Hampshire
+        "Southampton, Hampshire",
+        "Portsmouth, Hampshire",
+        "Winchester, Hampshire",
+        "Basingstoke, Hampshire",
+        "Eastleigh, Hampshire",
+        "Fareham, Hampshire",
+        "Andover, Hampshire",
+        "Aldershot, Hampshire",
+        "Fleet, Hampshire",
+        "Farnborough, Hampshire",
+        // Berkshire
+        "Reading, Berkshire",
+        "Windsor, Berkshire",
+        "Maidenhead, Berkshire",
+        "Bracknell, Berkshire",
+        "Wokingham, Berkshire",
+        "Newbury, Berkshire",
+        "Ascot, Berkshire",
+        "Slough, Berkshire",
+        "Sandhurst, Berkshire",
+        "Thatcham, Berkshire",
+      ];
+      
+      // Replace a random card (using index 0, 1, or 2)
+      const indexToUpdate = Math.floor(Math.random() * 3);
+      
+      setRecentValuations(prev => {
+        const newValuations = [...prev];
+        newValuations[indexToUpdate] = {
+          address: southEastLocations[Math.floor(Math.random() * southEastLocations.length)],
+          time: "Just now",
+          id: Date.now(),
+          index: indexToUpdate
+        };
+        return newValuations;
+      });
     }, 3000);
 
     return () => {
       clearInterval(valuationInterval);
     };
-  }, [recentValuations.length]);
+  }, []);
 
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-8 sm:pt-12"
+      className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-6"
     >
-      {/* Live valuation notifications - responsive row/column layout */}
+      {/* Live valuation notifications - always in a row */}
       <motion.div 
-        className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-2 sm:gap-3 mb-6 relative z-20"
+        className="flex flex-row flex-wrap justify-center items-center gap-1.5 sm:gap-3 mb-4 sm:mb-6 relative z-20"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <AnimatePresence>
-          {recentValuations.map((valuation) => (
-            <motion.div
-              key={valuation.id}
-              className="w-full sm:w-auto sm:max-w-[32%]"
-              initial={{ opacity: 0, y: -10, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -5, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
+        {recentValuations.map((valuation) => (
+          <motion.div
+            key={valuation.id}
+            className="w-[30%] sm:w-auto sm:max-w-[32%]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div 
+              className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg"
             >
-              <div 
-                className="flex items-center gap-2 px-3 py-2 sm:py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg"
-              >
-                <div className="relative">
-                  <CheckCircle2 className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-green-400" />
-                  <motion.div
-                    className="absolute -inset-1 rounded-full bg-green-400/20"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.2, 0.4, 0.2],
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                    }}
-                  />
-                </div>
-                <div className="flex flex-col items-start text-left">
-                  <span className="text-sm sm:text-xs text-white font-medium truncate max-w-[240px] sm:max-w-[140px] md:max-w-[180px]">
-                    {valuation.address}
-                  </span>
-                  <span className="text-xs sm:text-[10px] text-green-300">{valuation.time}</span>
-                </div>
+              <div className="relative flex-shrink-0">
+                <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-400" />
+                <motion.div
+                  className="absolute -inset-1 rounded-full bg-green-400/20"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.2, 0.4, 0.2],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                />
               </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+              <div className="flex flex-col items-start text-left flex-1 min-w-0">
+                <span className="text-xs sm:text-xs text-white font-medium truncate w-full">
+                  {valuation.address}
+                </span>
+                <span className="text-[8px] sm:text-[10px] text-green-300">{valuation.time}</span>
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </motion.div>
       
       <div className="relative">
