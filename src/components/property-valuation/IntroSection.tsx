@@ -136,14 +136,14 @@ export const IntroSection = () => {
         {recentValuations.map((valuation) => (
           <motion.div
             key={valuation.id}
-            className="w-[30%] sm:w-auto sm:max-w-[32%]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            className="w-[31%] sm:w-auto sm:max-w-[32%] transform-gpu"
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             <div 
-              className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg"
+              className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg hover:border-green-500/40 transition-colors duration-300"
             >
               <div className="relative flex-shrink-0">
                 <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-400" />
@@ -160,11 +160,14 @@ export const IntroSection = () => {
                   }}
                 />
               </div>
-              <div className="flex flex-col items-start text-left flex-1 min-w-0">
-                <span className="text-xs sm:text-xs text-white font-medium truncate w-full">
+              <div className="flex flex-col items-start text-left flex-1 min-w-0 overflow-hidden">
+                <span className="text-xs sm:text-xs text-white font-medium truncate w-full leading-tight">
                   {valuation.address}
                 </span>
-                <span className="text-[8px] sm:text-[10px] text-green-300">{valuation.time}</span>
+                <div className="flex items-center gap-1">
+                  <div className="w-1 h-1 rounded-full bg-green-400"></div>
+                  <span className="text-[8px] sm:text-[10px] text-green-300 whitespace-nowrap">{valuation.time}</span>
+                </div>
               </div>
             </div>
           </motion.div>
