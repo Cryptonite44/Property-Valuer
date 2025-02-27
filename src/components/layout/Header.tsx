@@ -186,7 +186,7 @@ export const Header = () => {
                     <Sparkles className="h-4 w-4 text-purple-300" />
                   </div>
                   <span className="text-xs font-medium text-gray-300 group-hover:text-gray-200 transition-colors">
-                    by Digitol
+                    by Digitol.co.uk
                   </span>
                 </div>
               </div>
