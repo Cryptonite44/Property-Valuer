@@ -83,7 +83,7 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
           />
           {isFeatured && (
             <div className="absolute top-2 left-2 bg-purple-500 text-white text-xs font-medium px-1.5 py-0.5 rounded-full">
-              Featured
+              Recently Valued
             </div>
           )}
         </div>
@@ -163,7 +163,7 @@ export const RecentValuations = () => {
       bedrooms: 4,
       bathrooms: 3,
       size: "2,400 ft²",
-      position: { top: "70%", right: "8%" },
+      position: { top: "30%", right: "15%" },
       delay: 0.3,
       isFeatured: true,
       isNew: false,
@@ -175,7 +175,7 @@ export const RecentValuations = () => {
       bedrooms: 2,
       bathrooms: 1,
       size: "850 ft²",
-      position: { top: "190%", left: "8%" },
+      position: { bottom: "20%", left: "20%" },
       delay: 0.5,
       isFeatured: true,
       isNew: false,
