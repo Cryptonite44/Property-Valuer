@@ -1,7 +1,7 @@
 
 import React from "react";
 import { motion, useAnimationControls } from "framer-motion";
-import { AnimatedPropertyCard } from "./AnimatedPropertyCard";
+import { RecentValuations } from "./AnimatedPropertyCard";
 
 export const IntroSection = () => {
   const controls = useAnimationControls();
@@ -102,8 +102,8 @@ export const IntroSection = () => {
         </motion.h1>
       </div>
 
-      {/* Add the animated property card */}
-      <AnimatedPropertyCard />
+      {/* Add the animated property cards as recent valuations */}
+      <RecentValuations />
 
       {/* Background floating elements with varying sizes */}
       <motion.div
