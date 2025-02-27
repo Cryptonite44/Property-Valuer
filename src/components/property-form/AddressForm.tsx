@@ -45,9 +45,9 @@ export const AddressForm = ({ address, onChange }: AddressFormProps) => {
         />
         
         {/* Decorative building icon */}
-        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/30 z-20 flex items-center">
+        <div className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-white/30 z-20 flex items-center">
           <Home className="w-4 h-4" />
-          <div className="w-px h-5 bg-white/10 mx-3"></div>
+          <div className="hidden sm:block w-px h-5 bg-white/10 mx-3"></div>
         </div>
         
         {/* Main input container with border animation */}
@@ -70,12 +70,12 @@ export const AddressForm = ({ address, onChange }: AddressFormProps) => {
           <div className="absolute inset-0 rounded-lg bg-[#1A1F2C]/90 backdrop-blur-sm" />
           <Input
             id="address"
-            placeholder="Enter your complete property address"
+            placeholder="Enter address"
             value={address}
             onChange={onChange}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            className="relative bg-transparent border-white/10 transition-all duration-300 pl-14 pr-10 rounded-lg text-white placeholder:text-white/40 focus:ring-4 focus:ring-[#3b82f6]/20 focus:border-indigo-500/50 h-14 text-base"
+            className="relative bg-transparent border-white/10 transition-all duration-300 pl-10 sm:pl-14 pr-10 rounded-lg text-white placeholder:text-white/40 focus:ring-4 focus:ring-[#3b82f6]/20 focus:border-indigo-500/50 h-14 text-sm sm:text-base truncate"
           />
           
           {/* Search button positioned on the right */}
@@ -89,7 +89,7 @@ export const AddressForm = ({ address, onChange }: AddressFormProps) => {
         </div>
       </div>
       
-      <div className="flex items-center justify-center gap-2 text-sm text-white/50 text-center mt-2">
+      <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-white/50 text-center mt-2">
         <MapPin className="w-3 h-3 text-indigo-400" />
         <p>Include postcode for precise results</p>
       </div>
