@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 import { RecentValuations } from "./AnimatedPropertyCard";
-import { CheckCircle2, Sparkles } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 export const IntroSection = () => {
   const controls = useAnimationControls();
@@ -191,7 +191,7 @@ export const IntroSection = () => {
           }}
         />
         
-        {/* New integrated title with more cohesive design */}
+        {/* New integrated title with more cohesive design - removed Sparkles icon */}
         <div className="relative z-10">
           <motion.div 
             className="inline-flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3"
@@ -204,44 +204,22 @@ export const IntroSection = () => {
               stiffness: 100
             }}
           >
-            <div className="flex items-center gap-1.5 sm:gap-3 mb-1 sm:mb-0">
-              <motion.div
-                className="relative"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.4 }}
-              >
-                <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 text-purple-400" />
-                <motion.div
-                  className="absolute -inset-1 rounded-full bg-purple-500/20"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.3, 0.1, 0.3],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                />
-              </motion.div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 inline-block">
-                Smart Property
-              </h1>
-            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 inline-block">
+              Smart Property
+            </h1>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white">
               Valuations
             </h1>
           </motion.div>
           
-          {/* Subtitle with AI reference */}
+          {/* Subtitle with AI reference - updated text */}
           <motion.p
             className="text-sm sm:text-base text-white/80 mt-2 sm:mt-3 max-w-lg mx-auto"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
           >
-            <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">AI-powered</span> insights for accurate property pricing in seconds
+            <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">AI-powered</span> insights in seconds
           </motion.p>
           
           {/* Fancy underline effect */}
