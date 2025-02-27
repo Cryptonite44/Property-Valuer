@@ -2,37 +2,26 @@
 import React, { useState, useEffect } from "react";
 import { motion, useAnimationControls, AnimatePresence } from "framer-motion";
 import { RecentValuations } from "./AnimatedPropertyCard";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Users, Home, Sparkles, CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Sparkles } from "lucide-react";
 
 export const IntroSection = () => {
   const controls = useAnimationControls();
-  const [activeUsers, setActiveUsers] = useState(0);
   const [liveValueCount, setLiveValueCount] = useState(0);
   const [recentValuations, setRecentValuations] = useState<
-    { address: string; time: string; id: number; position: string }[]
+    { address: string; time: string; id: number; index: number }[]
   >([]);
 
-  // Simulate active users and valuations
+  // Simulate valuations
   useEffect(() => {
     // Set initial values
-    setActiveUsers(Math.floor(Math.random() * 10) + 15);
     setLiveValueCount(Math.floor(Math.random() * 50) + 120);
-
-    // Update active users periodically
-    const userInterval = setInterval(() => {
-      setActiveUsers((prev) => {
-        const change = Math.random() > 0.7 ? 1 : -1;
-        return Math.max(12, Math.min(30, prev + change));
-      });
-    }, 5000);
 
     // Update valuations count
     const valuationInterval = setInterval(() => {
       setLiveValueCount((prev) => prev + 1);
       
       // Add a new valuation notification
-      if (Math.random() > 0.6) {
+      if (Math.random() > 0.6 || recentValuations.length < 3) {
         // South East UK locations
         const southEastLocations = [
           // Kent
@@ -91,28 +80,35 @@ export const IntroSection = () => {
           "Sandhurst, Berkshire",
           "Thatcham, Berkshire",
         ];
-
-        // Random position - alternating left/right and different heights
-        const positions = ["left", "right"];
-        const position = positions[Math.floor(Math.random() * positions.length)];
         
-        setRecentValuations((prev) => [
-          {
-            address: southEastLocations[Math.floor(Math.random() * southEastLocations.length)],
-            time: "Just now",
-            id: Date.now(),
-            position: position
-          },
-          ...prev
-        ].slice(0, 3)); // Keep only the 3 most recent
+        // Find available indices (0, 1, or 2) that aren't being used
+        const usedIndices = recentValuations.map(v => v.index);
+        const availableIndices = [0, 1, 2].filter(idx => !usedIndices.includes(idx));
+        const indexToUse = availableIndices.length > 0 
+          ? availableIndices[Math.floor(Math.random() * availableIndices.length)]
+          : Math.floor(Math.random() * 3); // If all positions filled, replace a random one
+        
+        setRecentValuations(prev => {
+          // Remove any existing valuation at this index
+          const filtered = prev.filter(v => v.index !== indexToUse);
+          // Add new valuation at this index
+          return [
+            ...filtered,
+            {
+              address: southEastLocations[Math.floor(Math.random() * southEastLocations.length)],
+              time: "Just now",
+              id: Date.now(),
+              index: indexToUse
+            }
+          ].slice(0, 3); // Keep only 3 most recent
+        });
       }
     }, 3000);
 
     return () => {
-      clearInterval(userInterval);
       clearInterval(valuationInterval);
     };
-  }, []);
+  }, [recentValuations.length]);
 
   return (
     <motion.div 
@@ -121,152 +117,53 @@ export const IntroSection = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="text-center mb-4 space-y-4 relative w-full max-w-screen-lg mx-auto px-4 pt-12"
     >
-      {/* Live activity indicators */}
+      {/* Live valuation notifications - in a row at the top */}
       <motion.div 
-        className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6"
+        className="flex flex-wrap justify-center gap-3 mb-6 relative z-20"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        {/* Active users */}
-        <motion.div 
-          className="flex items-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-purple-500/20"
-          whileHover={{ scale: 1.05 }}
-        >
-          <div className="relative mr-2">
-            <Users className="w-4 h-4 text-purple-400" />
+        <AnimatePresence>
+          {recentValuations.map((valuation) => (
             <motion.div
-              className="absolute -inset-1 rounded-full bg-purple-400/20"
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            />
-          </div>
-          <div className="text-xs text-white/90 font-medium">
-            <span className="text-purple-300">{activeUsers}</span> users online
-          </div>
-          
-          {/* User avatars */}
-          <div className="flex -space-x-2 ml-2">
-            {[1, 2, 3].map((index) => (
-              <Avatar key={index} className="w-5 h-5 border border-black/10">
-                <AvatarImage src={`https://i.pravatar.cc/100?img=${10 + index}`} />
-                <AvatarFallback className="text-[8px] bg-gradient-to-br from-purple-500/70 to-indigo-500/70 text-white">
-                  {String.fromCharCode(64 + index)}
-                </AvatarFallback>
-              </Avatar>
-            ))}
-            {activeUsers > 3 && (
-              <div className="w-5 h-5 rounded-full bg-gradient-to-br from-indigo-500/70 to-purple-500/70 flex items-center justify-center text-[8px] text-white border border-black/10">
-                +{activeUsers - 3}
+              key={valuation.id}
+              className="w-auto max-w-[32%] sm:max-w-[30%]"
+              initial={{ opacity: 0, y: -10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -5, scale: 0.9 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div 
+                className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg"
+              >
+                <div className="relative">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
+                  <motion.div
+                    className="absolute -inset-1 rounded-full bg-green-400/20"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.2, 0.4, 0.2],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col items-start text-left">
+                  <span className="text-xs text-white font-medium truncate max-w-[140px] sm:max-w-[180px]">
+                    {valuation.address}
+                  </span>
+                  <span className="text-[10px] text-green-300">{valuation.time}</span>
+                </div>
               </div>
-            )}
-          </div>
-        </motion.div>
-        
-        {/* Live valuations counter */}
-        <motion.div 
-          className="flex items-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-blue-500/20"
-          whileHover={{ scale: 1.05 }}
-        >
-          <div className="relative mr-2">
-            <Home className="w-4 h-4 text-blue-400" />
-            <motion.div
-              className="absolute -inset-1 rounded-full bg-blue-400/20"
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse",
-                delay: 0.5
-              }}
-            />
-          </div>
-          <div className="text-xs text-white/90 font-medium">
-            <span className="text-blue-300">{liveValueCount.toLocaleString()}</span> valuations generated
-          </div>
-        </motion.div>
-        
-        {/* Latest valuations */}
-        <motion.div 
-          className="hidden md:flex items-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-green-500/20"
-          whileHover={{ scale: 1.05 }}
-        >
-          <div className="relative mr-2">
-            <Sparkles className="w-4 h-4 text-green-400" />
-            <motion.div
-              className="absolute -inset-1 rounded-full bg-green-400/20"
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                repeatType: "reverse",
-                delay: 1
-              }}
-            />
-          </div>
-          <div className="text-xs text-white/90 font-medium">
-            Live valuations
-          </div>
-        </motion.div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </motion.div>
       
-      {/* Live valuation notifications - appear above property cards */}
-      <AnimatePresence>
-        {recentValuations.map((valuation) => (
-          <motion.div
-            key={valuation.id}
-            className={`absolute z-20 w-56 max-w-[90%] ${
-              valuation.position === 'left' 
-                ? 'left-4 sm:left-[5%] top-[50%] sm:top-[45%]' 
-                : 'right-4 sm:right-[5%] top-[55%] sm:top-[50%]'
-            }`}
-            initial={{ opacity: 0, y: -20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.9 }}
-            transition={{ duration: 0.4 }}
-          >
-            <div 
-              className="flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg bg-white/5 backdrop-blur-sm border border-green-500/20 shadow-lg"
-            >
-              <div className="relative">
-                <CheckCircle2 className="w-3.5 h-3.5 text-green-400" />
-                <motion.div
-                  className="absolute -inset-1 rounded-full bg-green-400/20"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.2, 0.4, 0.2],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs text-white font-medium truncate max-w-[180px]">
-                  {valuation.address}
-                </span>
-                <span className="text-[10px] text-green-300">{valuation.time}</span>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </AnimatePresence>
-
       <div className="relative">
         <motion.div
           className="absolute -inset-1 bg-gradient-to-r from-purple-500/5 via-blue-500/5 to-purple-500/5 blur-3xl"
