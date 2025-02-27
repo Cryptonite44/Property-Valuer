@@ -230,8 +230,8 @@ export const IntroSection = () => {
             key={valuation.id}
             className={`absolute z-20 w-56 max-w-[90%] ${
               valuation.position === 'left' 
-                ? 'top-[30%] md:top-[20%] left-4 sm:left-[10%]' 
-                : 'top-[25%] md:top-[15%] right-4 sm:right-[10%]'
+                ? 'left-4 sm:left-[5%] top-[50%] sm:top-[45%]' 
+                : 'right-4 sm:right-[5%] top-[55%] sm:top-[50%]'
             }`}
             initial={{ opacity: 0, y: -20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
