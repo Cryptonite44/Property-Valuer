@@ -1,9 +1,9 @@
 
 import React, { useState } from "react";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, Home } from "lucide-react";
+import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
+import { Search, MapPin } from "lucide-react";
 
 interface AddressFormProps {
   address: string;
@@ -11,88 +11,48 @@ interface AddressFormProps {
 }
 
 export const AddressForm = ({ address, onChange }: AddressFormProps) => {
-  const [isFocused, setIsFocused] = useState(false);
-
   return (
-    <motion.div 
-      className="space-y-3"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-    >
-      <Label htmlFor="address" className="text-base text-white/70 block text-center mb-2 font-medium">
-        Property Location
+    <div className="space-y-2">
+      <Label 
+        htmlFor="address" 
+        className="text-white flex items-center gap-2 text-sm font-medium mb-1.5"
+      >
+        <MapPin className="h-3.5 w-3.5 text-purple-400" />
+        Property Address
       </Label>
       
       <div className="relative">
-        {/* Animated pulse/glow effect background */}
-        <motion.div 
-          className="absolute -inset-0.5 rounded-lg opacity-75"
-          animate={{
-            boxShadow: isFocused 
-              ? [
-                  "0 0 20px rgba(139, 92, 246, 0.3)", 
-                  "0 0 30px rgba(139, 92, 246, 0.4)", 
-                  "0 0 20px rgba(139, 92, 246, 0.3)"
-                ]
-              : "0 0 15px rgba(139, 92, 246, 0.2)"
-          }}
-          transition={{ 
-            duration: 2,
-            repeat: Infinity,
-            repeatType: "reverse"
-          }}
+        <Input
+          id="address"
+          placeholder="Enter a UK property address"
+          value={address}
+          onChange={onChange}
+          className="bg-[#191627] text-white border-[#252033] h-12 pl-10 pr-4 placeholder:text-gray-500 focus:border-[#6C47FF] focus:ring-[#6C47FF]/10 transition-all duration-200"
         />
-        
-        {/* Decorative building icon */}
-        <div className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-white/30 z-20 flex items-center">
-          <Home className="w-4 h-4" />
-          <div className="hidden sm:block w-px h-5 bg-white/10 mx-3"></div>
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+          <Search className="h-4 w-4" />
         </div>
         
-        {/* Main input container with border animation */}
-        <motion.div 
-          className={`absolute -inset-0.5 rounded-lg ${isFocused ? 'bg-gradient-to-r from-purple-600/50 via-indigo-600/50 to-blue-600/50' : 'bg-gradient-to-r from-purple-600/30 via-indigo-600/30 to-blue-600/30'}`}
-          animate={{
-            backgroundPosition: isFocused ? ["0% 50%", "100% 50%", "0% 50%"] : "0% 50%",
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            repeatType: "reverse"
-          }}
-          style={{
-            backgroundSize: "200% 200%",
-          }}
-        />
-        
-        <div className="relative">
-          <div className="absolute inset-0 rounded-lg bg-[#1A1F2C]/90 backdrop-blur-sm" />
-          <Input
-            id="address"
-            placeholder="Enter address"
-            value={address}
-            onChange={onChange}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            className="relative bg-transparent border-white/10 transition-all duration-300 pl-10 sm:pl-14 pr-10 rounded-lg text-white placeholder:text-white/40 focus:ring-4 focus:ring-[#3b82f6]/20 focus:border-indigo-500/50 h-14 text-sm sm:text-base truncate"
-          />
-          
-          {/* Search button positioned on the right */}
-          <motion.div 
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-indigo-600 to-purple-600 p-1.5 rounded-md cursor-pointer z-20"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Search className="w-4 h-4 text-white" />
-          </motion.div>
-        </div>
+        {/* The icon that was here has been removed as it had no functionality */}
       </div>
       
-      <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-white/50 text-center mt-2">
-        <MapPin className="w-3 h-3 text-indigo-400" />
-        <p>Include postcode for precise results</p>
+      <div className="text-xs text-gray-500 mt-1.5 flex gap-1.5 items-center">
+        <motion.div
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.8, 1, 0.8],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            repeatType: "reverse",
+          }}
+          className="text-purple-400 text-[10px]"
+        >
+          ✦
+        </motion.div>
+        Enter your full address including postcode for the most accurate results
       </div>
-    </motion.div>
+    </div>
   );
 };
