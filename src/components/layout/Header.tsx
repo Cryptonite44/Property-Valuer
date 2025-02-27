@@ -209,13 +209,7 @@ export const Header = () => {
                       <span className="font-bold text-base sm:text-lg tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-white group-hover:from-white group-hover:via-purple-200 group-hover:to-white transition-all duration-500">
                         PropertyValuer
                       </span>
-                      {/* Animated underline effect */}
-                      <motion.div 
-                        className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 rounded-full"
-                        initial={{ width: "0%" }}
-                        animate={{ width: hoverLogo ? "100%" : "0%" }}
-                        transition={{ duration: 0.3 }}
-                      />
+                      {/* Removed the animated underline effect */}
                     </div>
                     <Sparkles className="h-4 w-4 text-purple-400" />
                   </div>

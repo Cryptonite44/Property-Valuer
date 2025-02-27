@@ -20,6 +20,7 @@ interface AnimatedPropertyCardProps {
   isFeatured?: boolean;
   isNew?: boolean;
   rotateDirection?: 1 | -1;
+  imgSrc: string;
 }
 
 export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
@@ -33,6 +34,7 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
   isFeatured = false,
   isNew = false,
   rotateDirection = 1,
+  imgSrc,
 }) => {
   return (
     <motion.div
@@ -75,7 +77,7 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
       <Card className="w-48 overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md shadow-xl">
         <div className="relative h-24 overflow-hidden">
           <motion.img 
-            src="/lovable-uploads/b92ee8ba-9ee7-4da4-b844-bdf1acb3185a.png" 
+            src={imgSrc}
             alt="Property" 
             className="w-full h-full object-cover"
             whileHover={{ scale: 1.05 }}
@@ -158,8 +160,8 @@ export const AnimatedPropertyCard: React.FC<AnimatedPropertyCardProps> = ({
 export const RecentValuations = () => {
   const recentProperties = [
     {
-      price: "£1,100,000",
-      address: "Riverside Manor, London",
+      price: "£290,000",
+      address: "Riverside House, Amersham",
       bedrooms: 4,
       bathrooms: 3,
       size: "2,400 ft²",
@@ -168,6 +170,7 @@ export const RecentValuations = () => {
       isFeatured: true,
       isNew: false,
       rotateDirection: 1 as const,
+      imgSrc: "/lovable-uploads/fa0d9c4f-855d-4893-99fd-30a6f7544366.png"
     },
     {
       price: "£420,000",
@@ -180,6 +183,7 @@ export const RecentValuations = () => {
       isFeatured: true,
       isNew: false,
       rotateDirection: -1 as const,
+      imgSrc: "/lovable-uploads/5bda7107-c273-4b16-be60-1da69b59b36f.png"
     }
   ];
 
