@@ -185,9 +185,7 @@ export const Header = () => {
                     </div>
                     <Sparkles className="h-4 w-4 text-purple-300" />
                   </div>
-                  <span className="text-xs font-medium text-gray-300 group-hover:text-gray-200 transition-colors">
-                    by Digitol.co.uk
-                  </span>
+                  {/* Removed "by Digitol.co.uk" text */}
                 </div>
               </div>
             </div>
