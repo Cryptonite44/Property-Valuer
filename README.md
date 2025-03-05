@@ -9,11 +9,10 @@ Property Valuer is a web application designed to provide accurate and reliable p
 
 This project is built with:
 
-- Vite
-- TypeScript
 - React
+- TypeScript
 - Tailwind CSS
-- UI Component Library
+- Custom UI Components
 
 ## Getting Started
 
@@ -42,8 +41,8 @@ npm run dev
 
 ## Deployment
 
-This project can be deployed using Netlify or any other static site hosting service.
+This project can be deployed using any static site hosting service.
 
 ## Custom Domain
 
-To deploy this project under your own domain, we recommend using Netlify or a similar service that supports custom domains.
+To deploy this project under your own domain, we recommend using a hosting service that supports custom domains.
