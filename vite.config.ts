@@ -2,7 +2,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger as devAssets } from "lovable-tagger";
+// Development assets plugin renamed for clarity
+import { componentTagger as developmentAssets } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -12,8 +13,9 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
+    // Only use development assets in development mode
     mode === 'development' &&
-    devAssets(),
+    developmentAssets(),
   ].filter(Boolean),
   resolve: {
     alias: {
