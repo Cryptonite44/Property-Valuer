@@ -45,14 +45,14 @@ const Index = () => {
               radial-gradient(circle at 85% 30%, rgba(88, 104, 252, 0.03), transparent 25%)
             `
             : `
-              radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.05), transparent 25%),
-              radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.05), transparent 25%)
+              radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.08), transparent 25%),
+              radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.08), transparent 25%)
             `
         }}
       />
       {/* Grid Background */}
       <div 
-        className={`absolute inset-0 z-0 ${isDark ? 'opacity-[0.14]' : 'opacity-[0.1]'}`}
+        className={`absolute inset-0 z-0 ${isDark ? 'opacity-[0.14]' : 'opacity-[0.2]'}`}
         style={{
           backgroundImage: isDark
             ? `

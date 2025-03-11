@@ -13,11 +13,11 @@ export const BackgroundEffects = () => {
         className={`absolute -inset-2 bg-gradient-to-r ${
           isDark 
             ? "from-[#8B5CF6] via-[#D946EF] to-[#0EA5E9] opacity-75" 
-            : "from-[#6366F1] via-[#A78BFA] to-[#60A5FA] opacity-30"
+            : "from-[#6366F1] via-[#A78BFA] to-[#60A5FA] opacity-40"
         } blur-2xl rounded-lg`}
         animate={{
           scale: [1, 1.1, 1],
-          opacity: isDark ? [0.5, 0.8, 0.5] : [0.3, 0.5, 0.3],
+          opacity: isDark ? [0.5, 0.8, 0.5] : [0.4, 0.6, 0.4],
         }}
         transition={{
           duration: 4,
@@ -29,11 +29,11 @@ export const BackgroundEffects = () => {
         className={`absolute -inset-2 bg-gradient-to-r ${
           isDark 
             ? "from-[#F97316] via-[#8B5CF6] to-[#D946EF] opacity-75" 
-            : "from-[#F59E0B] via-[#8B5CF6] to-[#EC4899] opacity-30"
+            : "from-[#F59E0B] via-[#8B5CF6] to-[#EC4899] opacity-40"
         } blur-2xl rounded-lg`}
         animate={{
           scale: [1.1, 1, 1.1],
-          opacity: isDark ? [0.5, 0.8, 0.5] : [0.3, 0.5, 0.3],
+          opacity: isDark ? [0.5, 0.8, 0.5] : [0.4, 0.6, 0.4],
         }}
         transition={{
           duration: 4,
@@ -42,6 +42,7 @@ export const BackgroundEffects = () => {
           delay: 2,
         }}
       />
+      
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating particles with adjusted visibility for light/dark modes */}
         {[...Array(15)].map((_, i) => (
@@ -55,10 +56,10 @@ export const BackgroundEffects = () => {
               top: Math.random() * 100 + "%",
               background: isDark 
                 ? `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.3})` 
-                : `rgba(100, 116, 139, ${Math.random() * 0.3 + 0.2})`,
+                : `rgba(79, 70, 229, ${Math.random() * 0.3 + 0.2})`,
               boxShadow: isDark 
                 ? '0 0 4px rgba(255, 255, 255, 0.5)' 
-                : '0 0 4px rgba(100, 116, 139, 0.3)',
+                : '0 0 4px rgba(79, 70, 229, 0.3)',
             }}
             animate={{
               y: [0, -50, 0],
@@ -78,7 +79,7 @@ export const BackgroundEffects = () => {
         {/* Large glowing orbs adjusted for light/dark modes */}
         <motion.div
           className={`absolute top-0 right-0 w-64 h-64 ${
-            isDark ? "bg-purple-500/5" : "bg-purple-500/2"
+            isDark ? "bg-purple-500/5" : "bg-purple-500/10"
           } rounded-full mix-blend-overlay filter blur-xl`}
           animate={{
             y: [0, 50, 0],
@@ -93,7 +94,7 @@ export const BackgroundEffects = () => {
         />
         <motion.div
           className={`absolute bottom-0 left-0 w-64 h-64 ${
-            isDark ? "bg-blue-500/5" : "bg-blue-500/2"
+            isDark ? "bg-blue-500/5" : "bg-blue-500/10"
           } rounded-full mix-blend-overlay filter blur-xl`}
           animate={{
             y: [0, -30, 0],
@@ -112,11 +113,11 @@ export const BackgroundEffects = () => {
           className={`absolute top-1/4 left-1/4 w-32 h-32 bg-gradient-to-r ${
             isDark 
               ? "from-purple-500/10 to-pink-500/10" 
-              : "from-purple-500/5 to-pink-500/5"
+              : "from-purple-500/15 to-pink-500/15"
           } rounded-full mix-blend-overlay filter blur-xl`}
           animate={{
             scale: [1, 1.2, 1],
-            opacity: isDark ? [0.3, 0.6, 0.3] : [0.2, 0.4, 0.2],
+            opacity: isDark ? [0.3, 0.6, 0.3] : [0.4, 0.7, 0.4],
           }}
           transition={{
             duration: 5,
@@ -128,11 +129,11 @@ export const BackgroundEffects = () => {
           className={`absolute bottom-1/4 right-1/4 w-40 h-40 bg-gradient-to-r ${
             isDark 
               ? "from-blue-500/10 to-teal-500/10" 
-              : "from-blue-500/5 to-teal-500/5"
+              : "from-blue-500/15 to-teal-500/15"
           } rounded-full mix-blend-overlay filter blur-xl`}
           animate={{
             scale: [1.2, 1, 1.2],
-            opacity: isDark ? [0.4, 0.7, 0.4] : [0.2, 0.5, 0.2],
+            opacity: isDark ? [0.4, 0.7, 0.4] : [0.4, 0.7, 0.4],
           }}
           transition={{
             duration: 7,
