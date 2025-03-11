@@ -26,6 +26,8 @@ serve(async (req) => {
 - Local amenities and transport links
 - Nearby schools and facilities
 
+Also identify the ideal buyer persona for this property based on its characteristics, location, and price range.
+
 Provide a realistic valuation range with a lower and upper bound, with approximately 10-15% difference between them.
 
 Format your response EXACTLY as this JSON (no other text):
@@ -54,6 +56,17 @@ Format your response EXACTLY as this JSON (no other text):
       "recentSales": [actual recent sales data],
       "priceChanges": [real local price trends]
     }
+  },
+  "buyerPersona": {
+    "profile": [detailed profile of the ideal buyer for this property],
+    "demographics": {
+      "ageRange": [likely age range of buyers],
+      "occupation": [likely occupation or industry of buyers],
+      "householdType": [e.g., "Single Professional", "Young Couple", "Family with Children", etc.]
+    },
+    "motivations": [array of key motivations for this buyer persona],
+    "preferences": [array of key preferences of this buyer persona],
+    "buyingPower": [assessment of financial capacity]
   }
 }`;
 
@@ -70,7 +83,7 @@ Format your response EXACTLY as this JSON (no other text):
         messages: [
           {
             role: 'system',
-            content: 'You are a UK property valuation expert with access to current market data. Provide realistic valuation ranges based on actual market conditions.'
+            content: 'You are a UK property valuation expert with access to current market data. Provide realistic valuation ranges based on actual market conditions and detailed buyer persona analysis.'
           },
           {
             role: 'user',

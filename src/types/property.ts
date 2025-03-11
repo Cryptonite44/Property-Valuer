@@ -18,9 +18,25 @@ export interface PropertyDetails {
   };
 }
 
+export interface BuyerPersona {
+  profile: string;
+  demographics: {
+    ageRange: string;
+    occupation: string;
+    householdType: string;
+  };
+  motivations: string[];
+  preferences: string[];
+  buyingPower: string;
+}
+
 export interface AIAnalysis {
-  estimatedValue: number;
+  estimatedValue: {
+    lower: number;
+    upper: number;
+  };
   confidence: 'low' | 'medium' | 'high';
   analysis: string;
   details: PropertyDetails;
+  buyerPersona: BuyerPersona;
 }

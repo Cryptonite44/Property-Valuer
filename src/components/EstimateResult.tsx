@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +37,11 @@ import {
   TreePine,
   Bus,
   Landmark,
+  Users,
+  Briefcase,
+  Heart,
+  CheckCircle,
+  Wallet,
 } from "lucide-react";
 import { AIAnalysis } from "@/types/property";
 
@@ -205,6 +211,68 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ value, analysis, onRese
               </div>
             )}
           </div>
+
+          {/* Buyer Persona Section */}
+          {analysis?.buyerPersona && (
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Users className="w-5 h-5 text-purple-400" />
+                <h4 className="text-lg font-medium text-white">Ideal Buyer Profile</h4>
+              </div>
+              <p className="text-sm text-white/70">{analysis.buyerPersona.profile}</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Users className="w-4 h-4 text-blue-400" />
+                    <h5 className="text-sm font-medium text-white">Demographics</h5>
+                  </div>
+                  <div className="space-y-2 text-sm text-white/70">
+                    <p><span className="text-white">Age Range:</span> {analysis.buyerPersona.demographics.ageRange}</p>
+                    <p><span className="text-white">Household Type:</span> {analysis.buyerPersona.demographics.householdType}</p>
+                    <p><span className="text-white">Likely Occupation:</span> {analysis.buyerPersona.demographics.occupation}</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Heart className="w-4 h-4 text-red-400" />
+                    <h5 className="text-sm font-medium text-white">Motivations</h5>
+                  </div>
+                  <ul className="space-y-1 text-sm text-white/70">
+                    {analysis.buyerPersona.motivations.map((motivation, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <span className="text-purple-400 text-xs mt-1">•</span>
+                        <span>{motivation}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400" />
+                    <h5 className="text-sm font-medium text-white">Preferences</h5>
+                  </div>
+                  <ul className="space-y-1 text-sm text-white/70">
+                    {analysis.buyerPersona.preferences.map((preference, index) => (
+                      <li key={index} className="flex items-start gap-2">
+                        <span className="text-purple-400 text-xs mt-1">•</span>
+                        <span>{preference}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-2 mt-4 text-sm">
+                <Wallet className="w-4 h-4 text-yellow-400" />
+                <span className="text-white/70">
+                  Buying Power: <span className="text-white">{analysis.buyerPersona.buyingPower}</span>
+                </span>
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
