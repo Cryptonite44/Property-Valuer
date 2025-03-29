@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { ValuationContent } from "@/components/property-valuation/ValuationContent";
 import { CardBackgroundEffects } from "@/components/property-valuation/CardBackgroundEffects";
 import { AIAnalysis } from "@/types/property";
+import { useTheme } from "@/components/layout/header/ThemeProvider";
 
 interface ValueRange {
   lower: number;
@@ -12,6 +13,8 @@ interface ValueRange {
 }
 
 const Index = () => {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [estimatedValue, setEstimatedValue] = useState<ValueRange | null>(null);
   const [analysis, setAnalysis] = useState<AIAnalysis | undefined>(undefined);
 
@@ -32,24 +35,34 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden bg-[#0A0118]">
+    <div className={`min-h-screen flex flex-col relative overflow-hidden ${isDark ? 'bg-[#0A0118]' : 'bg-[#F5F8FF]'}`}>
       <div 
         className="absolute inset-0 z-0"
         style={{
-          background: `
-            radial-gradient(circle at 15% 50%, rgba(188, 104, 252, 0.03), transparent 25%),
-            radial-gradient(circle at 85% 30%, rgba(88, 104, 252, 0.03), transparent 25%)
-          `
+          background: isDark 
+            ? `
+              radial-gradient(circle at 15% 50%, rgba(188, 104, 252, 0.03), transparent 25%),
+              radial-gradient(circle at 85% 30%, rgba(88, 104, 252, 0.03), transparent 25%)
+            `
+            : `
+              radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.08), transparent 25%),
+              radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.08), transparent 25%)
+            `
         }}
       />
       {/* Grid Background */}
       <div 
-        className="absolute inset-0 z-0 opacity-[0.14]"
+        className={`absolute inset-0 z-0 ${isDark ? 'opacity-[0.14]' : 'opacity-[0.2]'}`}
         style={{
-          backgroundImage: `
-            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
-          `,
+          backgroundImage: isDark
+            ? `
+              linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+            `
+            : `
+              linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px)
+            `,
           backgroundSize: '40px 40px',
           backgroundPosition: '-1px -1px'
         }}
